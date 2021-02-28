@@ -1,6 +1,6 @@
 /*
 Arduino 2x16 LCD - test program
-modified on 13 Feb 2021, for OOP
+modified on 28 Feb 2021, for OOP and MVC
 */
 
 #include <LiquidCrystal.h>//for LCD
