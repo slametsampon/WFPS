@@ -9,6 +9,6 @@
 #### 8. Installation of sensors, solenoid valve, push button and LED using hard-wire.
 #### 9. Communication with the server uses wireless (WIFI / Wireless) with the MQTT (Message Queuing Telemetry Transport) protocol.
 
-## [EoN - Hardware]()
+## [EoN - Hardware](https://github.com/slametsampon/WlFPS/blob/main/EoN/EoN-HW.jpg)
 
-## It is part of [WlFPS - Wireless Fire Protection System](https://github.com/slametsampon/WlFPS/blob/main/README.md)
+## It is part of [WlFPS - Wireless Fire Protection System](https://github.com/slametsampon/WlFPS)
