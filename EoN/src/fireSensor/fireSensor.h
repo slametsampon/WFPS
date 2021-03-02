@@ -11,7 +11,7 @@ const char NORMAL = 0;
 const char HIGH_ALARM = 1;
 const char LOW_ALARM = 2;
 
-    typedef struct parameter{
+    typedef struct sensorParam{
         String id;//
         String unit;//unit
         float value;
@@ -23,18 +23,18 @@ const char LOW_ALARM = 2;
         unsigned char _alfaEma;//alfa for EMA Filter (0 - 100) in percentage
         boolean highAlarm = false;
         boolean lowAlarm = false;
-    }parameter;
+    }sensorParam;
 
     class FireSensor{
         public:
             FireSensor(char);
             unsigned char Init();
-            void setParameter(parameter*);
-            parameter *getParameter();
+            void setParameter(sensorParam*);
+            sensorParam *getParameter();
             char getStatus();
             String toString();
         private:
-            parameter   *_parameter;
+            sensorParam   *_sensorParam;
             char _pin;
 
     };

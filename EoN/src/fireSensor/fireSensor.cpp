@@ -7,23 +7,23 @@
 
 FireSensor::FireSensor(char pin):_pin(pin){}
 
-void FireSensor::setParameter(parameter *param){
-    _parameter = param;
+void FireSensor::setParameter(sensorParam *param){
+    _sensorParam = param;
 }
 
-parameter *FireSensor::getParameter(){
-    return _parameter;
+sensorParam *FireSensor::getParameter(){
+    return _sensorParam;
 }
 
 String FireSensor::toString(){
-  String str = _parameter->id;
+  String str = _sensorParam->id;
   String alm = "(N)";
   str =  String(str + " ");
-  str =  String(str + _parameter->unit);
-  if (_parameter->lowAlarm){
+  str =  String(str + _sensorParam->unit);
+  if (_sensorParam->lowAlarm){
     alm = "(L)";
   }
-  if (_parameter->highAlarm){
+  if (_sensorParam->highAlarm){
     alm = "(H)";
   }
   str =  String(str + alm);
@@ -32,10 +32,10 @@ String FireSensor::toString(){
 
 char FireSensor::getStatus(){
     char sts = NORMAL;
-    if (_parameter->lowAlarm){
+    if (_sensorParam->lowAlarm){
         sts = LOW_ALARM;
     }
-    if (_parameter->highAlarm){
+    if (_sensorParam->highAlarm){
         sts = HIGH_ALARM;
     }
     return sts;

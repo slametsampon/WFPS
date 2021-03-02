@@ -12,7 +12,7 @@ FireSensor  sensorZone1(PIN_SENSOR);
 
 void setup(){
     Serial.begin(9600);
-    parameter param;
+    sensorParam param;
     Serial.println("FireSensor-setupParameter");
 
     //fire Zone1.
