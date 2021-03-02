@@ -6,7 +6,7 @@
 #define KeyPad_h
 
 #include "Arduino.h"
-#include "command.h"
+#include "src\command\command.h"
 
 const int DEBOUNCE_DELAY = 100;//milli second
 

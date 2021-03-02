@@ -7,7 +7,7 @@ modified on 28 Feb 2021, for OOP and MVC
 #include <RTClib.h>
 
 //Library yang dibuat sendiri lihat file KeyPad.h dan KeyPad.cpp
-#include "SequenceTimer.h"
+#include "src\sequenceTimer\sequenceTimer.h"
 #include "Model.h"//part of MVC pattern, see Model.h
 #include "View.h"//part of MVC pattern, see View.h
 #include "Controller.h"//part of MVC pattern, see Controller.h

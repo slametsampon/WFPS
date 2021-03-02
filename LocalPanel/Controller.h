@@ -10,7 +10,7 @@
 #include "Model.h"
 #include "View.h"
 #include "KeyPad.h"
-#include "command.h"
+#include "src\command\command.h"
 
 const int MODE_MENU_UTAMA = 1;
 const int MODE_MENU_PARAMETER = 2;
