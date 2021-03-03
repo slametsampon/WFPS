@@ -2,12 +2,13 @@
     It is just for testing only
 */
 
-#include "ledExt.h"
-LedExt blinkTest(LED_BUILTIN);
+#include "DigitalOutput.h"
+
+DigitalOutput blinkTest(LED_BUILTIN);
 
 void setup() {
     Serial.begin(115200);
-    blinkTest.init();
+    blinkTest.init(REVERSE_DO);
     Serial.println(blinkTest.info());
 }
 

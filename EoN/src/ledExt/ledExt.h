@@ -8,15 +8,17 @@
 
   class LedExt{
     public:
-      LedExt(char);
+      LedExt(int);
       void init();
       void on();
       void off();
       void blink(unsigned long);
+      String info();
 
     private:
       unsigned long  _prevMilli;//in milli second
-      char  _pin;
+      int  _pin;
+      String  _id;
   };
 
 #endif

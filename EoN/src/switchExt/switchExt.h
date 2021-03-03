@@ -19,11 +19,13 @@
 
     class SwitchExt : public Device{
         public: 
-            SwitchExt(char pin);   
+            SwitchExt(int pin);   
             void init();
             boolean isStatus(unsigned long);
+            String info();
         private:
-            char  _pin;
+            int  _pin;
             unsigned long  _prevMilli;
+            String  _id;
     };
 #endif

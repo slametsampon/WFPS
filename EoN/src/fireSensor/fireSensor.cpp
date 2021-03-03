@@ -15,7 +15,7 @@ sensorParam *FireSensor::getParameter(){
     return _sensorParam;
 }
 
-String FireSensor::toString(){
+String FireSensor::info(){
   String str = _sensorParam->id;
   String alm = "(N)";
   str =  String(str + " ");
@@ -41,3 +41,12 @@ char FireSensor::getStatus(){
     return sts;
 }
 
+float FireSensor::getValue(){
+	unsigned long tempVal, pv;
+		//calculate for EMA filter
+		tempVal = (analogRead(_pin)*_sensorParam->_alfaEma + (100-_sensorParam->_alfaEma)*_PV_Raw)/100;
+
+		_PV_Raw = tempVal;// after filtering
+		pv = map(tempVal,0, 1023,_sensorParam->lowRange , _sensorParam->highRange);
+	return pv;
+}

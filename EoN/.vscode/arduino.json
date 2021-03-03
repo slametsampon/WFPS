@@ -1,7 +1,8 @@
 {
-    "board": "arduino:avr:nano",
-    "configuration": "cpu=atmega328old",
-    "output": "build",
-    "sketch": "EoN.ino",
-    "port": "COM7"
+    "board": "arduino:avr:mega",
+    "configuration": "cpu=atmega2560",
+    "output": "src\\build",
+    "sketch": "src\\switchExt\\switchExt.ino",
+    "port": "COM7",
+    "programmer": "AVRISP mkII"
 }
