@@ -1,7 +1,11 @@
 #include "src\ledExt\ledExt.h"
+#include "src\fireSensor\fireSensor.h"
 #include "src\sequenceTimer\sequenceTimer.h"
 #include "pbAMR.h"
 #include "ledAMR.h"
+#include "FPSys.h"
+
+#define PIN_SENSOR  A0
 
 const char PIN_PB_AUTO = 2;
 const char PIN_PB_MANUAL = 3;
@@ -10,6 +14,8 @@ const char PIN_PB_RESET = 4;
 const char PIN_LED_AUTO = 5;
 const char PIN_LED_MANUAL = 6;
 const char PIN_LED_RESET = 7;
+
+SequenceTimer SequenceMain("Sequence");
 
 SwitchExt pbAuto(PIN_PB_AUTO);//use pin PIN_PB_AUTO for P/B
 SwitchExt pbManual(PIN_PB_MANUAL);//use pin PIN_PB_MANUAL for P/B
@@ -23,13 +29,22 @@ LedExt lifeLed(LED_BUILTIN);
 PbAMR pbAmr(&pbAuto, &pbManual, &pbReset);
 LedAMR ledAmr(&ledAuto, &ledManual, &ledReset);
 
-SequenceTimer SequenceMain("Sequence");
+FireSensor  fireSensor(PIN_SENSOR);
+FPSys   fpSys("Fire System");
 
 void setup() {
 
     Serial.begin(115200);
 
     initPbLed();
+    initSensor();
+
+    fpSys.attachLedAMR(&ledAmr);
+    fpSys.attachPbAMR(&pbAmr);
+    fpSys.attachFireSensor(&fireSensor);
+
+    fpSys.info();
+
     oneShootLed();
 }
 
@@ -72,4 +87,19 @@ void oneShootLed(){
     ledAuto.off();
     ledManual.off();
     ledReset.off();
+}
+
+void initSensor(){
+    sensorParam param;
+    Serial.println("EoN : initSensor()");
+
+    //fire Zone1.
+    param.id = "Smoke-1";
+    param.unit = "%";
+    param.highRange = 100;
+    param.lowRange = 0;
+    param.highLimit = 80;
+    param.lowLimit = 40;
+
+    fireSensor.setParameter(&param);
 }
