@@ -36,33 +36,32 @@ char PbAMR::getCmd(unsigned long debounceTime){
     return cmd;
 }
 
-void PbAMR::info(){
-    if(!_isInfo){
-        _isInfo = true;
-        switch (_prevCmd)
-        {
-        case PB_AUTO:
-            Serial.println("PB : Auto");
-            break;
-        
-        case PB_MANUAL:
-            Serial.println("PB : Manual");
-            break;
-        
-        case PB_MANUAL_ON:
-            Serial.println("PB : Manual ON");
-            break;
-        
-        case PB_READY:
-            Serial.println("PB : Ready");
-            break;
-        
-        case PB_RESET:
-            Serial.println("PB : Reset");
-            break;
-        
-        default:
-            break;
-        }
+String PbAMR::info(){
+    String str = "NO_PB";
+    switch (_prevCmd)
+    {
+    case PB_AUTO:
+        str = "PB : Auto";
+        break;
+    
+    case PB_MANUAL:
+        str = "PB : Manual";
+        break;
+    
+    case PB_MANUAL_ON:
+        str = "PB : Manual ON";
+        break;
+    
+    case PB_READY:
+        str = "PB : Ready";
+        break;
+    
+    case PB_RESET:
+        str = "PB : Reset";
+        break;
+    
+    default:
+        break;
     }
+    return str;
 }

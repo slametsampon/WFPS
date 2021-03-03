@@ -18,6 +18,7 @@ void setup(){
     //fire Zone1.
     param.id = "Smoke-1";
     param.unit = "%";
+    param.alfaEma = 80;//in %
     param.highRange = 100;
     param.lowRange = 0;
     param.highLimit = 80;

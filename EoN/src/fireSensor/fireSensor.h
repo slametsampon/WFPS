@@ -20,7 +20,7 @@ const char LOW_ALARM = 2;
         float lowRange;
         float highLimit;//for alarm high
         float lowLimit;//for alarm low
-        unsigned char _alfaEma;//alfa for EMA Filter (0 - 100) in percentage
+        unsigned int alfaEma;//alfa for EMA Filter (0 - 100) in percentage
         boolean highAlarm = false;
         boolean lowAlarm = false;
     }sensorParam;
@@ -32,13 +32,13 @@ const char LOW_ALARM = 2;
             void setParameter(sensorParam*);
             sensorParam *getParameter();
             char getStatus();
+            String toString();
             String info();
             float getValue();
         private:
             sensorParam   *_sensorParam;
             char _pin;
             unsigned int _PV_Raw;
-            unsigned char _alfaEma;//alfa for EMA Filter (0 - 100) in percentage
     };
 
 #endif
