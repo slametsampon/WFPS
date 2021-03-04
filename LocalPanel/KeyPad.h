@@ -8,7 +8,7 @@
 #include "Arduino.h"
 #include "src\command\command.h"
 
-const int DEBOUNCE_DELAY = 100;//milli second
+const int DEBOUNCE_DELAY = 150;//milli second
 
 class KeyPad : public command{
   public:

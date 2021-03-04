@@ -94,8 +94,8 @@ int Controller::_turunkanIndex(){
         return _menuIndex;
         break;
       case MODE_MENU_PARAMETER:
-        if (_paramIndex < PARAMETER_INCREMENT) _paramIndex--;
-        else _paramIndex = PARAMETER_VALUE;
+        if (_paramIndex > PARAMETER_VALUE) _paramIndex--;
+        else _paramIndex = PARAMETER_INCREMENT;
         return _paramIndex;
         break;
       case MODE_UBAH_PARAMETER:
@@ -133,7 +133,7 @@ void Controller::_kirimMenu(int index){
   }
 
 void Controller::_tampilkanParameter(parameter dataParam, int index){
-  String paramStr;
+  //String paramStr;
   boolean isUpdate = false;
 
   //check if display need to be updated
@@ -161,39 +161,33 @@ void Controller::_tampilkanParameter(parameter dataParam, int index){
     switch (index)
     {
     case PARAMETER_VALUE:
-      paramStr = "Value : ";
-      paramStr =  String(paramStr + dataParam.value);
-      _view->tampilkanPesan(1,0,paramStr);//pesan pada baris 2
+      _view->tampilkanPesan(1,0,"Value : ");//pesan pada baris 2
+      _view->tampilkanPesan(1,8,String(dataParam.value));//pesan pada baris 2
       break;
     
     case PARAMETER_LOW_RANGE:
-      paramStr = "LoRng : ";
-      paramStr =  String(paramStr + dataParam.lowRange);
-      _view->tampilkanPesan(1,0,paramStr);//pesan pada baris 2
+      _view->tampilkanPesan(1,0,"LoRng : ");//pesan pada baris 2
+      _view->tampilkanPesan(1,8,String(dataParam.lowRange));//pesan pada baris 2
       break;
     
     case PARAMETER_HIGH_RANGE:
-      paramStr = "HiRng : ";
-      paramStr =  String(paramStr + dataParam.highRange);
-      _view->tampilkanPesan(1,0,paramStr);//pesan pada baris 2
+      _view->tampilkanPesan(1,0,"HiRng : ");//pesan pada baris 2
+      _view->tampilkanPesan(1,8,String(dataParam.highRange));//pesan pada baris 2
       break;
     
     case PARAMETER_LOW_LIMIT:
-      paramStr = "LoLmt : ";
-      paramStr =  String(paramStr + dataParam.lowLimit);
-      _view->tampilkanPesan(1,0,paramStr);//pesan pada baris 2
+      _view->tampilkanPesan(1,0,"LoLmt : ");//pesan pada baris 2
+      _view->tampilkanPesan(1,8,String(dataParam.lowLimit));//pesan pada baris 2
       break;
     
     case PARAMETER_HIGH_LIMIT:
-      paramStr = "HiLmt : ";
-      paramStr =  String(paramStr + dataParam.highLimit);
-      _view->tampilkanPesan(1,0,paramStr);//pesan pada baris 2
+      _view->tampilkanPesan(1,0,"HiLmt : ");//pesan pada baris 2
+      _view->tampilkanPesan(1,8,String(dataParam.highLimit));//pesan pada baris 2
       break;
     
     case PARAMETER_INCREMENT:
-      paramStr = "Incr : ";
-      paramStr =  String(paramStr + dataParam.increment);
-      _view->tampilkanPesan(1,0,paramStr);//pesan pada baris 2
+      _view->tampilkanPesan(1,0,"Incr : ");//pesan pada baris 2
+      _view->tampilkanPesan(1,8,String(dataParam.increment));//pesan pada baris 2
       break;
     
     default:
@@ -334,6 +328,7 @@ void Controller::_menuUtama(char key){
           if (menuData.hasParameter){
             _modeMenu = MODE_MENU_PARAMETER;
             this->_paramIndex = PARAMETER_VALUE;
+            this->menu();
           }
           else{
             keyStr = "Right ";
@@ -383,11 +378,12 @@ void Controller::_menuParameter(parameter paramData, char key){
         //kembali ke menu utama
         _modeMenu = MODE_MENU_UTAMA;
         this->_menuIndex = 0;
-        //this->_menuUtama(NO_KEY);
+        this->menu();
         break;
       case 'R':
         //ke menu ubah parameter
         _modeMenu = MODE_UBAH_PARAMETER;
+        this->menu();
         //this->_menuUbahParameter(paramData, NO_KEY);
         break;
       case 'N':
@@ -414,7 +410,7 @@ void Controller::_menuUbahParameter(parameter paramData, char key){
       case 'U':
         //Naikkan parameter
         idx = this->_paramIndex;
-        paramData = this->_accessParameter->increaseParameter(paramData,idx);
+        //paramData = this->_accessParameter->increaseParameter(paramData,idx);
         this->_isParamChanged = true;
         this->_isSaved = true;//true is need to be saved
         this->_kirimParameter(paramData, idx);//kirim parameter ke serial port
@@ -423,7 +419,7 @@ void Controller::_menuUbahParameter(parameter paramData, char key){
       case 'D':
         //turunkan parameter
         idx = this->_paramIndex;
-        paramData = this->_accessParameter->decreaseParameter(paramData,idx);
+        //paramData = this->_accessParameter->decreaseParameter(paramData,idx);
         this->_isParamChanged = true;
         this->_isSaved = true;//true is need to be saved
         this->_kirimParameter(paramData, idx);//kirim parameter ke serial port
@@ -432,6 +428,8 @@ void Controller::_menuUbahParameter(parameter paramData, char key){
       case 'L':
         //kembali ke menu utama
         _modeMenu = MODE_MENU_PARAMETER;
+        this->_paramIndex = PARAMETER_VALUE;
+        this->menu();
         //this->_menuParameter(paramData, NO_KEY);
         break;
       case 'R':

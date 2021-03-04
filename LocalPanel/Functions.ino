@@ -10,60 +10,60 @@ void setupParameter(){
   param.id = "Smoke-1";
   param.unit = "%";
   param.indexMenu = 1;
+  param.value = 51;
   param.highRange = 100;
   param.lowRange = 0;
   param.highLimit = 80;
   param.lowLimit = 40;
-  accessParameter.add(param);
-
-  //fire Zone1.
-  param.id = "Smoke-1";
-  param.unit = "%";
-  param.indexMenu = 1;
-  param.highRange = 100;
-  param.lowRange = 0;
-  param.highLimit = 80;
-  param.lowLimit = 40;
+  param.increment = 1.1;
   accessParameter.add(param);
 
   //fire Zone1.
   param.id = "Smoke-2";
   param.unit = "%";
   param.indexMenu = 2;
+  param.value = 32;
   param.highRange = 100;
   param.lowRange = 0;
   param.highLimit = 80;
   param.lowLimit = 40;
+  param.increment = 2;
   accessParameter.add(param);
 
   //fire Zone1.
   param.id = "Smoke-3";
   param.unit = "%";
   param.indexMenu = 3;
+  param.value = 83;
   param.highRange = 100;
   param.lowRange = 0;
   param.highLimit = 80;
   param.lowLimit = 40;
+  param.increment = 23;
   accessParameter.add(param);
 
   //fire Zone1.
   param.id = "Smoke-4";
   param.unit = "%";
   param.indexMenu = 4;
+  param.value = 64;
   param.highRange = 100;
   param.lowRange = 0;
   param.highLimit = 80;
   param.lowLimit = 40;
+  param.increment = 4;
   accessParameter.add(param);
 
   //fire Zone1.
   param.id = "Smoke-5";
   param.unit = "%";
   param.indexMenu = 5;
+  param.value = 95;
   param.highRange = 100;
   param.lowRange = 0;
   param.highLimit = 80;
   param.lowLimit = 40;
+  param.increment = 15;
   accessParameter.add(param);
 }
 
