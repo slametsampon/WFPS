@@ -25,7 +25,7 @@ const boolean REVERSE_DO= false;
       //typical for DO
       void on();
       void off();
-      void blink(unsigned long);
+      //void blink(unsigned long);
     private:
       int  _pin;
       String _id;
