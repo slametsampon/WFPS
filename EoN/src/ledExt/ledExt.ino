@@ -7,6 +7,7 @@ LedExt blinkTest(LED_BUILTIN);
 
 void setup() {
     Serial.begin(115200);
+    delay(500);
     blinkTest.init();
     Serial.println(blinkTest.info());
 }

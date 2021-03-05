@@ -9,13 +9,13 @@
 
 #define PIN_SENSOR  A0
 
-const int PIN_PB_AUTO = 2;
-const int PIN_PB_MANUAL = 2;
-const int PIN_PB_RESET = 3;
+const int PIN_PB_AUTO = 4;
+const int PIN_PB_MANUAL = 5;
+const int PIN_PB_RESET = 6;
 
-const int PIN_LED_AUTO = 4;
-const int PIN_LED_MANUAL = 5;
-const int PIN_LED_RESET = 6;
+const int PIN_LED_AUTO = 2;
+const int PIN_LED_MANUAL = 2;
+const int PIN_LED_RESET = 3;
 
 const int PIN_SOLENOID_VALVE = 7;
 
@@ -25,14 +25,14 @@ SwitchExt pbAuto(PIN_PB_AUTO);//use pin PIN_PB_AUTO for P/B
 SwitchExt pbManual(PIN_PB_MANUAL);//use pin PIN_PB_MANUAL for P/B
 SwitchExt pbReset(PIN_PB_RESET);//use pin PIN_PB_RESET for P/B
 
-LedExt ledAuto(PIN_LED_AUTO);
-LedExt ledManual(PIN_LED_MANUAL);
-LedExt ledReset(PIN_LED_RESET);
+//LedExt ledAuto(PIN_LED_AUTO);
+//LedExt ledManual(PIN_LED_MANUAL);
+//LedExt ledReset(PIN_LED_RESET);
 LedExt lifeLed(LED_BUILTIN);
 DigitalOutput   solenoidValve(PIN_SOLENOID_VALVE);
 
 PbAMR pbAmr(&pbAuto, &pbManual, &pbReset);
-LedAMR ledAmr(&ledAuto, &ledManual, &ledReset);
+//LedAMR ledAmr(&ledAuto, &ledManual, &ledReset);
 
 FireSensor  fireSensor(PIN_SENSOR);
 FPSys   fpSys("Fire System");
@@ -44,14 +44,13 @@ void setup() {
     initPbLed();
     initSensor();
 
-    fpSys.attachLedAMR(&ledAmr);
-    fpSys.attachPbAMR(&pbAmr);
+    //fpSys.attachLedAMR(&ledAmr);
+    //fpSys.attachPbAMR(&pbAmr);
     fpSys.attachFireSensor(&fireSensor);
     fpSys.attachSolenoidValve(&solenoidValve);
 
     fpSys.info();
 
-    oneShootLed();
 }
 
 // the loop function runs over and over again forever
@@ -69,30 +68,25 @@ void loop() {
 
 void initPbLed(){
     Serial.println("EoN : initPbLed()");
-    //initialization switch
-    pbAuto.init();
-    pbManual.init();
-    pbReset.init();
-
     //initialization LED's
+    Serial.println("EoN : initPbLed()-lifeLed");
     lifeLed.init();
+    //initialization switch
+    //Serial.println("EoN : initPbLed()-pbAuto");
+    //pbAuto.init();
+    //Serial.println("EoN : initPbLed()-pbManual");
+    //pbManual.init();
+    //Serial.println("EoN : initPbLed()-pbReset");
+    //pbReset.init();
+
+    /*
+    Serial.println("EoN : initPbLed()-ledAuto");
     ledAuto.init();
+    Serial.println("EoN : initPbLed()-ledManual");
     ledManual.init();
+    Serial.println("EoN : initPbLed()-ledReset");
     ledReset.init();
-}
-
-void oneShootLed(){
-    Serial.println("EoN : oneShootLed()");
-    //one shoot
-    ledAuto.on();
-    ledManual.on();
-    ledReset.on();
-
-    delay(1000);
-
-    ledAuto.off();
-    ledManual.off();
-    ledReset.off();
+    */
 }
 
 void initSensor(){
