@@ -25,3 +25,13 @@ void FPSys::attachFireSensor(FireSensor *fireSensor){
     Serial.println("FPSys::attachFireSensor(FireSensor *fireSensor)");
     _fireSensor = fireSensor;
 }
+
+void FPSys::operationLogic(int modeOper){
+
+}
+
+int FPSys::_getInput(){
+    int cmd;
+    
+    return cmd;
+}

@@ -8,8 +8,8 @@
 
 PbAMR::PbAMR(SwitchExt *pbAuto, SwitchExt *pbManual, SwitchExt *pbReset): _pbAuto(pbAuto), _pbManual(pbManual), _pbReset(pbReset){}
 
-char PbAMR::getCmd(unsigned long debounceTime){
-    char cmd;
+int PbAMR::getCmd(unsigned long debounceTime){
+    int cmd;
     if (_pbReset->isStatus(debounceTime)){
       if (_prevCmd == PB_RESET) cmd = PB_READY;//highest priority
       else if (_prevCmd == PB_READY) cmd = PB_READY;//highest priority

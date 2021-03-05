@@ -28,7 +28,7 @@ const char LOW_ALARM = 2;
     class FireSensor{
         public:
             FireSensor(char);
-            unsigned char Init();
+            void Init();
             void setParameter(sensorParam*);
             sensorParam *getParameter();
             char getStatus();

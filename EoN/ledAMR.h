@@ -12,11 +12,11 @@
 #ifndef ledAMR_h
 #define ledAMR_h
 
-const char LED_READY = 0;
-const char LED_AUTO = 1;
-const char LED_MANUAL = 2;
-const char LED_MANUAL_ON = 3;
-const char LED_RESET = 4;
+const int LED_READY = 0;
+const int LED_AUTO = 1;
+const int LED_MANUAL = 2;
+const int LED_MANUAL_ON = 3;
+const int LED_RESET = 4;
 //const unsigned long DEBOUNCE_PB = 150;//milli second
 
 #include "Arduino.h"
@@ -25,7 +25,7 @@ const char LED_RESET = 4;
     class LedAMR{
         public:
             LedAMR(LedExt *ledAuto, LedExt *ledManual, LedExt *ledReset): _ledAuto(ledAuto), _ledManual(ledManual), _ledReset(ledReset){}
-            void info(char state){
+            void info(int state){
                 switch (state){
                 case LED_AUTO:
                     _ledAuto->on();

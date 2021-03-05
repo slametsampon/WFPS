@@ -7,13 +7,13 @@
 
 #define PIN_SENSOR  A0
 
-const char PIN_PB_AUTO = 2;
-const char PIN_PB_MANUAL = 3;
-const char PIN_PB_RESET = 4;
+const int PIN_PB_AUTO = 2;
+const int PIN_PB_MANUAL = 3;
+const int PIN_PB_RESET = 4;
 
-const char PIN_LED_AUTO = 5;
-const char PIN_LED_MANUAL = 6;
-const char PIN_LED_RESET = 7;
+const int PIN_LED_AUTO = 5;
+const int PIN_LED_MANUAL = 6;
+const int PIN_LED_RESET = 7;
 
 SequenceTimer SequenceMain("Sequence");
 

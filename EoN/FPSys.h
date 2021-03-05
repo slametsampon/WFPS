@@ -21,11 +21,13 @@
             void attachLedAMR(LedAMR*);
             void attachPbAMR(PbAMR*);
             void attachFireSensor(FireSensor*);
+            void operationLogic(int);
         private:
             LedAMR *_ledAMR;
             PbAMR *_pbAMR;
             FireSensor *_fireSensor;
             String  _id;
+            int _getInput();
     };
 
 #endif
