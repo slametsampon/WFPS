@@ -24,7 +24,8 @@ const int PB_RESET = 4;
         public:
             PbAMR(SwitchExt*, SwitchExt*, SwitchExt*);
             int getCmd(unsigned long);
-            String info();
+            String status();
+            void info();
         private:
             SwitchExt *_pbAuto, *_pbManual, *_pbReset;
             int    _prevCmd;

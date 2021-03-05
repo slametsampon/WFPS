@@ -5,7 +5,7 @@
 
 #include    "fireSensor.h"
 
-FireSensor::FireSensor(char pin):_pin(pin){}
+FireSensor::FireSensor(int pin):_pin(pin){}
 
 void FireSensor::setParameter(sensorParam *param){
     _sensorParam = param;
@@ -66,8 +66,8 @@ String FireSensor::info(){
 
 }
 
-char FireSensor::getStatus(){
-    char sts = NORMAL;
+int FireSensor::getStatus(){
+    int sts = NORMAL;
     if (_sensorParam->lowAlarm){
         sts = LOW_ALARM;
     }
@@ -77,12 +77,13 @@ char FireSensor::getStatus(){
     return sts;
 }
 
-float FireSensor::getValue(){
+//measure and putting in _sensorParam
+void FireSensor::getValue(){
 	unsigned long tempVal, pv;
 		//calculate for EMA filter
 		tempVal = (analogRead(_pin)*_sensorParam->alfaEma + (100-_sensorParam->alfaEma)*_PV_Raw)/100;
 
 		_PV_Raw = tempVal;// after filtering
 		pv = map(tempVal,0, 1023,_sensorParam->lowRange , _sensorParam->highRange);
-	return pv;
+    _sensorParam->value = pv;
 }

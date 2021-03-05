@@ -7,9 +7,9 @@
 
 #include "Arduino.h"
 
-const char NORMAL = 0;
-const char HIGH_ALARM = 1;
-const char LOW_ALARM = 2;
+const int NORMAL = 0;
+const int HIGH_ALARM = 1;
+const int LOW_ALARM = 2;
 
     typedef struct sensorParam{
         String id;//
@@ -27,17 +27,17 @@ const char LOW_ALARM = 2;
 
     class FireSensor{
         public:
-            FireSensor(char);
+            FireSensor(int);
             void Init();
             void setParameter(sensorParam*);
             sensorParam *getParameter();
-            char getStatus();
+            int getStatus();
             String toString();
             String info();
-            float getValue();
+            void getValue();
         private:
             sensorParam   *_sensorParam;
-            char _pin;
+            int _pin;
             unsigned int _PV_Raw;
     };
 

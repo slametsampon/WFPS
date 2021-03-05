@@ -13,20 +13,28 @@
 #include "ledAMR.h"
 #include "pbAMR.h"
 #include "src\fireSensor\fireSensor.h"
+#include "src\digitalOutput\DigitalOutput.h"
 
     class FPSys{
+        
         public:
             FPSys(String);
             void info();
             void attachLedAMR(LedAMR*);
             void attachPbAMR(PbAMR*);
             void attachFireSensor(FireSensor*);
-            void operationLogic(int);
+            void attachSolenoidValve(DigitalOutput*);
+            void execute();
+
         private:
+            String  _id;
+
             LedAMR *_ledAMR;
             PbAMR *_pbAMR;
             FireSensor *_fireSensor;
-            String  _id;
+            DigitalOutput   *_solenoidValve;
+
+            int _operationMode;
             int _getInput();
     };
 

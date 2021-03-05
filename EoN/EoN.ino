@@ -1,6 +1,8 @@
+#include "src\sequenceTimer\sequenceTimer.h"
 #include "src\ledExt\ledExt.h"
 #include "src\fireSensor\fireSensor.h"
-#include "src\sequenceTimer\sequenceTimer.h"
+#include "src\digitalOutput\DigitalOutput.h"
+
 #include "pbAMR.h"
 #include "ledAMR.h"
 #include "FPSys.h"
@@ -8,12 +10,14 @@
 #define PIN_SENSOR  A0
 
 const int PIN_PB_AUTO = 2;
-const int PIN_PB_MANUAL = 3;
-const int PIN_PB_RESET = 4;
+const int PIN_PB_MANUAL = 2;
+const int PIN_PB_RESET = 3;
 
-const int PIN_LED_AUTO = 5;
-const int PIN_LED_MANUAL = 6;
-const int PIN_LED_RESET = 7;
+const int PIN_LED_AUTO = 4;
+const int PIN_LED_MANUAL = 5;
+const int PIN_LED_RESET = 6;
+
+const int PIN_SOLENOID_VALVE = 7;
 
 SequenceTimer SequenceMain("Sequence");
 
@@ -25,6 +29,7 @@ LedExt ledAuto(PIN_LED_AUTO);
 LedExt ledManual(PIN_LED_MANUAL);
 LedExt ledReset(PIN_LED_RESET);
 LedExt lifeLed(LED_BUILTIN);
+DigitalOutput   solenoidValve(PIN_SOLENOID_VALVE);
 
 PbAMR pbAmr(&pbAuto, &pbManual, &pbReset);
 LedAMR ledAmr(&ledAuto, &ledManual, &ledReset);
@@ -42,6 +47,7 @@ void setup() {
     fpSys.attachLedAMR(&ledAmr);
     fpSys.attachPbAMR(&pbAmr);
     fpSys.attachFireSensor(&fireSensor);
+    fpSys.attachSolenoidValve(&solenoidValve);
 
     fpSys.info();
 
@@ -56,9 +62,9 @@ void loop() {
     if(SequenceMain.isASecondEvent()){
         //put process every second
     }
+
+    fpSys.execute();
     
-    ledAmr.info(pbAmr.getCmd(500));//debounce time in milli second
-    pbAmr.info();
 }
 
 void initPbLed(){

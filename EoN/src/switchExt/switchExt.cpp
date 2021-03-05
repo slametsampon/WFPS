@@ -43,8 +43,8 @@ String SwitchExt::info(){
   str = String(str + "\n");//new line
 
   str = String(str + "Value : ");
-  if (digitalRead(_pin)) str = String(str + "On");
-  else str = String(str + "Off");
+  if (digitalRead(_pin)) str = String(str + "On \n");//with new line
+  else str = String(str + "Off \n");//with new line
 
   return str;
 }

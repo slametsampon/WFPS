@@ -25,7 +25,8 @@ const int LED_RESET = 4;
     class LedAMR{
         public:
             LedAMR(LedExt *ledAuto, LedExt *ledManual, LedExt *ledReset): _ledAuto(ledAuto), _ledManual(ledManual), _ledReset(ledReset){}
-            void info(int state){
+            
+            void status(int state){
                 switch (state){
                 case LED_AUTO:
                     _ledAuto->on();
@@ -60,6 +61,22 @@ const int LED_RESET = 4;
                 default:
                     break;
                 }
+            }
+
+            void  info(){
+                String str;
+                str = String("_ledAuto \n");//with new line
+                str = String(str + _ledAuto->info());
+                Serial.println(str);
+
+                str = String("_ledManual \n");//with new line
+                str = String(str + _ledManual->info());
+                Serial.println(str);
+                
+                str = String("_ledReset \n");//with new line
+                str = String(str + _ledReset->info());
+                Serial.println(str);
+                
             }
         private:
             LedExt *_ledAuto, *_ledManual, *_ledReset;

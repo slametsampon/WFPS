@@ -18,7 +18,9 @@
                 "C:\\Users\\Hp\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\2.6.3\\**",
                 "C:\\Users\\Hp\\AppData\\Local\\Arduino15\\packages\\esp8266\\tools\\**"
             ],
-            "forcedInclude": [],
+            "forcedInclude": [
+                "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino\\Arduino.h"
+            ],
             "defines": [
                 "USBCON"
             ],

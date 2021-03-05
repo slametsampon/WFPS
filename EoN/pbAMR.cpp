@@ -36,7 +36,7 @@ int PbAMR::getCmd(unsigned long debounceTime){
     return cmd;
 }
 
-String PbAMR::info(){
+String PbAMR::status(){
     String str = "NO_PB";
     switch (_prevCmd)
     {
@@ -64,4 +64,20 @@ String PbAMR::info(){
         break;
     }
     return str;
+}
+
+void PbAMR::info(){
+    String str;
+    str = String("_pbAuto \n");//with new line
+    str = String(str + _pbAuto->info());
+    Serial.println(str);
+
+    str = String("_pbManual \n");//with new line
+    str = String(str + _pbManual->info());
+    Serial.println(str);
+    
+    str = String("_pbReset \n");//with new line
+    str = String(str + _pbReset->info());
+    Serial.println(str);
+    
 }
