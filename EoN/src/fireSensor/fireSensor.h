@@ -27,17 +27,17 @@ const int LOW_ALARM = 2;
 
     class FireSensor{
         public:
-            FireSensor(int);
+            FireSensor(char);
             void Init();
             void setParameter(sensorParam*);
             sensorParam *getParameter();
             int getStatus();
             String toString();
-            String info();
+            void info();
             void getValue();
         private:
             sensorParam   *_sensorParam;
-            int _pin;
+            char _pin;
             unsigned int _PV_Raw;
     };
 

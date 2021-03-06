@@ -5,7 +5,7 @@
 
 #include    "fireSensor.h"
 
-FireSensor::FireSensor(int pin):_pin(pin){}
+FireSensor::FireSensor(char pin):_pin(pin){}
 
 void FireSensor::setParameter(sensorParam *param){
     _sensorParam = param;
@@ -30,39 +30,31 @@ String FireSensor::toString(){
   return str;
 }
 
-String FireSensor::info(){
+void FireSensor::info(){
   String str;
   str = String("Device : " + _sensorParam->id);
-  str = String(str + "\n");//new line
+  Serial.println(str);
 
-  str = String(str + "Pin : ");
-  str = String(str + _pin);
-  str = String(str + "\n");//new line
+  str = String("Pin : " + _pin);
+  Serial.println(str);
 
-  str = String(str + "Unit : ");
-  str = String(str + _sensorParam->unit);
-  str = String(str + "\n");//new line
+  str = String("Unit : " + _sensorParam->unit);
+  Serial.println(str);
 
-  str = String(str + "High Range : ");
-  str = String(str + _sensorParam->highRange);
-  str = String(str + "\n");//new line
+  str = String("High Range : " + String(_sensorParam->highRange));
+  Serial.println(str);
 
-  str = String(str + "Low Range : ");
-  str = String(str + _sensorParam->lowRange);
-  str = String(str + "\n");//new line
+  str = String("Low Range : " + String(_sensorParam->lowRange));
+  Serial.println(str);
 
-  str = String(str + "High Limit : ");
-  str = String(str + _sensorParam->highLimit);
-  str = String(str + "\n");//new line
+  str = String("High Limit : "+ String(_sensorParam->highLimit));
+  Serial.println(str);
 
-  str = String(str + "Low Lmt : ");
-  str = String(str + _sensorParam->lowLimit);
-  str = String(str + "\n");//new line
+  str = String("Low Lmt : " + String(_sensorParam->lowLimit));
+  Serial.println(str);
 
-  str = String(str + "AlfaEma : ");
-  str = String(str + _sensorParam->alfaEma);
-
-  return str;
+  str = String("AlfaEma : " + String(_sensorParam->alfaEma));
+  Serial.println(str);
 
 }
 
