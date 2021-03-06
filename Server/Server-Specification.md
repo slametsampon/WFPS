@@ -4,6 +4,6 @@
 #### 3. Communication protocol with Eon using MQTT (Message Queuing Telemetry Transport).
 #### 4. Users can also monitor status and changes remotely via the internet network
 
-## [Server - Hardware]()
+## [Server - Hardware](https://github.com/slametsampon/WlFPS/blob/main/Server/Server-HW.jpg)
 
 ## It is part of [WlFPS - Wireless Fire Protection System](https://github.com/slametsampon/WlFPS)

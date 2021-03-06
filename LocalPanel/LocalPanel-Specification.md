@@ -4,6 +4,6 @@
 #### 3. Users can also make changes to parameter settings via the keypad provided locally.
 #### 4. Panel local communication with the server using serial hard-wire.
 
-## [Local Panel - Hardware]()
+## [Local Panel - Hardware](https://github.com/slametsampon/WlFPS/blob/main/LocalPanel/LocalPanel.jpg)
 
 ## It is part of [WlFPS - Wireless Fire Protection System](https://github.com/slametsampon/WlFPS)

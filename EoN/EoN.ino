@@ -1,5 +1,6 @@
 /*
 Pin Function ESP-8266 Pin
+Wemos D1 Mini
 TX TXD TXD
 RX RXD RXD
 A0 Analog in(max 3.3V) A0
@@ -14,7 +15,6 @@ D7 IO, MOSI GPIO13
 D8 IO,pull-down, SS GPIO15
 */
 
-
 #include "src\sequenceTimer\sequenceTimer.h"
 #include "src\ledExt\ledExt.h"
 #include "src\switchExt\switchExt.h"
@@ -24,7 +24,6 @@ D8 IO,pull-down, SS GPIO15
 #include    "pbAMR.h"
 #include    "ledAMR.h"
 #include    "FPSys.h"
-
 
 #define PIN_SENSOR  A0
 
