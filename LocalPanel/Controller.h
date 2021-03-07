@@ -42,6 +42,7 @@ class Controller
     command *_cmdInput[MAX_CMD_INPUT];
     char _prevCmd;
     int _modeMenu = MODE_MENU_UTAMA;
+    boolean _isParamChanged, _isSaved;
 
     void _tampilkanMenu(int);//Tampilkan Menu ke LCD sesuai index-menu
     void _kirimMenu(int);//Kirim Menu ke serial port sesuai index-menu
@@ -54,6 +55,5 @@ class Controller
     void _menuUtama(char);
     void _menuParameter(parameter, char);
     void _menuUbahParameter(parameter, char);
-    boolean _isParamChanged, _isSaved;
 };//end of class
 #endif
