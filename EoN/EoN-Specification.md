@@ -11,4 +11,5 @@
 
 ## [EoN - Hardware](https://github.com/slametsampon/WlFPS/blob/main/EoN/EoN-HW.jpg)
 
+## [EoN - Software](https://github.com/slametsampon/WlFPS/blob/main/EoN/EoN_ClassDiagram.jpg)
 ## It is part of [WlFPS - Wireless Fire Protection System](https://github.com/slametsampon/WlFPS)

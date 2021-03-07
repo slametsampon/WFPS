@@ -28,8 +28,7 @@ const boolean REVERSE_DO= false;
       //void blink(unsigned long);
     private:
       int  _pin;
-      String _id;
-      unsigned long  _prevMilli;
       boolean _actionType;
+      String _id;
   };
 #endif

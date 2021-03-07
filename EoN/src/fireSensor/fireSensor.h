@@ -15,7 +15,6 @@ const int LOW_ALARM = 2;
         String id;//
         String unit;//unit
         float value;
-        float raw;
         float highRange;
         float lowRange;
         float highLimit;//for alarm high

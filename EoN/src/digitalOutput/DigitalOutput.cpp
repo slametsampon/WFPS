@@ -25,14 +25,7 @@ void DigitalOutput::off(){
   if (_actionType == FORWARD_DO) digitalWrite(_pin, LOW);
   else digitalWrite(_pin, HIGH);
 }
-/*
-void DigitalOutput::blink(unsigned long blinkTime){
-    if ((millis() - _prevMilli) >= blinkTime){
-        _prevMilli = millis();
-        digitalWrite( _pin, digitalRead(_pin) ^ 1 );
-    }
-}
-*/
+
 String DigitalOutput::info(){
   String str;
   str = String("Device : " + _id);
