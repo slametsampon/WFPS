@@ -6,4 +6,5 @@
 
 ## [Server - Hardware](https://github.com/slametsampon/WlFPS/blob/main/Server/Server-HW.jpg)
 
+## [Server - Software](https://github.com/slametsampon/WlFPS/blob/main/Server/ServerClassDiagram.jpg)
 ## It is part of [WlFPS - Wireless Fire Protection System](https://github.com/slametsampon/WlFPS)

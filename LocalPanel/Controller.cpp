@@ -298,10 +298,6 @@ void Controller::_menuUtama(char key){
     {
         case 'S':
           //Tempatkan menu di sini
-          keyStr = "Select";
-          _view->tampilkanPesan(0,0,"-Diag LcdKeypad-");//tampilkan pesan pada baris 0, kolom 0              
-          _view->tampilkanPesan(1,0,"Keypad : ");//tampilkan pesan pada baris 1, kolom 0              
-          _view->tampilkanPesan(1,9,keyStr);//tampilkan pesan pada baris 1, kolom 10
           break;
         case 'U':
           //naikkan index
@@ -317,10 +313,6 @@ void Controller::_menuUtama(char key){
           break;
         case 'L':
           //Tempatkan menu di sini
-          keyStr = "Left  ";
-          _view->tampilkanPesan(0,0,"-Diag LcdKeypad-");//tampilkan pesan pada baris 0, kolom 0              
-          _view->tampilkanPesan(1,0,"Keypad : ");//tampilkan pesan pada baris 1, kolom 0              
-          _view->tampilkanPesan(1,9,keyStr);//tampilkan pesan pada baris 1, kolom 10
           break;
         case 'R':
           //ke menu parameter
@@ -330,14 +322,8 @@ void Controller::_menuUtama(char key){
             this->_paramIndex = PARAMETER_VALUE;
             this->menu();
           }
-          else{
-            keyStr = "Right ";
-            _view->tampilkanPesan(0,0,"-Diag LcdKeypad-");//tampilkan pesan pada baris 0, kolom 0              
-            _view->tampilkanPesan(1,0,"Keypad : ");//tampilkan pesan pada baris 1, kolom 0              
-            _view->tampilkanPesan(1,9,keyStr);//tampilkan pesan pada baris 1, kolom 10
-          }
           break;
-        case 'N':
+        case 'N'://No Key
         default:
           break;
     }
@@ -357,10 +343,6 @@ void Controller::_menuParameter(parameter paramData, char key){
     {
       case 'S':
         //Tempatkan menu di sini
-        keyStr = "Select";
-        _view->tampilkanPesan(0,0,"-Diag LcdKeypad-");//tampilkan pesan pada baris 0, kolom 0              
-        _view->tampilkanPesan(1,0,"Keypad : ");//tampilkan pesan pada baris 1, kolom 0              
-        _view->tampilkanPesan(1,9,keyStr);//tampilkan pesan pada baris 1, kolom 10
         break;
       case 'U':
         //Naikkan Index
@@ -386,7 +368,7 @@ void Controller::_menuParameter(parameter paramData, char key){
         this->menu();
         //this->_menuUbahParameter(paramData, NO_KEY);
         break;
-      case 'N':
+      case 'N'://No Key
       default:
         break;
     }
@@ -434,12 +416,8 @@ void Controller::_menuUbahParameter(parameter paramData, char key){
         break;
       case 'R':
         //ke menu ubah parameter
-        keyStr = "Select";
-        _view->tampilkanPesan(0,0,"-Diag LcdKeypad-");//tampilkan pesan pada baris 0, kolom 0              
-        _view->tampilkanPesan(1,0,"Keypad : ");//tampilkan pesan pada baris 1, kolom 0              
-        _view->tampilkanPesan(1,9,keyStr);//tampilkan pesan pada baris 1, kolom 10
         break;
-      case 'N':
+      case 'N'://No Key
       default:
         break;
     }
