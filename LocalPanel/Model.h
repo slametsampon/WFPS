@@ -2,6 +2,32 @@
   Model.h - Library untuk Model
   Ini adalah bagian dari MVC (Model View Control) pattern design
   Dibuat Oleh : Sam Feb 15, 2021
+  JSON
+{
+  "id":"Smoke-1",
+  "unit":"%",
+  "indexMenu":1,
+  "value":51.5,
+  "highRange":100.0,
+  "lowRange":0.0,
+  "highLimit":80.0,
+  "lowLimit":40.0,
+  "increment":1.1
+  }
+
+StaticJsonDocument<96> doc;
+
+doc["id"] = "Smoke-1";
+doc["unit"] = "%";
+doc["indexMenu"] = 1;
+doc["value"] = 51.5;
+doc["highRange"] = 100;
+doc["lowRange"] = 0;
+doc["highLimit"] = 80;
+doc["lowLimit"] = 40;
+doc["increment"] = 1.1;
+
+serializeJson(doc, output);
 */
 #ifndef Model_h
 #define Model_h

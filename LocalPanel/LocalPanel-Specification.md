@@ -5,6 +5,7 @@
 #### 4. Panel local communication with the server using serial hard-wire.
 
 ## [Local Panel - Hardware](https://github.com/slametsampon/WlFPS/blob/main/LocalPanel/LocalPanel.jpg)
+## [Local Panel - Fritzing](https://github.com/slametsampon/WlFPS/blob/main/LocalPanel/LocalPanelFrz.jpg)
 
 ## [Local Panel - Software](https://github.com/slametsampon/WlFPS/blob/main/LocalPanel/LocalPanelClassDiagram.jpg)
 ## It is part of [WlFPS - Wireless Fire Protection System](https://github.com/slametsampon/WlFPS)
