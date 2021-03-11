@@ -4,8 +4,8 @@
 #### 3. Users can also make changes to parameter settings via the keypad provided locally.
 #### 4. Panel local communication with the server using serial hard-wire.
 
-## [Local Panel - Hardware](https://github.com/slametsampon/WlFPS/blob/main/LocalPanel/LocalPanel.jpg)
-## [Local Panel - Fritzing](https://github.com/slametsampon/WlFPS/blob/main/LocalPanel/LocalPanelFrz.jpg)
+## [Local Panel - Hardware](https://github.com/slametsampon/WFPS/blob/main/LocalPanel/LocalPanel.jpg)
+## [Local Panel - Fritzing](https://github.com/slametsampon/WFPS/blob/main/LocalPanel/LocalPanelFrz.jpg)
 
-## [Local Panel - Software](https://github.com/slametsampon/WlFPS/blob/main/LocalPanel/LocalPanelClassDiagram.jpg)
-## It is part of [WlFPS - Wireless Fire Protection System](https://github.com/slametsampon/WlFPS)
+## [Local Panel - Software](https://github.com/slametsampon/WFPS/blob/main/LocalPanel/LocalPanelClassDiagram.jpg)
+## It is part of [WFPS - Wireless Fire Protection System](https://github.com/slametsampon/WFPS)
