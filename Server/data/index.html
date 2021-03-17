@@ -1,47 +1,57 @@
-<!DOCTYPE html>
-<!-- 
-  Rui Santos
-  Complete project details at https://github.com/slametsampon/WFPS/tree/main/Server
--->
-<html>
+<!doctype html>
+<html lang="en">
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+
     <title>WFPS - Wireless Fire Protection System</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="data:,">
-    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="navbar-top-fixed.css" rel="stylesheet">
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <script src="bootstrap.min.js"></script>
   </head>
+
   <body>
-    <h1>WFPS Web Server</h1>
-    <table class="summaryTbl">
-        <caption>Summary</caption>
-      <thead>
-          <tr>
-              <th scope="col">Id</th>
-              <th scope="col">Value</th>
-              <th scope="col">Unit</th>
-              <th scope="col">Alarm</th>
-          </tr>    
-      </thead>
-      <tbody>
-        <tr>
-          <td>Smoke-1</td>
-          <td>75</td>
-          <td>%</td>
-          <td>N</td>
-        </tr>
-        <tr>
-          <td>Smoke-2</td>
-          <td>92</td>
-          <td>%</td>
-          <td>H</td>
-        </tr>
-        <tr>
-          <td>Smoke-3</td>
-          <td>33</td>
-          <td>%</td>
-          <td>L</td>
-        </tr>
-      </tbody>
-    </table> 
+
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="summary.html">Summary</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <br><br><br>
+    <main role="main" class="container">
+      <div class="jumbotron">
+        <h1>WFPS Web Server</h1>
+        <p class="lead">WFPS - Wireless Fire Protection System.</p>
+        <p class="lead">Specifications : </p>
+        <ul>
+          <li>This system is designed wireless and has the ability to be accessed via the internet so that it can be opened from anywhere (as long as there is internet facilities).</li>
+          <li>Local panel can also be used for operational (viewing status, parameter settings change) use a keypad. Here is the LCD to display messages to the user.</li>
+          <li>EoN (Edge of Network) is the node closest to zone where sensors, solenoid valves, push buttons, LEDs are attached for protection purposes.</li>
+          <li>Communication protocol between broker (server) and the sensor / actuator uses MQTT (Message Queuing Telemetry Transport), for internet network uses HTTP (Hypertext Transfer Protocol).</li>
+          <li>This system uses OOP (Object Oriented Programming) approach and uses the MVC (Model-View-Controller) pattern.</li>
+          <li>This approach is taken to make it easier to develop and easy to track if there are problems.</li>
+        </ul>
+      </div>
+    </main>
   </body>
 </html>

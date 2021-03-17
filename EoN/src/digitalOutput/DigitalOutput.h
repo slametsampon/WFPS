@@ -18,8 +18,9 @@ const boolean REVERSE_DO= false;
       //constructor
       DigitalOutput(int pin);  
 
-      //from deviceBase.h 
       void init(boolean);
+      void init(String);
+      void init(boolean, String);
       String info();
 
       //typical for DO

@@ -10,9 +10,23 @@
 DigitalOutput::DigitalOutput(int pin):_pin(pin){}
 
 void DigitalOutput::init(boolean actType){
-  _id = "Digital Output";
   pinMode(_pin, OUTPUT);
 
+  _id = "Digital Output";
+  _actionType = actType;
+}
+
+void DigitalOutput::init(String id){
+  pinMode(_pin, OUTPUT);
+
+  _id = id;
+  _actionType = FORWARD_DO;
+}
+
+void DigitalOutput::init(boolean actType, String id){
+  pinMode(_pin, OUTPUT);
+
+  _id = id;
   _actionType = actType;
 }
 

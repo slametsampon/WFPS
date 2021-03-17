@@ -21,6 +21,7 @@
         public: 
             SwitchExt(int pin);   
             void init();
+            void init(String);
             boolean isStatus(unsigned long);
             String info();
         private:

@@ -13,6 +13,11 @@ void LedExt::init(){
     _id = "LedExt";
 }
 
+void LedExt::init(String id){
+    pinMode(_pin, OUTPUT);
+    _id = id;
+}
+
 void LedExt::on(){
     digitalWrite(_pin, HIGH);//reverse due to pull up
 }

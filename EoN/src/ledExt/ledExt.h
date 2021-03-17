@@ -10,6 +10,7 @@
     public:
       LedExt(int);
       void init();
+      void init(String);
       void on();
       void off();
       void blink(unsigned long);

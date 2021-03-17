@@ -54,7 +54,6 @@ FireSensor  fireSensor(PIN_SENSOR);
 PbAMR   pbAMR(&pbAuto, &pbManual, &pbReset);
 LedAMR   ledAMR(&ledAuto, &ledManual, &ledReset);
 FPSys   fpSys("Fire System");
-
 void setup() {
 
     Serial.begin(115200);
@@ -87,21 +86,20 @@ void loop() {
 
     fpSys.execute();
 }
-
 void initPbLed(){
     Serial.println("EoN : initPbLed()");
 
     //initialization switch
-    pbAuto.init();
-    pbManual.init();
-    pbReset.init();
+    pbAuto.init("pbAuto");
+    pbManual.init("pbManual");
+    pbReset.init("pbReset");
     solenoidValve.init(FORWARD_DO);
 
     //initialization LEDs
-    lifeLed.init();
-    ledAuto.init();
-    ledManual.init();
-    ledReset.init();
+    lifeLed.init("lifeLed");
+    ledAuto.init("ledAuto");
+    ledManual.init("ledManual");
+    ledReset.init("ledReset");
 }
 
 void initSensor(){
