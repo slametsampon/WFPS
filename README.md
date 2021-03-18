@@ -8,4 +8,4 @@ WFPS - Wireless Fire Protection System
 #### 4. The communication protocol between the broker (server) and the sensor / actuator uses MQTT (Message Queuing Telemetry Transport), while the internet network uses HTTP (Hypertext Transfer Protocol).
 #### 5. This system uses OOP (Object Oriented Programming) approach and uses the MVC (Model-View-Controller) pattern.
 #### 6. This approach is taken to make it easier to develop and easy to track if there are problems.
-## [Hardware - concept](https://github.com/slametsampon/WFPS/blob/main/WFPS-HW.jpg)
+## [Hardware - concept](https://github.com/slametsampon/WFPS/blob/main/resources/WFPS-HW.jpg)
