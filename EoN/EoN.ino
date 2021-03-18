@@ -15,60 +15,98 @@ D7 IO, MOSI GPIO13
 D8 IO,pull-down, SS GPIO15
 */
 
+#include <LiquidCrystal.h>//for LCD
+#include <RTClib.h>
+
 #include "src\sequenceTimer\sequenceTimer.h"
 #include "src\ledExt\ledExt.h"
 #include "src\switchExt\switchExt.h"
-#include "src\fireSensor\fireSensor.h"
 #include "src\digitalOutput\DigitalOutput.h"
 
 #include    "pbAMR.h"
 #include    "ledAMR.h"
 #include    "FPSys.h"
+#include    "dipAddr.h"
+#include    "localPanel.h"
 
-#define PIN_SENSOR  A0
+#define PIN_KEYPAD A0 // pin Analog Keypad
 
-const int PIN_PB_AUTO     = 14; //D5
-const int PIN_PB_MANUAL   = 12; //D6
-const int PIN_PB_RESET    = 13; //D7
+const int LCD_RS = 8;
+const int LCD_EN = 9;
+const int LCD_D4 = 4;
+const int LCD_D5 = 5;
+const int LCD_D6 = 6;
+const int LCD_D7 = 7;
 
-const int PIN_LED_AUTO    = 5; //D1
-const int PIN_LED_MANUAL  = 4; //D2
-const int PIN_LED_RESET   = 0; //D3
+const int PIN_PB_AUTO       = 23; //D23
+const int PIN_PB_MANUAL     = 25; //D25
+const int PIN_PB_RESET      = 27; //D27
 
-const int PIN_SOLENOID_VALVE = 16; //D0
+const int PIN_ADDR0         = 29; //D29
+const int PIN_ADDR1         = 31; //D31
+const int PIN_ADDR2         = 33; //D33
+const int PIN_SENSOR        = 35; //D35
+
+const int PIN_LED_AUTO      = 22; //D22
+const int PIN_LED_MANUAL    = 24; //D23
+const int PIN_LED_RESET     = 26; //D26
+
+const int PIN_SOLENOID_VALVE = 28; //D0
 
 SequenceTimer SequenceMain("Sequence");
 
-SwitchExt pbAuto(PIN_PB_AUTO);//use pin PIN_PB_AUTO for P/B
-SwitchExt pbManual(PIN_PB_MANUAL);//use pin PIN_PB_MANUAL for P/B
-SwitchExt pbReset(PIN_PB_RESET);//use pin PIN_PB_RESET for P/B
+SwitchExt       addr0(PIN_ADDR0);//use pin PIN_ADDR0 for addressing
+SwitchExt       addr1(PIN_ADDR1);//use pin PIN_ADDR1 for addressing
+SwitchExt       addr2(PIN_ADDR2);//use pin PIN_ADDR2 for addressing
+
+SwitchExt       pbAuto(PIN_PB_AUTO);//use pin PIN_PB_AUTO for P/B
+SwitchExt       pbManual(PIN_PB_MANUAL);//use pin PIN_PB_MANUAL for P/B
+SwitchExt       pbReset(PIN_PB_RESET);//use pin PIN_PB_RESET for P/B
 DigitalOutput   solenoidValve(PIN_SOLENOID_VALVE);
 
-LedExt ledAuto(PIN_LED_AUTO);
-LedExt ledManual(PIN_LED_MANUAL);
-LedExt ledReset(PIN_LED_RESET);
-LedExt lifeLed(LED_BUILTIN);//Pin 2 for Wemos D1
+LedExt          ledAuto(PIN_LED_AUTO);
+LedExt          ledManual(PIN_LED_MANUAL);
+LedExt          ledReset(PIN_LED_RESET);
+LedExt          lifeLed(LED_BUILTIN);//Pin 2 for Wemos D1
 
-FireSensor  fireSensor(PIN_SENSOR);
+SwitchExt       fireSensor(PIN_SENSOR);
 
-PbAMR   pbAMR(&pbAuto, &pbManual, &pbReset);
-LedAMR   ledAMR(&ledAuto, &ledManual, &ledReset);
-FPSys   fpSys("Fire System");
+DipAddr         eonAddr(&addr0, &addr1, &addr2);
+PbAMR           pbAMR(&pbAuto, &pbManual, &pbReset);
+LedAMR          ledAMR(&ledAuto, &ledManual, &ledReset);
+
+FPSys           fpSys("Fire System");
+
+//Variables declaration
+LiquidCrystal   lcd(LCD_RS,LCD_EN,LCD_D4,LCD_D5,LCD_D6,LCD_D7);
+KeyPad          keyPad(PIN_KEYPAD);//declare keypad
+serialCmd       serInput("Serial Command");
+ViewLcd         view(lcd);//declare view, part of MVC pattern
+LocalPanel      localPanel("localPanel");
+
+//Static member class should be initialized FIRST (IF NOT, WILL HAVE ERROR)
+unsigned char LocalPanel::cmdInNbr=0;
+
 void setup() {
 
     Serial.begin(115200);
     delay(500);
 
     initPbLed();
-    initSensor();
 
+    //attachment all peripherals
+    fpSys.attachDipAddr(&eonAddr);
     fpSys.attachLedAMR(&ledAMR);
     fpSys.attachPbAMR(&pbAMR);
     fpSys.attachFireSensor(&fireSensor);
     fpSys.attachSolenoidValve(&solenoidValve);
 
+    //attachment all peripherals
+    localPanel.attachCmdIn(&keyPad);
+    localPanel.attachView(&view);
+
     String str;
-    str = String("_ledAuto \n");//with new line
+    str = String("lifeLed \n");//with new line
     str = String(str + lifeLed.info());
     Serial.println(str);
     
@@ -86,6 +124,7 @@ void loop() {
 
     fpSys.execute();
 }
+
 void initPbLed(){
     Serial.println("EoN : initPbLed()");
 
@@ -95,26 +134,15 @@ void initPbLed(){
     pbReset.init("pbReset");
     solenoidValve.init(FORWARD_DO);
 
+    addr0.init("addr0");
+    addr1.init("addr1");
+    addr2.init("addr2");
+
+    fireSensor.init("fireSensor");
+
     //initialization LEDs
     lifeLed.init("lifeLed");
     ledAuto.init("ledAuto");
     ledManual.init("ledManual");
     ledReset.init("ledReset");
 }
-
-void initSensor(){
-    sensorParam param;
-    Serial.println("EoN : initSensor()");
-
-    //fire Zone1.
-    param.id = "Smoke-1";
-    param.unit = "%";
-    param.highRange = 100;
-    param.lowRange = 0;
-    param.highLimit = 80;
-    param.lowLimit = 40;
-    param.alfaEma = 80;
-
-    fireSensor.setParameter(&param);
-}
-

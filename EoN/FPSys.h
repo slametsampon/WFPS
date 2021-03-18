@@ -12,7 +12,7 @@
 #include "Arduino.h"
 #include "ledAMR.h"
 #include "pbAMR.h"
-#include "src\fireSensor\fireSensor.h"
+#include "dipAddr.h"
 #include "src\digitalOutput\DigitalOutput.h"
 
     class FPSys{
@@ -20,9 +20,10 @@
         public:
             FPSys(String);
             void info();
+            void attachDipAddr(DipAddr*);
             void attachLedAMR(LedAMR*);
             void attachPbAMR(PbAMR*);
-            void attachFireSensor(FireSensor*);
+            void attachFireSensor(SwitchExt*);
             void attachSolenoidValve(DigitalOutput*);
             void execute();
 
@@ -31,7 +32,8 @@
 
             LedAMR *_ledAMR;
             PbAMR *_pbAMR;
-            FireSensor *_fireSensor;
+            DipAddr *_dipAddr;
+            SwitchExt *_fireSensor;
             DigitalOutput   *_solenoidValve;
 
             int _operationMode;

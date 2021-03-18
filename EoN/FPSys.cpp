@@ -9,10 +9,11 @@ FPSys::FPSys(String id):_id(id){}
 
 void FPSys::info(){
     Serial.println("FPSys::info()=>Fire Protection System");
+    _dipAddr->info();
     _pbAMR->info();
     _ledAMR->info();
     Serial.println(_solenoidValve->info());
-    _fireSensor->info();
+    Serial.println(_fireSensor->info());
 }
 
 void FPSys::attachLedAMR(LedAMR *ledAMR){
@@ -25,8 +26,13 @@ void FPSys::attachPbAMR(PbAMR *pbAMR){
     _pbAMR = pbAMR;
 }
 
-void FPSys::attachFireSensor(FireSensor *fireSensor){
-    Serial.println("FPSys::attachFireSensor(FireSensor *fireSensor)");
+void FPSys::attachDipAddr(DipAddr *dipAddr){
+    Serial.println("FPSys::attachDipAddr(DipAddr *dipAddr)");
+    _dipAddr = dipAddr;
+}
+
+void FPSys::attachFireSensor(SwitchExt *fireSensor){
+    Serial.println("FPSys::attachFireSensor(SwitchExt *fireSensor)");
     _fireSensor = fireSensor;
 }
 
@@ -38,8 +44,7 @@ void FPSys::attachSolenoidValve(DigitalOutput *solenoidValve){
 void FPSys::execute(){
 
     //measure and putting in sensorParam
-    _fireSensor->getValue();
-    int sensorStatus = _fireSensor->getStatus();
+    boolean sensorStatus = _fireSensor->isStatus(500);//debouncing in milli second
 
     //get input command from push button
     _operationMode = _pbAMR->getCmd(500);//debouncing in milli second
@@ -48,8 +53,7 @@ void FPSys::execute(){
     //logic of operation
     switch (_operationMode){
         case PB_AUTO:
-            //if (_fireSensor->getStatus()==LOW_ALARM)_solenoidValve->on();//if we use HIGH_ALARM
-            if (sensorStatus == HIGH_ALARM)_solenoidValve->on();//if we use HIGH_ALARM
+            if (sensorStatus)_solenoidValve->on();
             else _solenoidValve->off();
             break;
         
