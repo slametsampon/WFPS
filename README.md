@@ -9,3 +9,7 @@ WFPS - Wireless Fire Protection System
 #### 5. This system uses OOP (Object Oriented Programming) approach and uses the MVC (Model-View-Controller) pattern.
 #### 6. This approach is taken to make it easier to develop and easy to track if there are problems.
 ## [Hardware - concept](https://github.com/slametsampon/WFPS/blob/main/resources/WFPS-HW.jpg)
+
+## [Specifications Server] (https://github.com/slametsampon/WFPS/blob/main/Server/Server-Specification.md)
+## [Specifications LocalPanel] (https://github.com/slametsampon/WFPS/blob/main/LocalPanel/LocalPanel-Specification.md)
+## [Specifications EoN] (https://github.com/slametsampon/WFPS/blob/main/EoN/EoN-Specification.md)
