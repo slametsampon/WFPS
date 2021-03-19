@@ -6,28 +6,16 @@
 #define analogInput_h
 
 #include "Arduino.h"
+#include "aiParam.h"
 
-const int NORMAL = 0;
-const int HIGH_ALARM = 1;
-const int LOW_ALARM = 2;
-
-    typedef struct aiParam{
-        String id;//
-        String unit;//unit
-        float value;
-        float highRange;
-        float lowRange;
-        float highLimit;//for alarm high
-        float lowLimit;//for alarm low
-        unsigned int alfaEma;//alfa for EMA Filter (0 - 100) in percentage
-        boolean highAlarm = false;
-        boolean lowAlarm = false;
-    }aiParam;
+const int AI_NORMAL = 0;
+const int AI_HIGH_ALARM = 1;
+const int AI_LOW_ALARM = 2;
 
     class AnalogInput{
         public:
             AnalogInput(char);
-            void Init();
+            void init(String);
             void setParameter(aiParam*);
             aiParam *getParameter();
             int getStatus();
@@ -38,6 +26,7 @@ const int LOW_ALARM = 2;
             aiParam   *_aiParam;
             char _pin;
             unsigned int _PV_Raw;
+            String _id;//
     };
 
 #endif

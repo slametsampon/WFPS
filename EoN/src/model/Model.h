@@ -118,39 +118,57 @@ Messages["line2"] = "message21-message22-message23-message24-";
 
 serializeJson(doc, output);
 
-Menu[
+Menu
 {
-  "id":1,
-  "Messages": {"line1":"message11-message12-message13-message14-", "line2":"message21-message22-message23-message24-"}
-  },
-{
-  "id":2,
-  "Messages": {"line1":"message11-message12-message13-message14-", "line2":"message21-message22-message23-message24-"}
+  "Messages": ["message11-message12-message13-message14-",
+              "message21-message22-message23-message24-",
+              "message31-message32-message33-message34-",
+              "message41-message42-message43-message44-"]
   }
-]
 
-StaticJsonDocument<384> doc;
+StaticJsonDocument<256> doc;
 
-JsonObject doc_0 = doc.createNestedObject();
-doc_0["id"] = 1;
-
-JsonObject doc_0_Messages = doc_0.createNestedObject("Messages");
-doc_0_Messages["line1"] = "message11-message12-message13-message14-";
-doc_0_Messages["line2"] = "message21-message22-message23-message24-";
-
-JsonObject doc_1 = doc.createNestedObject();
-doc_1["id"] = 2;
-
-JsonObject doc_1_Messages = doc_1.createNestedObject("Messages");
-doc_1_Messages["line1"] = "message11-message12-message13-message14-";
-doc_1_Messages["line2"] = "message21-message22-message23-message24-";
+JsonArray Messages = doc.createNestedArray("Messages");
+Messages.add("message11-message12-message13-message14-");
+Messages.add("message21-message22-message23-message24-");
+Messages.add("message31-message32-message33-message34-");
+Messages.add("message41-message42-message43-message44-");
 
 serializeJson(doc, output);
+
+DeserializationError error = deserializeJson(doc, input);
+
+if (error) {
+  Serial.print(F("deserializeJson() failed: "));
+  Serial.println(error.f_str());
+  return;
+}
+
+JsonArray Messages = doc["Messages"];
+const char* Messages_0 = Messages[0]; // "message11-message12-message13-message14-"
+const char* Messages_1 = Messages[1]; // "message21-message22-message23-message24-"
+const char* Messages_2 = Messages[2]; // "message31-message32-message33-message34-"
+const char* Messages_3 = Messages[3]; // "message41-message42-message43-message44-"
+
 */
-#ifndef Model_h
-#define Model_h
+#ifndef model_h
+#define model_h
 
 #include "Arduino.h"
+#include  <ArduinoJson.h>
 
+
+class AccessMenuJson{
+  public:
+    AccessMenuJson(String);
+    void add(String);
+    void insert(int, String);
+    String read(int);
+    void info();
+  private:
+    String    _id;
+    StaticJsonDocument<256> _menuJson;
+    JsonArray _messages = _menuJson.createNestedArray("Messages");
+};//end of class
 
 #endif

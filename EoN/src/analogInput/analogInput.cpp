@@ -7,6 +7,10 @@
 
 AnalogInput::AnalogInput(char pin):_pin(pin){}
 
+void AnalogInput::init(String id){
+  _id = id;
+}
+
 void AnalogInput::setParameter(aiParam *param){
     _aiParam = param;
 }
@@ -16,14 +20,14 @@ aiParam *AnalogInput::getParameter(){
 }
 
 String AnalogInput::toString(){
-  String str = _aiParam->id;
+  String str = _id;
   String alm = "(N)";
   str =  String(str + " ");
   str =  String(str + _aiParam->unit);
-  if (_aiParam->lowAlarm){
+  if (_aiParam->alarm == AI_LOW_ALARM){
     alm = "(L)";
   }
-  if (_aiParam->highAlarm){
+  if (_aiParam->alarm == AI_HIGH_ALARM){
     alm = "(H)";
   }
   str =  String(str + alm);
@@ -32,7 +36,7 @@ String AnalogInput::toString(){
 
 void AnalogInput::info(){
   String str;
-  str = String("Device : " + _aiParam->id);
+  str = String("Device : " + _id);
   Serial.println(str);
 
   str = String("Pin : " + _pin);
@@ -59,14 +63,7 @@ void AnalogInput::info(){
 }
 
 int AnalogInput::getStatus(){
-    int sts = NORMAL;
-    if (_aiParam->lowAlarm){
-        sts = LOW_ALARM;
-    }
-    if (_aiParam->highAlarm){
-        sts = HIGH_ALARM;
-    }
-    return sts;
+    return _aiParam->alarm;
 }
 
 //measure and putting in _aiParam
@@ -77,5 +74,9 @@ void AnalogInput::getValue(){
 
 		_PV_Raw = tempVal;// after filtering
 		pv = map(tempVal,0, 1023,_aiParam->lowRange , _aiParam->highRange);
+
     _aiParam->value = pv;
+    _aiParam->alarm = AI_NORMAL;
+    if (pv >= _aiParam->highLimit)_aiParam->alarm = AI_HIGH_ALARM;
+    else if (pv <= _aiParam->lowLimit)_aiParam->alarm = AI_LOW_ALARM;
 }
