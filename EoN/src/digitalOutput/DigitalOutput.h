@@ -26,10 +26,11 @@ const boolean REVERSE_DO= false;
       //typical for DO
       void on();
       void off();
-      //void blink(unsigned long);
+      void blink(unsigned long);
     private:
       int  _pin;
       boolean _actionType;
       String _id;
+      unsigned long  _prevMilli;//in milli second
   };
 #endif

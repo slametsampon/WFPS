@@ -31,7 +31,7 @@ void FPSys::attachDipAddr(DipAddr *dipAddr){
     _dipAddr = dipAddr;
 }
 
-void FPSys::attachFireSensor(SwitchExt *fireSensor){
+void FPSys::attachFireSensor(DigitalInput *fireSensor){
     Serial.println("FPSys::attachFireSensor(SwitchExt *fireSensor)");
     _fireSensor = fireSensor;
 }

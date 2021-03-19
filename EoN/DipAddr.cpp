@@ -11,7 +11,7 @@
 /* Dependencies */
 #include "dipAddr.h"
 
-DipAddr::DipAddr(SwitchExt *addr0, SwitchExt *addr1, SwitchExt *addr2): _addr0(addr0), _addr1(addr1), _addr2(addr2){}
+DipAddr::DipAddr(DigitalInput *addr0, DigitalInput *addr1, DigitalInput *addr2): _addr0(addr0), _addr1(addr1), _addr2(addr2){}
 
 int DipAddr::getAddr(){
     int addr0, addr1, addr2;

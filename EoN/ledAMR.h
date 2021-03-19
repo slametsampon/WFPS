@@ -20,11 +20,11 @@ const int LED_RESET = 4;
 //const unsigned long DEBOUNCE_PB = 150;//milli second
 
 #include "Arduino.h"
-#include "src\ledExt\ledExt.h"
+#include "src\digitalOutput\DigitalOutput.h"
 
     class LedAMR{
         public:
-            LedAMR(LedExt *ledAuto, LedExt *ledManual, LedExt *ledReset): _ledAuto(ledAuto), _ledManual(ledManual), _ledReset(ledReset){}
+            LedAMR(DigitalOutput *ledAuto, DigitalOutput *ledManual, DigitalOutput *ledReset): _ledAuto(ledAuto), _ledManual(ledManual), _ledReset(ledReset){}
             
             void status(int state){
                 switch (state){
@@ -79,7 +79,7 @@ const int LED_RESET = 4;
                 
             }
         private:
-            LedExt *_ledAuto, *_ledManual, *_ledReset;
+            DigitalOutput *_ledAuto, *_ledManual, *_ledReset;
     };
 
 #endif

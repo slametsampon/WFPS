@@ -19,8 +19,7 @@ D8 IO,pull-down, SS GPIO15
 #include <RTClib.h>
 
 #include "src\sequenceTimer\sequenceTimer.h"
-#include "src\ledExt\ledExt.h"
-#include "src\switchExt\switchExt.h"
+#include "src\digitalInput\digitalInput.h"
 #include "src\digitalOutput\DigitalOutput.h"
 
 #include    "pbAMR.h"
@@ -31,45 +30,45 @@ D8 IO,pull-down, SS GPIO15
 
 #define PIN_KEYPAD A0 // pin Analog Keypad
 
-const int LCD_RS = 8;
-const int LCD_EN = 9;
-const int LCD_D4 = 4;
-const int LCD_D5 = 5;
-const int LCD_D6 = 6;
-const int LCD_D7 = 7;
+const int LCD_RS            = 8;
+const int LCD_EN            = 9;
+const int LCD_D4            = 4;
+const int LCD_D5            = 5;
+const int LCD_D6            = 6;
+const int LCD_D7            = 7;
 
-const int PIN_PB_AUTO       = 23; //D23
-const int PIN_PB_MANUAL     = 25; //D25
-const int PIN_PB_RESET      = 27; //D27
+const int PIN_PB_AUTO       = 23; 
+const int PIN_PB_MANUAL     = 25; 
+const int PIN_PB_RESET      = 27; 
 
-const int PIN_ADDR0         = 29; //D29
-const int PIN_ADDR1         = 31; //D31
-const int PIN_ADDR2         = 33; //D33
-const int PIN_SENSOR        = 35; //D35
+const int PIN_ADDR0         = 29; 
+const int PIN_ADDR1         = 31; 
+const int PIN_ADDR2         = 33; 
+const int PIN_SENSOR        = 35; 
 
-const int PIN_LED_AUTO      = 22; //D22
-const int PIN_LED_MANUAL    = 24; //D23
-const int PIN_LED_RESET     = 26; //D26
+const int PIN_LED_AUTO      = 22; 
+const int PIN_LED_MANUAL    = 24; 
+const int PIN_LED_RESET     = 26; 
 
-const int PIN_SOLENOID_VALVE = 28; //D0
+const int PIN_SOLENOID_VALVE = 28; 
 
 SequenceTimer SequenceMain("Sequence");
 
-SwitchExt       addr0(PIN_ADDR0);//use pin PIN_ADDR0 for addressing
-SwitchExt       addr1(PIN_ADDR1);//use pin PIN_ADDR1 for addressing
-SwitchExt       addr2(PIN_ADDR2);//use pin PIN_ADDR2 for addressing
+DigitalInput        addr0(PIN_ADDR0);//use pin PIN_ADDR0 for addressing
+DigitalInput        addr1(PIN_ADDR1);//use pin PIN_ADDR1 for addressing
+DigitalInput        addr2(PIN_ADDR2);//use pin PIN_ADDR2 for addressing
 
-SwitchExt       pbAuto(PIN_PB_AUTO);//use pin PIN_PB_AUTO for P/B
-SwitchExt       pbManual(PIN_PB_MANUAL);//use pin PIN_PB_MANUAL for P/B
-SwitchExt       pbReset(PIN_PB_RESET);//use pin PIN_PB_RESET for P/B
-DigitalOutput   solenoidValve(PIN_SOLENOID_VALVE);
+DigitalInput        pbAuto(PIN_PB_AUTO);//use pin PIN_PB_AUTO for P/B
+DigitalInput        pbManual(PIN_PB_MANUAL);//use pin PIN_PB_MANUAL for P/B
+DigitalInput        pbReset(PIN_PB_RESET);//use pin PIN_PB_RESET for P/B
+DigitalOutput       solenoidValve(PIN_SOLENOID_VALVE);
 
-LedExt          ledAuto(PIN_LED_AUTO);
-LedExt          ledManual(PIN_LED_MANUAL);
-LedExt          ledReset(PIN_LED_RESET);
-LedExt          lifeLed(LED_BUILTIN);//Pin 2 for Wemos D1
+DigitalOutput       ledAuto(PIN_LED_AUTO);
+DigitalOutput       ledManual(PIN_LED_MANUAL);
+DigitalOutput       ledReset(PIN_LED_RESET);
+DigitalOutput       lifeLed(LED_BUILTIN);//Pin 2 for Wemos D1
 
-SwitchExt       fireSensor(PIN_SENSOR);
+DigitalInput       fireSensor(PIN_SENSOR);
 
 DipAddr         eonAddr(&addr0, &addr1, &addr2);
 PbAMR           pbAMR(&pbAuto, &pbManual, &pbReset);

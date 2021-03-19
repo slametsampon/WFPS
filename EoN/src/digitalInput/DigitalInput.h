@@ -1,35 +1,27 @@
 /*
-  digitalInput.h - Library for Digital Input (DI)
-  Digital Input with debouncing mechanism 
-  By : Sam March 03, 2021
+  digitalInput.h - Library for Switch Extended
+  Switch with debouncing mechanism 
+  By : Sam March 01, 2021
 */
 
-#ifndef DigitalInput_h
-#define DigitalInput_h
+#ifndef digitalInput_h
+#define digitalInput_h
 
 #include "Arduino.h"
 const boolean FORWARD_DI = true;
 const boolean REVERSE_DI = false;
 
-
-  class DigitalInput{
-    public: 
-      //constructor
-      DigitalInput(int pin);  
-
-      void init(boolean);
-      String info();
-      void setSimulate(boolean);
-      boolean isSimulate();
-      void setSimulateValue(boolean);
-      boolean getValue();
-      boolean getValue(unsigned long);
-    private:
-      int  _pin;
-      String _id;
-      unsigned long  _prevMilli;
-      boolean _actionType;
-      boolean _isSimulate, _valSimulate;    
-      void _setActionType(boolean);
-  };
+    class DigitalInput{
+        public: 
+            DigitalInput(int pin);   
+            void init(boolean);
+            void init(String);
+            boolean isStatus(unsigned long);
+            String info();
+        private:
+            int  _pin;
+            unsigned long  _prevMilli;
+            String  _id;
+            boolean _initTyp;
+    };
 #endif

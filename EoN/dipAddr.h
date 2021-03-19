@@ -12,15 +12,15 @@
 #define dipAddr_h
 
 #include "Arduino.h"
-#include "src\switchExt\switchExt.h"
+#include "src\digitalInput\digitalInput.h"
 
     class DipAddr{
         public:
-            DipAddr(SwitchExt*, SwitchExt*, SwitchExt*);
+            DipAddr(DigitalInput*, DigitalInput*, DigitalInput*);
             int getAddr();
             void info();
         private:
-            SwitchExt *_addr0, *_addr1, *_addr2;
+            DigitalInput *_addr0, *_addr1, *_addr2;
     };
 
 #endif

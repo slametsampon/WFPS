@@ -1,16 +1,24 @@
+/*
+    It is just for testing only, for switchExt usage
+    
+*/
 
-#include "DigitalInput.h" //Library buatan sendiri
+#include "digitalInput.h"
 
-#define   DIG_PIN 2 //Digital Input Pin
+const char PB_GREEN = 2;
 
-DigitalInput inputSwitch(DIG_PIN);
 
-void setup(void) {
-  Serial.begin(115200);
-  // put your setup code here, to run once:
-  inputSwitch.init(REVERSE_DI);
-  Serial.println(inputSwitch.info());
+DigitalInput pbGreen(PB_GREEN);//use pin PB_GREEN for P/B
+
+void setup() {
+
+    Serial.begin(115200);
+
+    //initialization switch
+    pbGreen.init();
+    Serial.println(pbGreen.info());
 }
 
+// the loop function runs over and over again forever
 void loop() {
 }

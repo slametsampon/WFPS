@@ -14,6 +14,7 @@
 #include "pbAMR.h"
 #include "dipAddr.h"
 #include "src\digitalOutput\DigitalOutput.h"
+#include "src\digitalInput\digitalInput.h"
 
     class FPSys{
         
@@ -23,7 +24,7 @@
             void attachDipAddr(DipAddr*);
             void attachLedAMR(LedAMR*);
             void attachPbAMR(PbAMR*);
-            void attachFireSensor(SwitchExt*);
+            void attachFireSensor(DigitalInput*);
             void attachSolenoidValve(DigitalOutput*);
             void execute();
 
@@ -33,7 +34,7 @@
             LedAMR *_ledAMR;
             PbAMR *_pbAMR;
             DipAddr *_dipAddr;
-            SwitchExt *_fireSensor;
+            DigitalInput *_fireSensor;
             DigitalOutput   *_solenoidValve;
 
             int _operationMode;

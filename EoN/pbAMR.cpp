@@ -6,7 +6,7 @@
 /* Dependencies */
 #include "pbAMR.h"
 
-PbAMR::PbAMR(SwitchExt *pbAuto, SwitchExt *pbManual, SwitchExt *pbReset): _pbAuto(pbAuto), _pbManual(pbManual), _pbReset(pbReset){}
+PbAMR::PbAMR(DigitalInput *pbAuto, DigitalInput *pbManual, DigitalInput *pbReset): _pbAuto(pbAuto), _pbManual(pbManual), _pbReset(pbReset){}
 
 int PbAMR::getCmd(unsigned long debounceTime){
     int cmd;

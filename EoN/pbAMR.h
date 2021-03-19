@@ -18,16 +18,16 @@ const int PB_RESET = 4;
 //const unsigned long DEBOUNCE_PB = 150;//milli second
 
 #include "Arduino.h"
-#include "src\switchExt\switchExt.h"
+#include "src\digitalInput\digitalInput.h"
 
     class PbAMR{
         public:
-            PbAMR(SwitchExt*, SwitchExt*, SwitchExt*);
+            PbAMR(DigitalInput*, DigitalInput*, DigitalInput*);
             int getCmd(unsigned long);
             String status();
             void info();
         private:
-            SwitchExt *_pbAuto, *_pbManual, *_pbReset;
+            DigitalInput *_pbAuto, *_pbManual, *_pbReset;
             int    _prevCmd;
             bool  _isInfo;//one shoot info
     };
