@@ -18,11 +18,14 @@ D8 IO,pull-down, SS GPIO15
 #include <LiquidCrystal.h>//for LCD
 #include <RTClib.h>
 
-#include "src\sequenceTimer\sequenceTimer.h"
-#include "src\digitalInput\digitalInput.h"
-#include "src\digitalOutput\DigitalOutput.h"
+#include    "src\analogInput\param.h"
+#include    "src\sequenceTimer\sequenceTimer.h"
+#include    "src\digitalInput\digitalInput.h"
+#include    "src\digitalOutput\DigitalOutput.h"
 
+#include    "Model.h"
 #include    "pbAMR.h"
+#include    "KeyPad.h"
 #include    "ledAMR.h"
 #include    "FPSys.h"
 #include    "dipAddr.h"
@@ -81,10 +84,19 @@ LiquidCrystal   lcd(LCD_RS,LCD_EN,LCD_D4,LCD_D5,LCD_D6,LCD_D7);
 KeyPad          keyPad(PIN_KEYPAD);//declare keypad
 serialCmd       serInput("Serial Command");
 ViewLcd         view(lcd);//declare view, part of MVC pattern
+AccessDataMenu  accessMenu("Data Menu");//part of MVC pattern
+AccessParam     accessParameter("Parameter");//part of MVC pattern
+
 LocalPanel      localPanel("localPanel");
 
 //Static member class should be initialized FIRST (IF NOT, WILL HAVE ERROR)
 unsigned char LocalPanel::cmdInNbr=0;
+unsigned char AccessDataMenu::menuNbr=0;
+
+//function declaration
+void initPbLed();
+void setupParameter();
+void setupMenu();
 
 void setup() {
 
@@ -92,6 +104,8 @@ void setup() {
     delay(500);
 
     initPbLed();
+    setupMenu();
+    setupParameter();
 
     //attachment all peripherals
     fpSys.attachDipAddr(&eonAddr);
@@ -102,7 +116,10 @@ void setup() {
 
     //attachment all peripherals
     localPanel.attachCmdIn(&keyPad);
+    localPanel.attachCmdIn(&serInput);
     localPanel.attachView(&view);
+    localPanel.attachModelMenu(&accessMenu);
+    localPanel.attachModelParameter(&accessParameter);
 
     String str;
     str = String("lifeLed \n");//with new line
@@ -122,6 +139,7 @@ void loop() {
     }
 
     fpSys.execute();
+    localPanel.menu();
 }
 
 void initPbLed(){
@@ -144,4 +162,38 @@ void initPbLed(){
     ledAuto.init("ledAuto");
     ledManual.init("ledManual");
     ledReset.init("ledReset");
+}
+
+void setupMenu(){
+  dataMenu  dtMenu;
+
+  Serial.println("EoN-setupMenu()");
+
+  dtMenu.isHasParam = false;
+  dtMenu.Messages_0 ="Fire Protection System";
+  dtMenu.Messages_1 ="Salman Alfarisi";
+  accessMenu.add(dtMenu);
+
+  dtMenu.isHasParam = true;
+  dtMenu.Messages_0 ="Fire Zone-1";
+  dtMenu.Messages_1 ="Parameter 1";
+  accessMenu.add(dtMenu);
+
+}
+
+void setupParameter(){
+  param dtParam;
+  Serial.println("EoN-setupParameter()");
+
+  //fire Zone1.
+  dtParam.unit = "%";
+  dtParam.value = 51;
+  dtParam.highRange = 100;
+  dtParam.lowRange = 0;
+  dtParam.highLimit = 80;
+  dtParam.lowLimit = 40;
+  dtParam.increment = 1.1;
+
+  accessParameter.init("ZONE - 1", dtParam);
+
 }

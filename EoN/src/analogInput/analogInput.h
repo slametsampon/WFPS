@@ -6,24 +6,20 @@
 #define analogInput_h
 
 #include "Arduino.h"
-#include "aiParam.h"
-
-const int AI_NORMAL = 0;
-const int AI_HIGH_ALARM = 1;
-const int AI_LOW_ALARM = 2;
+#include "param.h"
 
     class AnalogInput{
         public:
             AnalogInput(char);
             void init(String);
-            void setParameter(aiParam*);
-            aiParam *getParameter();
+            void setParameter(param*);
+            param *getParameter();
             int getStatus();
             String toString();
             void info();
             void getValue();
         private:
-            aiParam   *_aiParam;
+            param   *_param;
             char _pin;
             unsigned int _PV_Raw;
             String _id;//
