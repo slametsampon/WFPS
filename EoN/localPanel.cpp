@@ -11,6 +11,10 @@ LocalPanel::LocalPanel(String id):_id(id){
   _modeMenu = MODE_MENU_UTAMA;
 }
 
+void LocalPanel::info(){
+  Serial.println(_id);
+}
+
 void LocalPanel::attachCmdIn(command *cmdIn){
   Serial.print("LocalPanel::attachCmdIn-");
   Serial.println(cmdInNbr);
