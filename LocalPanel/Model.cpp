@@ -1,10 +1,4 @@
-/*
-  Model.h - Library untuk Model
-  Ini adalah bagian dari MVC (Model View Control) pattern design
-  Dibuat Oleh : Sam Feb 15, 2021
-*/
-
-#include "Model.h"
+#include    "model.h"
 
 //AccessDataMenu - Class
 AccessDataMenu::AccessDataMenu(String id):_id(id){}
@@ -18,166 +12,157 @@ dataMenu AccessDataMenu::read(int index){
   return _dataMenu[index];
 }
 
-//Parameter - Class
-AccessParameter::AccessParameter(String id):_id(id){}
+//AccessParam - Class
+AccessParam::AccessParam(String id):_id(id){}
 
-void AccessParameter::add(parameter param){
-  this->_parameter[paramNbr] = param;
-  paramNbr++;
+void AccessParam::init(String id, param dtParam){
+  _id = id;
+  _paramJson["id"] = _id;
+  _paramJson["unit"] = dtParam.unit;
+  _paramJson["value"] = dtParam.value;
+  _paramJson["highRange"] = dtParam.highRange;
+  _paramJson["lowRange"] = dtParam.lowRange;
+  _paramJson["highLimit"] = dtParam.highLimit;
+  _paramJson["lowLimit"] = dtParam.lowLimit;
+  _paramJson["alfaEma"] = dtParam.alfaEma;
+  _paramJson["increment"] = dtParam.increment;
+
+  _param = dtParam;
 }
 
-String AccessParameter::toString(parameter paramData){
-  String str = paramData.id;
+void AccessParam::updateJson(JsonObject paramJson){
+  _paramJson = paramJson;
+}
+
+JsonObject AccessParam::getJson(){
+  // Get a reference to the root object
+
+  return _paramJson.as<JsonObject>();
+}
+
+param AccessParam::getParam(){
+  return _param;
+}
+
+String AccessParam::toString(){
+  String str = _id;
   String alm = "(N)";
   str =  String(str + " ");
-  str =  String(str + paramData.unit);
-  if (paramData.lowAlarm){
+  str =  String(str + _param.unit);
+  if (_param.alarm == LOW_ALARM){
     alm = "(L)";
   }
-  if (paramData.highAlarm){
+  if (_param.alarm == HIGH_ALARM){
     alm = "(H)";
   }
   str =  String(str + alm);
   return str;
 }
 
-void AccessParameter::setParameter(int index, parameter data){
-  this->_parameter[index] = data;
+void AccessParam::info(){
+  Serial.println(_id);
+  String str;
+  for (JsonPair p : _paramJson.as<JsonObject>()) {
+    str = p.key().c_str();
+    str = String (str + " : ");
+    str = String (str + p.value().as<String>());
+    Serial.println(str);
+  }    
 }
 
-parameter AccessParameter::getParameter(int index){
-  //matching with index menu
-   for (int i=0; i <= this->paramNbr; i++){
-      if (this->getIndexMenu(i) == index)return this->_parameter[i];
-   } 
-}
-
-int AccessParameter::getIndexMenu(int index){
-  return this->_parameter[index].indexMenu;
-}
-
-int AccessParameter::getIndexParameter(parameter paramData){
-  int i = 0;
-  for (i = 0; i < this->paramNbr; i++)
-  {
-    if (paramData.id == this->_parameter[i].id)
-    {
-      break;
-    }  
-  }
-  return i;
-}
-
-void AccessParameter::_checkAlarm(parameter paramData){
+void AccessParam::_checkAlarm(){
   //Alarm Low evaluation
-  paramData.lowAlarm = false;
-  if (paramData.value <= paramData.lowAlarm) {
-    paramData.lowAlarm = true;
+  _param.alarm = NO_ALARM;
+  if (_param.value <= _param.lowLimit) {
+    _param.alarm = LOW_ALARM;
     return;
   }
 
   //Alarm High evaluation
-  paramData.highAlarm = false;
-  if (paramData.value >= paramData.highAlarm) {
-    paramData.highAlarm = true;
+  else if (_param.value >= _param.highLimit) {
+    _param.alarm = HIGH_ALARM;
     return;
   }
 }
 
-parameter AccessParameter::increaseParameter(parameter paramData, int idParam){
-  float percentInc = ((paramData.increment)/100);
-  float range = (paramData.highRange - paramData.lowRange);
+void AccessParam::increaseParameter(int idParam){
+  float percentInc = ((_param.increment)/100);
+  float range = (_param.highRange - _param.lowRange);
   float increment = percentInc * range;
   float tempVal;
 
   switch (idParam)
   {
-    case PARAMETER_VALUE:
-      tempVal = paramData.value = paramData.value + increment;
-      if(tempVal < paramData.highRange) paramData.value = tempVal;
-      this->_checkAlarm(paramData);
-      break;
-    
     case PARAMETER_LOW_RANGE:
-      tempVal = paramData.lowRange + increment;
-      if(tempVal < paramData.lowLimit) paramData.lowRange = tempVal;
-      this->_checkAlarm(paramData);
+      tempVal = _param.lowRange + increment;
+      if(tempVal < _param.lowLimit) _param.lowRange = tempVal;
+      this->_checkAlarm();
       break;
     
     case PARAMETER_HIGH_RANGE:
-      tempVal = paramData.highRange + increment;
-      if(tempVal < paramData.highRange) paramData.highRange = tempVal;
-      this->_checkAlarm(paramData);
+      tempVal = _param.highRange + increment;
+      if(tempVal < _param.highRange) _param.highRange = tempVal;
+      this->_checkAlarm();
       break;
     
     case PARAMETER_LOW_LIMIT:
-      tempVal = paramData.lowLimit + increment;
-      if(tempVal < paramData.highLimit) paramData.lowLimit = tempVal;
-      this->_checkAlarm(paramData);
+      tempVal = _param.lowLimit + increment;
+      if(tempVal < _param.highLimit) _param.lowLimit = tempVal;
+      this->_checkAlarm();
       break;
     
     case PARAMETER_HIGH_LIMIT:
-      tempVal = paramData.highLimit + increment;
-      if(tempVal < paramData.highRange) paramData.highLimit = tempVal;
-      this->_checkAlarm(paramData);
+      tempVal = _param.highLimit + increment;
+      if(tempVal < _param.highRange) _param.highLimit = tempVal;
+      this->_checkAlarm();
       break;
     
     case PARAMETER_INCREMENT:
-      paramData.increment = paramData.increment + paramData.increment * DELTA_INCREMENT;
+      _param.increment = _param.increment + _param.increment * DELTA_INCREMENT;
       break;
     
     default:
       break;
-    return paramData;
   }
 }
 
-parameter AccessParameter::decreaseParameter(parameter paramData, int idParam){
-  float percentInc = ((paramData.increment)/100);
-  float range = (paramData.highRange - paramData.lowRange);
+void AccessParam::decreaseParameter(int idParam){
+  float percentInc = ((_param.increment)/100);
+  float range = (_param.highRange - _param.lowRange);
   float increment = percentInc * range;
   float tempVal;
 
   switch (idParam)
   {
-    case PARAMETER_VALUE:
-      tempVal = paramData.value = paramData.value - increment;
-      if(tempVal > paramData.lowRange) paramData.value = tempVal;
-      this->_checkAlarm(paramData);
-      break;
-    
     case PARAMETER_LOW_RANGE:
-      tempVal = paramData.lowRange - increment;
-      if(tempVal > paramData.lowRange) paramData.lowRange = tempVal;
-      this->_checkAlarm(paramData);
+      tempVal = _param.lowRange - increment;
+      if(tempVal > _param.lowRange) _param.lowRange = tempVal;
+      this->_checkAlarm();
       break;
     
     case PARAMETER_HIGH_RANGE:
-      tempVal = paramData.highRange - increment;
-      if(tempVal > paramData.highLimit) paramData.highRange = tempVal;
-      this->_checkAlarm(paramData);
+      tempVal = _param.highRange - increment;
+      if(tempVal > _param.highLimit) _param.highRange = tempVal;
+      this->_checkAlarm();
       break;
     
     case PARAMETER_LOW_LIMIT:
-      tempVal = paramData.lowLimit - increment;
-      if(tempVal > paramData.lowLimit) paramData.lowLimit = tempVal;
-      this->_checkAlarm(paramData);
+      tempVal = _param.lowLimit - increment;
+      if(tempVal > _param.lowLimit) _param.lowLimit = tempVal;
+      this->_checkAlarm();
       break;
     
     case PARAMETER_HIGH_LIMIT:
-      tempVal = paramData.highLimit - increment;
-      if(tempVal > paramData.lowLimit) paramData.highLimit = tempVal;
-      this->_checkAlarm(paramData);
+      tempVal = _param.highLimit - increment;
+      if(tempVal > _param.lowLimit) _param.highLimit = tempVal;
+      this->_checkAlarm();
       break;
     
     case PARAMETER_INCREMENT:
-      paramData.increment = paramData.increment - paramData.increment * DELTA_INCREMENT;
+      _param.increment = _param.increment - _param.increment * DELTA_INCREMENT;
       break;
     
     default:
       break;
-
-    return paramData;
   }
 }
-

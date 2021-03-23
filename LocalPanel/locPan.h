@@ -1,10 +1,10 @@
 /*
-  LocalPanel.h - Library untuk LocalPanel
+  locPan.h - Library untuk locPan
   Ini adalah bagian dari MVC (Model View Control) pattern design
   Dibuat Oleh : Sam Feb 2021
 */
-#ifndef LocalPanel_h
-#define LocalPanel_h
+#ifndef locPan_h
+#define locPan_h
 
 #include  "Arduino.h"
 #include  "viewLcd.h"
@@ -16,14 +16,14 @@ const int MODE_MENU_UTAMA = 1;
 const int MODE_MENU_PARAMETER = 2;
 const int MODE_UBAH_PARAMETER = 3;
 
-class LocalPanel
+class LocPan
 {
   public:
     static unsigned char cmdInNbr;
     static unsigned char getCmdInNbr(){
       return cmdInNbr;
     }
-    LocalPanel(String);//constructor
+    LocPan(String);//constructor
     void attachCmdIn(command*);//Pasang command, penggunaan pointer ini sangat mutlak (JIKA TIDAK ERROR !!!!)
     void attachView(ViewLcd*);//Pasang View, penggunaan pointer ini sangat mutlak (JIKA TIDAK ERROR !!!!)
     void attachModelMenu(AccessDataMenu*);//Pasang Model menu, penggunaan pointer ini sangat mutlak (JIKA TIDAK ERROR !!!!)

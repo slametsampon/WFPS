@@ -17,33 +17,29 @@ void CommSer::attachModelParameter(AccessParam *accessParameter){
     _accessParameter = accessParameter;
   }
  
-void CommSer::attachSoftwareSerial(SoftwareSerial *softSerial){
-    Serial.println("CommSer::attachSoftwareSerial(SoftwareSerial *softSerial)");
-    _linkSerial = softSerial;
-  }
- 
+
 void CommSer::sendValue(JsonObject valueJson){
   // Send the JSON document over the "link" serial port
-  serializeJson(valueJson, *_linkSerial);
+  serializeJson(valueJson, Serial1);
 
 }
 
 void CommSer::sendParameter(JsonObject paramJson){
     //JsonObject.as<JsonObject>()  paramJson = _accessParameter->getJson();
-  serializeJson(paramJson, *_linkSerial);
+  serializeJson(paramJson, Serial1);
 
 }
 
 JsonObject CommSer::getParameter(){
 
-  if (_linkSerial->available()) 
+  if (Serial1.available()) 
     {
       // Allocate the JSON document
       // This one must be bigger than for the sender because it must store the strings
       StaticJsonDocument<192> paramJson;
 
       // Read the JSON document from the "link" serial port
-      DeserializationError err = deserializeJson(paramJson, *_linkSerial);
+      DeserializationError err = deserializeJson(paramJson, Serial1);
 
       if (err == DeserializationError::Ok) 
         {
@@ -70,8 +66,8 @@ JsonObject CommSer::getParameter(){
           Serial.println(err.c_str());
       
           // Flush all bytes in the "link" serial port buffer
-          while (_linkSerial->available() > 0)
-            _linkSerial->read();
+          while (Serial1.available() > 0)
+            Serial1.read();
         }
     }
 }

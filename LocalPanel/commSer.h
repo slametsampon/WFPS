@@ -79,7 +79,6 @@ float increment = doc["increment"]; // 1.1
 
 #include    "Arduino.h"
 #include    <ArduinoJson.h>
-#include    <SoftwareSerial.h>
 #include    "model.h"
 
 class CommSer
@@ -92,14 +91,12 @@ class CommSer
     void sendParameter(JsonObject);
     JsonObject getParameter();
     void attachModelParameter(AccessParam*);//Pasang Model parameter, penggunaan pointer ini sangat mutlak (JIKA TIDAK ERROR !!!!)
-    void attachSoftwareSerial(SoftwareSerial*);//Pasang SoftwareSerial, penggunaan pointer ini sangat mutlak (JIKA TIDAK ERROR !!!!)
     void execute();
 
   private:
 
     String _id;
     AccessParam *_accessParameter;
-    SoftwareSerial *_linkSerial; // RX, TX
 };//end of class
 
 #endif

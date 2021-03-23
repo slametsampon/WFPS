@@ -3,38 +3,51 @@
   Ini adalah bagian dari MVC (Model View Control) pattern design
   Dibuat Oleh : Sam Feb 15, 2021
   JSON
-{
-  "id":"Smoke-1",
-  "unit":"%",
-  "indexMenu":1,
-  "value":51.5,
-  "highRange":100.0,
-  "lowRange":0.0,
-  "highLimit":80.0,
-  "lowLimit":40.0,
-  "increment":1.1
-  }
 
 StaticJsonDocument<96> doc;
 
 doc["id"] = "Smoke-1";
 doc["unit"] = "%";
-doc["indexMenu"] = 1;
 doc["value"] = 51.5;
 doc["highRange"] = 100;
 doc["lowRange"] = 0;
 doc["highLimit"] = 80;
 doc["lowLimit"] = 40;
+doc["alfaEma"] = 75.5;
 doc["increment"] = 1.1;
 
 serializeJson(doc, output);
+
+? Stream& input;
+
+StaticJsonDocument<192> doc;
+
+DeserializationError error = deserializeJson(doc, input);
+
+if (error) {
+  Serial.print(F("deserializeJson() failed: "));
+  Serial.println(error.f_str());
+  return;
+}
+
+const char* id = doc["id"]; // "Smoke-1"
+const char* unit = doc["unit"]; // "%"
+float value = doc["value"]; // 51.5
+int highRange = doc["highRange"]; // 100
+int lowRange = doc["lowRange"]; // 0
+int highLimit = doc["highLimit"]; // 80
+int lowLimit = doc["lowLimit"]; // 40
+float alfaEma = doc["alfaEma"]; // 75.5
+float increment = doc["increment"]; // 1.1
 */
-#ifndef Model_h
-#define Model_h
+#ifndef model_h
+#define model_h
 
 #include "Arduino.h"
+#include  <ArduinoJson.h>
+#include "src/analogInput/param.h"
 
-const int MAX_MENU = 10;
+const int MAX_MENU = 3;
 const int PARAMETER_VALUE = 0;
 const int PARAMETER_LOW_RANGE = 1;
 const int PARAMETER_HIGH_RANGE = 2;
@@ -43,25 +56,10 @@ const int PARAMETER_HIGH_LIMIT = 4;
 const int PARAMETER_INCREMENT = 5;
 const float DELTA_INCREMENT = 0.1;
 
-typedef struct parameter{
-  String id;//
-  String unit;//unit
-  int indexMenu;//index menu
-  float value;
-  float highRange;
-  float lowRange;
-  float highLimit;//for alarm high
-  float lowLimit;//for alarm low
-  float increment;
-  boolean highAlarm = false;
-  boolean lowAlarm = false;
-}parameter;
-
 typedef struct dataMenu{
-  int id;//
-  boolean hasParameter;//is a Parameter
-  String pesan1;//pesan untuk baris pertama (1)
-  String pesan2;//pesan untuk baris kedua (2)
+  boolean isHasParam;//is has a Parameter
+  char* Messages_0;//pesan untuk baris pertama (1)
+  char* Messages_1;//pesan untuk baris kedua (2)
 }dataMenu;
 
 class AccessDataMenu{
@@ -78,25 +76,25 @@ class AccessDataMenu{
     String    _id;
 };//end of class
 
-class AccessParameter{
+class AccessParam{
+  
   public:
-    static unsigned char paramNbr;
-    static unsigned char getParamNbr(){
-      return paramNbr;
-    }
-    AccessParameter(String );
-    String toString(parameter);
-    void add(parameter);
-    parameter increaseParameter(parameter,int);
-    parameter decreaseParameter(parameter,int);
-    void setParameter(int,parameter);
-    parameter getParameter(int);
-    int getIndexParameter(parameter);
-    int getIndexMenu(int);
+    AccessParam(String);
+    void init(String, param);
+    JsonObject getJson();
+    param getParam();
+    String toString();
+    void updateJson(JsonObject);
+    void increaseParameter(int);
+    void decreaseParameter(int);
+    void info();
+
   private:
-    parameter  _parameter[MAX_MENU-1];
     String    _id;
-    void _checkAlarm(parameter);
+    StaticJsonDocument<192> _paramJson;
+    param _param;
+
+    void _checkAlarm();
 };//end of class
 
 #endif

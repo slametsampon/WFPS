@@ -7,18 +7,18 @@
 
 #include "Arduino.h"
 
-const int A_SECOND	= 1000; //1000 MILLI
-const int A_MINUTE	= 60000;  //60000 MILLI
+#define A_SECOND	1000 //1000 MILLI
+#define A_MINUTE	60000 //60000 MILLI
 
 class SequenceTimer
 {
   public:
-  SequenceTimer(String );
+    SequenceTimer(String );
 	void setPulsePeriod(long val);
 	long getPulsePeriod();
-  void setSetingMiliSecond(long val);
+    void setSetingMiliSecond(long val);
 	long getSetingMiliSecond();
-  void setSetingSecond(float val);
+    void setSetingSecond(float val);
 	float getSetingSecond();
 	boolean isMiliSecondEvent();
 	boolean isSecondEvent();
@@ -26,8 +26,8 @@ class SequenceTimer
 	boolean isAMinuteEvent();
 	void execute();
   private:
-  long _SetingMiliSecond;
-  long _SetingSecond;
+    long _SetingMiliSecond;
+    long _SetingSecond;
 	unsigned long _prevMilli,_prevSetMilli, _PrevSetASecond,_prevSetSecond,_prevAMinute;
 	boolean		_MiliSecondEvent;
 	boolean		_SecondEvent;

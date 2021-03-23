@@ -5,6 +5,7 @@
 
 /* Dependencies */
 #include "SequenceTimer.h"
+#include "Arduino.h"
 
 SequenceTimer::SequenceTimer(String id)
 {

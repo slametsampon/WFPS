@@ -1,9 +1,9 @@
 /*
-  KeyPad.h - Library untuk AnalogInput
+  keyPad.h - Library untuk keyPad
   Dibuat Oleh : Sam Feb 2021
 */
-#ifndef KeyPad_h
-#define KeyPad_h
+#ifndef keyPad_h
+#define keyPad_h
 
 #include "Arduino.h"
 #include "src\command\command.h"

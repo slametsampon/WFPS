@@ -5,7 +5,7 @@
  */
 
 /* Dependencies */
-#include "KeyPad.h"
+#include "keyPad.h"
 
 KeyPad::KeyPad(int pin):_pinAnalog(pin){
   //pinMode(_pinAnalog, INPUT_PULLUP);  // set pull-up on analog pin

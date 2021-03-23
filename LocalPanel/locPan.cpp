@@ -1,43 +1,43 @@
 /*
-  LocalPanel.h - Library untuk LocalPanel
+  locPan.h - Library untuk LocPan
   Dibuat Oleh : Sam March 18, 2021
 */
 
 /* Dependencies */
-#include "localPanel.h"
+#include "locPan.h"
 
 //global function
-LocalPanel::LocalPanel(String id):_id(id){
+LocPan::LocPan(String id):_id(id){
   _modeMenu = MODE_MENU_UTAMA;
 }
 
-void LocalPanel::info(){
+void LocPan::info(){
   Serial.println(_id);
 }
 
-void LocalPanel::attachCmdIn(command *cmdIn){
-  Serial.print("LocalPanel::attachCmdIn-");
+void LocPan::attachCmdIn(command *cmdIn){
+  Serial.print("LocPan::attachCmdIn-");
   Serial.println(cmdInNbr);
   _cmdInput[cmdInNbr] = cmdIn;
   cmdInNbr++;
 }
 
-void LocalPanel::attachView(ViewLcd *view){
-    Serial.println("LocalPanel::attachView(ViewLcd *view)");
+void LocPan::attachView(ViewLcd *view){
+    Serial.println("LocPan::attachView(ViewLcd *view)");
     _view = view;
   }
 
-void LocalPanel::attachModelMenu(AccessDataMenu *accessMenu){
-    Serial.println("LocalPanel::attachModelMenu(AccessDataMenu *accessMenu)");
+void LocPan::attachModelMenu(AccessDataMenu *accessMenu){
+    Serial.println("LocPan::attachModelMenu(AccessDataMenu *accessMenu)");
     _accessMenu = accessMenu;
   }
  
-void LocalPanel::attachModelParameter(AccessParam *accessParameter){
-    Serial.println("LocalPanel::attachModelParameter(AccessParam *accessParameter)");
+void LocPan::attachModelParameter(AccessParam *accessParameter){
+    Serial.println("LocPan::attachModelParameter(AccessParam *accessParameter)");
     _accessParameter = accessParameter;
   }
  
-void LocalPanel::menu(){
+void LocPan::menu(){
 
   char key = this->_getCommand();
 
@@ -60,7 +60,7 @@ void LocalPanel::menu(){
 
 //private function
 
-void LocalPanel::_menuMain(char key){
+void LocPan::_menuMain(char key){
   String keyStr = "";
   dataMenu menuData;
   int idx;//for index
@@ -105,7 +105,7 @@ void LocalPanel::_menuMain(char key){
     }
 }
 
-void LocalPanel::_menuParameter(char key){
+void LocPan::_menuParameter(char key){
   String keyStr = "";
   int idx;//for index
 
@@ -150,7 +150,7 @@ void LocalPanel::_menuParameter(char key){
     }
 }
 
-void LocalPanel::_menuChangeParameter(char key){
+void LocPan::_menuChangeParameter(char key){
   String keyStr = "";
   int idx, idxParam;
   param paramData = _accessParameter->getParam();
@@ -201,7 +201,7 @@ void LocalPanel::_menuChangeParameter(char key){
     }
 }
 
-char LocalPanel::_getCommand(){
+char LocPan::_getCommand(){
   char rawCmd = NO_KEY;
   for (int i=0; i < this->cmdInNbr; i++){
       rawCmd = _cmdInput[i]->ambilCode();
@@ -213,7 +213,7 @@ char LocalPanel::_getCommand(){
   return rawCmd;
 }
 
-void LocalPanel::_viewMenu(int index){
+void LocPan::_viewMenu(int index){
     dataMenu tempMenu;
     if(_prevMenuIndex != index){
       tempMenu = _accessMenu->read(index);
@@ -224,7 +224,7 @@ void LocalPanel::_viewMenu(int index){
     }
   }
 
-void LocalPanel::_sendMenu(int index){
+void LocPan::_sendMenu(int index){
     dataMenu tempMenu;
     if(_prevMenuIndex != index){
       tempMenu = _accessMenu->read(index);
@@ -237,7 +237,7 @@ void LocalPanel::_sendMenu(int index){
     }
   }
 
-void LocalPanel::_viewParameter(int index){
+void LocPan::_viewParameter(int index){
   //String paramStr;
   boolean isUpdate = false;
   param dataParam = _accessParameter->getParam();
@@ -302,7 +302,7 @@ void LocalPanel::_viewParameter(int index){
   }
 }
 
-void LocalPanel::_sendParameter(int index){
+void LocPan::_sendParameter(int index){
   
   String paramStr;
   boolean isUpdate = false;
@@ -370,7 +370,7 @@ void LocalPanel::_sendParameter(int index){
     }
   }
 
-int LocalPanel::_increaseIndex(){
+int LocPan::_increaseIndex(){
   switch (_modeMenu)
     {
       case MODE_MENU_UTAMA:
@@ -388,7 +388,7 @@ int LocalPanel::_increaseIndex(){
     }
 }
  
-int LocalPanel::_decreaseIndex(){
+int LocPan::_decreaseIndex(){
   switch (_modeMenu)
     {
       case MODE_MENU_UTAMA:
