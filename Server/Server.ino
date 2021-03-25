@@ -9,7 +9,11 @@
 #include <ESP8266WiFi.h>
 #include "uMQTTBroker.h"
 #include "SequenceTimer.h"
-#include "MqttBroker.h"
+#include "mqttBroker.h"
+
+//global variables
+
+boolean isWfpsParamUpdate = false;
 
 /*
  * Your WiFi config here
@@ -21,6 +25,8 @@ const char* password = "sampon170466";
 const unsigned long BLINK_TIME = 1000;
 
 bool WiFiAP = false;      // Do yo want the ESP as AP?
+const char* WFPS_VALUE = "WFPS/Value";
+const char* WFPS_PARAM = "WFPS/Param";
 
 MqttBroker mqttBroker("Broker");
 SequenceTimer   mainSequence("Sequence");
@@ -46,10 +52,12 @@ void setup()
   Serial.println("Starting MQTT broker");
   mqttBroker.init();
 
-/*
- * Subscribe to anything
- */
-  mqttBroker.subscribe("#");
+  /*
+  * Subscribe to anything
+  */
+  mqttBroker.subscribe(WFPS_VALUE);
+  mqttBroker.subscribe(WFPS_PARAM);
+
 }
 
 int counter = 0;
@@ -63,7 +71,9 @@ void loop()
     /*
     * Publish the counter value as String
     */
-    //mqttBroker.publish("broker/counter", (String)counter++);
+    if(isWfpsParamUpdate){
+        mqttBroker.publish(WFPS_PARAM, (String)counter++);
+    }
   }
 }
 
