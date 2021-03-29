@@ -12,7 +12,27 @@ KeyPad::KeyPad(int pin):_pinAnalog(pin){
   this->_prevKey = NO_KEY;
 }
 
-void KeyPad::Init(){}
+void KeyPad::info(){
+    Serial.println("KeyPad::info()");
+    String str;
+
+    str = String("_pinAnalog : " + _pinAnalog);
+    Serial.println(str);
+
+    str = String("VALUE_UP : " + VALUE_UP);
+    Serial.println(str);
+
+    str = String("VALUE_DOWN : " + VALUE_DOWN);
+    Serial.println(str);
+
+    str = String("VALUE_LEFT : " + VALUE_LEFT);
+    Serial.println(str);
+
+    str = String("VALUE_SELECT : " + VALUE_SELECT);
+    Serial.println(str);
+}
+
+void KeyPad::init(){}
 
 //function for getting keypad value
 int KeyPad::ambilNilai(){
@@ -25,19 +45,19 @@ char KeyPad::ambilCode(){
       int key = ambilNilai();
       char keyPad = NO_KEY;//Default key, No key
       char keyReturn = NO_KEY;//Default key, No key
-      if (key < 60) {
+      if (key < VALUE_RIGHT) {
         keyPad =  RIGHT;
       }
-      else if (key < 200) {
+      else if (key < VALUE_UP) {
         keyPad = UP;
       }
-      else if (key < 400){
+      else if (key < VALUE_DOWN){
         keyPad = DOWN;
       }
-      else if (key < 600){
+      else if (key < VALUE_LEFT){
         keyPad = LEFT;
       }
-      else if (key < 800){
+      else if (key < VALUE_SELECT){
         keyPad = SELECT;
       }
       

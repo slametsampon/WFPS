@@ -64,6 +64,7 @@ const int LED_RESET = 4;
             }
 
             void  info(){
+                Serial.println("LedAMR::info()");
                 String str;
                 str = String("_ledAuto \n");//with new line
                 str = String(str + _ledAuto->info());

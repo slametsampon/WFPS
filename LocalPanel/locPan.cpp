@@ -12,7 +12,10 @@ LocPan::LocPan(String id):_id(id){
 }
 
 void LocPan::info(){
+  Serial.println("LocPan::info()=>Local Panel System");
+  Serial.print("_id : ");
   Serial.println(_id);
+  Serial.println("");
 }
 
 void LocPan::attachCmdIn(command *cmdIn){

@@ -15,13 +15,14 @@ DipAddr::DipAddr(DigitalInput *addr0, DigitalInput *addr1, DigitalInput *addr2):
 
 int DipAddr::getAddr(){
     int addr0, addr1, addr2;
-    if (_addr0->isStatus(0)) addr0 = 1;
-    if (_addr1->isStatus(0)) addr2 = 2;
-    if (_addr2->isStatus(0)) addr2 = 4;
+    if (_addr0->isStatus()) addr0 = 1;
+    if (_addr1->isStatus()) addr1 = 2;
+    if (_addr2->isStatus()) addr2 = 4;
     return (addr0 + addr1 + addr2);
 }
 
 void DipAddr::info(){
+    Serial.println("DipAddr::info()");
     String str;
     str = String("_addr0 \n");//with new line
     str = String(str + _addr0->info());
@@ -35,4 +36,6 @@ void DipAddr::info(){
     str = String(str + _addr2->info());
     Serial.println(str);
     
+    Serial.print("Address : ");
+    Serial.println(this->getAddr());
 }

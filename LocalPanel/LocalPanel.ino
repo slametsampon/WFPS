@@ -57,27 +57,27 @@ DigitalOutput       ledAuto(PIN_LED_AUTO);
 DigitalOutput       ledManual(PIN_LED_MANUAL);
 DigitalOutput       ledReset(PIN_LED_RESET);
 DigitalOutput       lifeLed(LED_BUILTIN);//Pin 2 for Wemos D1
-DigitalInput       fireSensor(PIN_SENSOR);
-PbAMR           pbAMR(&pbAuto, &pbManual, &pbReset);
-LedAMR          ledAMR(&ledAuto, &ledManual, &ledReset);
-FPSys           fpSys("EoN-Fire System");
+DigitalInput        fireSensor(PIN_SENSOR);
+PbAMR               pbAMR(&pbAuto, &pbManual, &pbReset);
+LedAMR              ledAMR(&ledAuto, &ledManual, &ledReset);
+FPSys               fpSys("LocalPanel-Fire System");
 
 //Variables declaration for LocPan
-LiquidCrystal   lcd(LCD_RS,LCD_EN,LCD_D4,LCD_D5,LCD_D6,LCD_D7);
-KeyPad          keyPad(PIN_KEYPAD);//declare keypad
-serialCmd       serInput("Serial Command");
-DipAddr         eonAddr(&addr0, &addr1, &addr2);
-ViewLcd         view(lcd);//declare view, part of MVC pattern
-AccessDataMenu  accessMenu("Data Menu");//part of MVC pattern
-AccessParam     accessParameter("Parameter");//part of MVC pattern
-LocPan          locPan("EoN-locPan");
+LiquidCrystal       lcd(LCD_RS,LCD_EN,LCD_D4,LCD_D5,LCD_D6,LCD_D7);
+KeyPad              keyPad(PIN_KEYPAD);//declare keypad
+serialCmd           serInput("Serial Command");
+DipAddr             eonAddr(&addr0, &addr1, &addr2);
+ViewLcd             view(lcd);//declare view, part of MVC pattern
+AccessDataMenu      accessMenu("Data Menu");//part of MVC pattern
+AccessParam         accessParameter("Parameter");//part of MVC pattern
+LocPan              locPan("LocalPanel-locPan");//local panel
 
 //Variables declaration for CommSer
-CommSer         commSer("EoN-Serial");
+CommSer             commSer("LocalPanel-Serial");//Serail communication to/from EoN
 
 //Static member class should be initialized FIRST (IF NOT, WILL HAVE ERROR)
-unsigned char LocPan::cmdInNbr=0;
-unsigned char AccessDataMenu::menuNbr=0;
+unsigned char       LocPan::cmdInNbr=0;
+unsigned char       AccessDataMenu::menuNbr=0;
 
 //function declaration
 void initPbLed();
@@ -99,8 +99,10 @@ void setup() {
     fpSys.attachPbAMR(&pbAMR);
     fpSys.attachFireSensor(&fireSensor);
     fpSys.attachSolenoidValve(&solenoidValve);
+    fpSys.info();
 
     //attachment all peripherals for locPan
+    locPan.info();
     locPan.attachCmdIn(&keyPad);
     locPan.attachCmdIn(&serInput);
     locPan.attachView(&view);
@@ -108,6 +110,7 @@ void setup() {
     locPan.attachModelParameter(&accessParameter);
 
     //attachment all peripherals for locPan
+    commSer.info();
     commSer.attachModelParameter(&accessParameter);
 
     String str;
@@ -115,9 +118,6 @@ void setup() {
     str = String(str + lifeLed.info());
     Serial.println(str);
     
-    fpSys.info();
-    locPan.info();
-    commSer.info();
 }
 
 // the loop function runs over and over again forever
@@ -129,13 +129,13 @@ void loop() {
         //put process every second
     }
 
-    fpSys.execute();
-    locPan.menu();
-    commSer.execute();
+    //fpSys.execute();
+    //locPan.menu();
+    //commSer.execute();
 }
 
 void initPbLed(){
-    Serial.println("EoN : initPbLed()");
+    Serial.println("LocalPanel : initPbLed()");
 
     //initialization switch
     pbAuto.init("pbAuto");
@@ -159,7 +159,7 @@ void initPbLed(){
 void setupMenu(){
   dataMenu  dtMenu;
 
-  Serial.println("EoN-setupMenu()");
+  Serial.println("LocalPanel-setupMenu()");
 
   dtMenu.isHasParam = false;
   dtMenu.Messages_0 ="Fire Protection System";
@@ -175,7 +175,7 @@ void setupMenu(){
 
 void setupParameter(){
   param dtParam;
-  Serial.println("EoN-setupParameter()");
+  Serial.println("LocalPanel-setupParameter()");
 
   //fire Zone1.
   dtParam.unit = "%";

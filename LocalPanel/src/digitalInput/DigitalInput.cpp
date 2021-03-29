@@ -20,6 +20,11 @@ void DigitalInput::init(String id){
   _id = id;
 }
 
+boolean DigitalInput::isStatus(){
+  //HIGH when it's open, and LOW when it's pressed. it's INPUT_PULLUP
+  return (!digitalRead(_pin));
+}
+
 boolean DigitalInput::isStatus(unsigned long holdTime){
   boolean validSts = false;
   //HIGH when it's open, and LOW when it's pressed. it's INPUT_PULLUP

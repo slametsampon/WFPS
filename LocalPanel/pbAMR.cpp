@@ -67,6 +67,7 @@ String PbAMR::status(){
 }
 
 void PbAMR::info(){
+    Serial.println("PbAMR::info()");
     String str;
     str = String("_pbAuto \n");//with new line
     str = String(str + _pbAuto->info());

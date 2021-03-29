@@ -2,6 +2,7 @@
   commSer.h - Library untuk commSer
   Ini adalah bagian dari MVC (Model View Control) pattern design
   Dibuat Oleh : Sam March 22, 2021
+  {"Test":"test Value"}
 */
 
 #include    "commSer.h"
@@ -9,7 +10,10 @@
 CommSer::CommSer(String id):_id(id){}
 
 void CommSer::info(){
-    Serial.println(_id);
+  Serial.println("CommSer::info()=>Communictaion Serial System");
+  Serial.print("_id : ");
+  Serial.println(_id);
+  Serial.println("");
 }
 
 void CommSer::attachModelParameter(AccessParam *accessParameter){
@@ -75,5 +79,6 @@ JsonObject CommSer::getParameter(){
 void CommSer::execute(){
 
   this->getParameter();
+  serializeJson(this->getParameter(), Serial);// it is just for testing
     
 }

@@ -9,11 +9,13 @@ FPSys::FPSys(String id):_id(id){}
 
 void FPSys::info(){
     Serial.println("FPSys::info()=>Fire Protection System");
+    
     _dipAddr->info();
     _pbAMR->info();
     _ledAMR->info();
     Serial.println(_solenoidValve->info());
     Serial.println(_fireSensor->info());
+    Serial.println("");
 }
 
 void FPSys::attachLedAMR(LedAMR *ledAMR){

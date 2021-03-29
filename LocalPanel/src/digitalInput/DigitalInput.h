@@ -17,6 +17,7 @@ const boolean REVERSE_DI = false;
             void init(boolean);
             void init(String);
             boolean isStatus(unsigned long);
+            boolean isStatus();
             String info();
         private:
             int  _pin;

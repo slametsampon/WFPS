@@ -9,13 +9,19 @@
 #include "src\command\command.h"
 
 const int DEBOUNCE_DELAY = 150;//milli second
+const int VALUE_RIGHT = 60;
+const int VALUE_UP = 200;
+const int VALUE_DOWN = 400;
+const int VALUE_LEFT = 600;
+const int VALUE_SELECT = 800;
 
 class KeyPad : public command{
   public:
     KeyPad(int);//constructor
-    void Init();//Initialization
+    void init();//Initialization
     int ambilNilai();//function for getting keypad value
     char ambilCode();//Convert keypad value to char
+    void info();
   private:
     int _pinAnalog;
     unsigned long _prevMilli;
