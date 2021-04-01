@@ -35,14 +35,34 @@ void KeyPad::info(){
 void KeyPad::init(){}
 
 //function for getting keypad value
-int KeyPad::ambilNilai(){
+int KeyPad::getValue(){
       int keyVal = analogRead(_pinAnalog);
       return keyVal;
   }
 
+bool KeyPad::isValid(char cmdVal){
+  bool flVal = false;
+  switch (cmdVal){
+    
+    //Keypad validation
+    case UP: 
+    case DOWN:
+    case RIGHT:
+    case LEFT:
+    case SELECT:
+      flVal = true;
+      break;
+    
+    //Other validation bluetooth, esp etc...
+    default:
+      break;
+  }
+  return flVal;
+}
+
 //Convert keypad value to char with debouncing mechanism
-char KeyPad::ambilCode(){
-      int key = ambilNilai();
+char KeyPad::getCode(){
+      int key = getValue();
       char keyPad = NO_KEY;//Default key, No key
       char keyReturn = NO_KEY;//Default key, No key
       if (key < VALUE_RIGHT) {

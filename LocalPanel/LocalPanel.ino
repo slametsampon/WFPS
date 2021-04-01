@@ -2,14 +2,15 @@
 #include <LiquidCrystal.h>//for LCD
 #include <RTClib.h>
 
-#include    "src\analogInput\param.h"
+#include    "src\global\param.h"
 #include    "src\sequenceTimer\sequenceTimer.h"
 #include    "src\digitalInput\digitalInput.h"
 #include    "src\digitalOutput\DigitalOutput.h"
+#include    "src\keyPad\KeyPad.h"
+#include    "src\serDevCmd\serDevCmd.h"
 
 #include    "model.h"
 #include    "pbAMR.h"
-#include    "KeyPad.h"
 #include    "ledAMR.h"
 #include    "dipAddr.h"
 
@@ -29,11 +30,12 @@ const int LCD_D7            = 7;
 const int PIN_PB_AUTO       = 23; 
 const int PIN_PB_MANUAL     = 25; 
 const int PIN_PB_RESET      = 27; 
+const int PIN_PB_TEST       = 29; 
 
-const int PIN_ADDR0         = 29; 
-const int PIN_ADDR1         = 31; 
-const int PIN_ADDR2         = 33; 
-const int PIN_SENSOR        = 35; 
+const int PIN_ADDR0         = 31; 
+const int PIN_ADDR1         = 33; 
+const int PIN_ADDR2         = 35; 
+
 
 const int PIN_LED_AUTO      = 22; 
 const int PIN_LED_MANUAL    = 24; 
@@ -49,15 +51,18 @@ SequenceTimer SequenceMain("Sequence");
 DigitalInput        addr0(PIN_ADDR0);//use pin PIN_ADDR0 for addressing
 DigitalInput        addr1(PIN_ADDR1);//use pin PIN_ADDR1 for addressing
 DigitalInput        addr2(PIN_ADDR2);//use pin PIN_ADDR2 for addressing
+
 DigitalInput        pbAuto(PIN_PB_AUTO);//use pin PIN_PB_AUTO for P/B
 DigitalInput        pbManual(PIN_PB_MANUAL);//use pin PIN_PB_MANUAL for P/B
 DigitalInput        pbReset(PIN_PB_RESET);//use pin PIN_PB_RESET for P/B
+DigitalInput        pbTest(PIN_PB_TEST);
+
 DigitalOutput       solenoidValve(PIN_SOLENOID_VALVE);
 DigitalOutput       ledAuto(PIN_LED_AUTO);
 DigitalOutput       ledManual(PIN_LED_MANUAL);
 DigitalOutput       ledReset(PIN_LED_RESET);
 DigitalOutput       lifeLed(LED_BUILTIN);//Pin 2 for Wemos D1
-DigitalInput        fireSensor(PIN_SENSOR);
+
 PbAMR               pbAMR(&pbAuto, &pbManual, &pbReset);
 LedAMR              ledAMR(&ledAuto, &ledManual, &ledReset);
 FPSys               fpSys("fpSys-Fire System");
@@ -97,7 +102,8 @@ void setup() {
     fpSys.attachDipAddr(&eonAddr);
     fpSys.attachLedAMR(&ledAMR);
     fpSys.attachPbAMR(&pbAMR);
-    fpSys.attachFireSensor(&fireSensor);
+    //fpSys.attachFireSensor(&pbTest);
+
     fpSys.attachSolenoidValve(&solenoidValve);
     fpSys.info();
 
@@ -141,13 +147,13 @@ void initPbLed(){
     pbAuto.init(REVERSE_DI);
     pbManual.init(REVERSE_DI);
     pbReset.init(REVERSE_DI);
-    solenoidValve.init(FORWARD_DO);
+    pbTest.init(REVERSE_DI);
 
     addr0.init(REVERSE_DI);
     addr1.init(REVERSE_DI);
     addr2.init(REVERSE_DI);
 
-    fireSensor.init("fireSensor");
+    solenoidValve.init(FORWARD_DO);
 
     //initialization LEDs
     lifeLed.init(FORWARD_DO);

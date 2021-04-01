@@ -207,7 +207,7 @@ void LocPan::_menuChangeParameter(char key){
 char LocPan::_getCommand(){
   char rawCmd = NO_KEY;
   for (int i=0; i < this->cmdInNbr; i++){
-      rawCmd = _cmdInput[i]->ambilCode();
+      rawCmd = _cmdInput[i]->getCode();
       if (rawCmd != NO_KEY){
           _prevCmd = rawCmd;
           break;

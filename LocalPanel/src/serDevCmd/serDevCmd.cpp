@@ -4,9 +4,22 @@
  */
 
 /* Dependencies */
-#include "command.h"
+#include "serDevCmd.h"
 
-bool command::isValid(char cmdVal){
+
+serialCmd::serialCmd(String id): _id(id){
+}
+
+char serialCmd::getCode(){
+  char serialCmd = NO_KEY;
+  if (Serial.available() > 0) {
+      serialCmd = Serial.read();
+      if (!serialCmd::isValid(serialCmd))serialCmd = NO_KEY;
+  }  
+  return serialCmd;
+}
+
+bool serialCmd::isValid(char cmdVal){
   bool flVal = false;
   switch (cmdVal){
     
@@ -26,22 +39,10 @@ bool command::isValid(char cmdVal){
   return flVal;
 }
 
-serialCmd::serialCmd(String id): _id(id){
-}
-
-char serialCmd::ambilCode(){
-  char serialCmd = NO_KEY;
-  if (Serial.available() > 0) {
-      serialCmd = Serial.read();
-      if (!command::isValid(serialCmd))serialCmd = NO_KEY;
-  }  
-  return serialCmd;
-}
-
 bluetoothCmd::bluetoothCmd(String id): _id(id){
 }
 
-char bluetoothCmd::ambilCode(){
+char bluetoothCmd::getCode(){
   char bluetoothCmd = NO_KEY;
   /*
   if (Serial1.available() > 0) {
@@ -53,3 +54,24 @@ char bluetoothCmd::ambilCode(){
   */
   return bluetoothCmd;
 }
+
+bool bluetoothCmd::isValid(char cmdVal){
+  bool flVal = false;
+  switch (cmdVal){
+    
+    //Keypad validation
+    case UP: 
+    case DOWN:
+    case RIGHT:
+    case LEFT:
+    case SELECT:
+      flVal = true;
+      break;
+    
+    //Other validation bluetooth, esp etc...
+    default:
+      break;
+  }
+  return flVal;
+}
+

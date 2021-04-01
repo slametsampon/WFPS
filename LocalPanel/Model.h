@@ -45,7 +45,7 @@ float increment = doc["increment"]; // 1.1
 
 #include "Arduino.h"
 #include  <ArduinoJson.h>
-#include "src/analogInput/param.h"
+#include "src\global\param.h"
 
 const int MAX_MENU = 3;
 const int PARAMETER_VALUE = 0;

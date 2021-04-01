@@ -9,8 +9,8 @@
 #include  "Arduino.h"
 #include  "viewLcd.h"
 #include  "Model.h"
-#include  "src\command\command.h"
-#include  "src\analogInput\param.h"
+#include  "src\keyPad\KeyPad.h"
+#include  "src\global\param.h"
 
 const int MODE_MENU_UTAMA = 1;
 const int MODE_MENU_PARAMETER = 2;

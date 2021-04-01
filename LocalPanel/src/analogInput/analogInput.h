@@ -6,7 +6,7 @@
 #define analogInput_h
 
 #include "Arduino.h"
-#include "param.h"
+#include "..\global\param.h"
 
     class AnalogInput{
         public:
