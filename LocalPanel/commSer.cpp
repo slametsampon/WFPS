@@ -79,6 +79,6 @@ JsonObject CommSer::getParameter(){
 void CommSer::execute(){
 
   this->getParameter();
-  serializeJson(this->getParameter(), Serial);// it is just for testing
+  //serializeJson(this->getParameter(), Serial);// it is just for testing
     
 }

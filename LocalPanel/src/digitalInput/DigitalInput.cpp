@@ -8,27 +8,40 @@
 #include "digitalInput.h"
 
 DigitalInput::DigitalInput(int pin):_pin(pin){}
+
 void DigitalInput::init(boolean typ){
-  if (typ == FORWARD_DI)pinMode(_pin, INPUT);
-  else pinMode(_pin, INPUT_PULLUP);
   _id = "DigitalInput";
-  _initTyp = true;
+
+  if (typ == FORWARD_DI){
+    pinMode(_pin, INPUT);
+    _digTyp = FORWARD_DI;
+  }
+  else {
+    pinMode(_pin, INPUT_PULLUP);
+    _digTyp = REVERSE_DI;
+  }
 }
 
 void DigitalInput::init(String id){
-  if (!_initTyp)pinMode(_pin, INPUT_PULLUP);
   _id = id;
+  
+  if (_digTyp == REVERSE_DI)pinMode(_pin, INPUT_PULLUP);
+
+  else pinMode(_pin, INPUT);
 }
 
 boolean DigitalInput::isStatus(){
-  //HIGH when it's open, and LOW when it's pressed. it's INPUT_PULLUP
-  return (!digitalRead(_pin));
+
+  if (_digTyp == REVERSE_DI)return (!digitalRead(_pin));
+
+  else return (digitalRead(_pin));
+  
 }
 
 boolean DigitalInput::isStatus(unsigned long holdTime){
   boolean validSts = false;
-  //HIGH when it's open, and LOW when it's pressed. it's INPUT_PULLUP
-  if (!digitalRead(_pin)){
+
+  if (this->isStatus()){
     if (_prevMilli == 0){
       _prevMilli = millis();//Transition for new command
     }

@@ -14,11 +14,11 @@
 DipAddr::DipAddr(DigitalInput *addr0, DigitalInput *addr1, DigitalInput *addr2): _addr0(addr0), _addr1(addr1), _addr2(addr2){}
 
 int DipAddr::getAddr(){
-    int addr0, addr1, addr2;
-    if (_addr0->isStatus()) addr0 = 1;
-    if (_addr1->isStatus()) addr1 = 2;
-    if (_addr2->isStatus()) addr2 = 4;
-    return (addr0 + addr1 + addr2);
+    int addr = 0;
+    if (_addr0->isStatus()) addr += 1;
+    if (_addr1->isStatus()) addr += 2;
+    if (_addr2->isStatus()) addr += 4;
+    return (addr);
 }
 
 void DipAddr::info(){

@@ -60,7 +60,7 @@ DigitalOutput       lifeLed(LED_BUILTIN);//Pin 2 for Wemos D1
 DigitalInput        fireSensor(PIN_SENSOR);
 PbAMR               pbAMR(&pbAuto, &pbManual, &pbReset);
 LedAMR              ledAMR(&ledAuto, &ledManual, &ledReset);
-FPSys               fpSys("LocalPanel-Fire System");
+FPSys               fpSys("fpSys-Fire System");
 
 //Variables declaration for LocPan
 LiquidCrystal       lcd(LCD_RS,LCD_EN,LCD_D4,LCD_D5,LCD_D6,LCD_D7);
@@ -70,10 +70,10 @@ DipAddr             eonAddr(&addr0, &addr1, &addr2);
 ViewLcd             view(lcd);//declare view, part of MVC pattern
 AccessDataMenu      accessMenu("Data Menu");//part of MVC pattern
 AccessParam         accessParameter("Parameter");//part of MVC pattern
-LocPan              locPan("LocalPanel-locPan");//local panel
+LocPan              locPan("LocPan-Local Panel");//local panel
 
 //Variables declaration for CommSer
-CommSer             commSer("LocalPanel-Serial");//Serail communication to/from EoN
+CommSer             commSer("commSer-Communication Serial");//Serail communication to/from EoN
 
 //Static member class should be initialized FIRST (IF NOT, WILL HAVE ERROR)
 unsigned char       LocPan::cmdInNbr=0;
@@ -86,7 +86,7 @@ void setupMenu();
 
 void setup() {
 
-    Serial.begin(115200);
+    Serial.begin(9600);
     delay(500);
 
     initPbLed();
@@ -138,22 +138,22 @@ void initPbLed(){
     Serial.println("LocalPanel : initPbLed()");
 
     //initialization switch
-    pbAuto.init("pbAuto");
-    pbManual.init("pbManual");
-    pbReset.init("pbReset");
+    pbAuto.init(REVERSE_DI);
+    pbManual.init(REVERSE_DI);
+    pbReset.init(REVERSE_DI);
     solenoidValve.init(FORWARD_DO);
 
-    addr0.init("addr0");
-    addr1.init("addr1");
-    addr2.init("addr2");
+    addr0.init(REVERSE_DI);
+    addr1.init(REVERSE_DI);
+    addr2.init(REVERSE_DI);
 
     fireSensor.init("fireSensor");
 
     //initialization LEDs
-    lifeLed.init("lifeLed");
-    ledAuto.init("ledAuto");
-    ledManual.init("ledManual");
-    ledReset.init("ledReset");
+    lifeLed.init(FORWARD_DO);
+    ledAuto.init(FORWARD_DO);
+    ledManual.init(FORWARD_DO);
+    ledReset.init(FORWARD_DO);
 }
 
 void setupMenu(){

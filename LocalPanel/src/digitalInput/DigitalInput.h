@@ -23,6 +23,6 @@ const boolean REVERSE_DI = false;
             int  _pin;
             unsigned long  _prevMilli;
             String  _id;
-            boolean _initTyp;
+            boolean _digTyp = REVERSE_DI;
     };
 #endif
