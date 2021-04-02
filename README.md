@@ -11,5 +11,5 @@ WFPS - Wireless Fire Protection System
 ## [Hardware - concept](https://github.com/slametsampon/WFPS/blob/main/resources/WFPS-HW.jpg)
 
 ## [Server Specifications](https://github.com/slametsampon/WFPS/blob/main/Server/Server-Specification.md)
-## [LocalPanel Specifications](https://github.com/slametsampon/WFPS/blob/main/LocalPanel/LocalPanel-Specification.md)
+## [LocalPanel Specifications](https://github.com/slametsampon/WFPS/blob/main/aLocalPanel/LocalPanel-Specification.md)
 ## [EoN Specifications](https://github.com/slametsampon/WFPS/blob/main/EoN/EoN-Specification.md)
