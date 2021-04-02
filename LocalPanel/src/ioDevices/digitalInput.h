@@ -8,8 +8,7 @@
 #define digitalInput_h
 
 #include "Arduino.h"
-const boolean FORWARD_DI = true;
-const boolean REVERSE_DI = false;
+#include "signalConst.h"
 
     class DigitalInput{
         public: 
@@ -18,11 +17,11 @@ const boolean REVERSE_DI = false;
             void init(String);
             boolean isStatus(unsigned long);
             boolean isStatus();
-            String info();
+            void info();
         private:
             int  _pin;
             unsigned long  _prevMilli;
             String  _id;
-            boolean _digTyp = REVERSE_DI;
+            boolean _digTyp = REVERSE_TYPE;
     };
 #endif

@@ -3,19 +3,16 @@
   By : Sam March 03, 2021
 
 */
-#include "FPSys.h"
+#include "fpSys.h"
 
 FPSys::FPSys(String id):_id(id){}
 
 void FPSys::info(){
     Serial.println("FPSys::info()=>Fire Protection System");
     
-    _dipAddr->info();
     _pbAMR->info();
     _ledAMR->info();
-    Serial.println(_solenoidValve->info());
-    Serial.println(_fireSensor->info());
-    Serial.println("");
+    _solenoidValve->info();
 }
 
 void FPSys::attachLedAMR(LedAMR *ledAMR){
@@ -26,11 +23,6 @@ void FPSys::attachLedAMR(LedAMR *ledAMR){
 void FPSys::attachPbAMR(PbAMR *pbAMR){
     Serial.println("FPSys::attachPbAMR(PbAMR *pbAMR)");
     _pbAMR = pbAMR;
-}
-
-void FPSys::attachDipAddr(DipAddr *dipAddr){
-    Serial.println("FPSys::attachDipAddr(DipAddr *dipAddr)");
-    _dipAddr = dipAddr;
 }
 
 void FPSys::attachFireSensor(DigitalInput *fireSensor){

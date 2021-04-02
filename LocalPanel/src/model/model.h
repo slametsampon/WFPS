@@ -45,16 +45,8 @@ float increment = doc["increment"]; // 1.1
 
 #include "Arduino.h"
 #include  <ArduinoJson.h>
-#include "src\global\param.h"
-
-const int MAX_MENU = 3;
-const int PARAMETER_VALUE = 0;
-const int PARAMETER_LOW_RANGE = 1;
-const int PARAMETER_HIGH_RANGE = 2;
-const int PARAMETER_LOW_LIMIT = 3;
-const int PARAMETER_HIGH_LIMIT = 4;
-const int PARAMETER_INCREMENT = 5;
-const float DELTA_INCREMENT = 0.1;
+#include "..\global\param.h"
+#include "..\global\localPanelConst.h"
 
 typedef struct dataMenu{
   boolean isHasParam;//is has a Parameter

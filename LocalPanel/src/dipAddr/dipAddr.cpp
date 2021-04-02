@@ -23,18 +23,15 @@ int DipAddr::getAddr(){
 
 void DipAddr::info(){
     Serial.println("DipAddr::info()");
-    String str;
-    str = String("_addr0 \n");//with new line
-    str = String(str + _addr0->info());
-    Serial.println(str);
-
-    str = String("_addr1 \n");//with new line
-    str = String(str + _addr1->info());
-    Serial.println(str);
     
-    str = String("_addr2 \n");//with new line
-    str = String(str + _addr2->info());
-    Serial.println(str);
+    Serial.println("_addr0");
+    _addr0->info();
+
+    Serial.println("_addr1");
+    _addr1->info();
+    
+    Serial.println("_addr2");
+    _addr2->info();
     
     Serial.print("Address : ");
     Serial.println(this->getAddr());

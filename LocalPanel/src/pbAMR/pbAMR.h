@@ -18,7 +18,7 @@ const int PB_RESET = 4;
 //const unsigned long DEBOUNCE_PB = 150;//milli second
 
 #include "Arduino.h"
-#include "src\digitalInput\digitalInput.h"
+#include "..\ioDevices\digitalInput.h"
 
     class PbAMR{
         public:

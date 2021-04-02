@@ -12,7 +12,7 @@
 #define dipAddr_h
 
 #include "Arduino.h"
-#include "src\digitalInput\digitalInput.h"
+#include "..\ioDevices\digitalInput.h"
 
     class DipAddr{
         public:

@@ -8,14 +8,31 @@
 
 //global function
 LocPan::LocPan(String id):_id(id){
-  _modeMenu = MODE_MENU_UTAMA;
+  _modeMenu = MODE_MENU_MAIN;
+  _menuIndex = 0;
+
+  this->_initPrevIndex();
+
+}
+
+void LocPan::attachDipAddr(DipAddr *dipAddr){
+    Serial.println("LocPan::attachDipAddr(DipAddr *dipAddr)");
+    _dipAddr = dipAddr;
+}
+
+int LocPan::getAddress(){
+  return _dipAddr->getAddr();
 }
 
 void LocPan::info(){
   Serial.println("LocPan::info()=>Local Panel System");
   Serial.print("_id : ");
   Serial.println(_id);
-  Serial.println("");
+
+  Serial.print("Fire Zone : ");
+  Serial.println(_dipAddr->getAddr());
+
+  _dipAddr->info();
 }
 
 void LocPan::attachCmdIn(command *cmdIn){
@@ -46,13 +63,13 @@ void LocPan::menu(){
 
   switch (_modeMenu)
     {
-      case MODE_MENU_UTAMA:
+      case MODE_MENU_MAIN:
         this->_menuMain(key);
         break;
       case MODE_MENU_PARAMETER:
         this->_menuParameter(key);
         break;
-      case MODE_UBAH_PARAMETER:
+      case MODE_CHANGE_PARAMETER:
         this->_menuChangeParameter(key);
         break;
       case 'N':
@@ -63,8 +80,12 @@ void LocPan::menu(){
 
 //private function
 
+void LocPan::_initPrevIndex(){
+  _prevMenuIndex = DEFAULT_INDEX;//default value
+  _prevParamIndex = DEFAULT_INDEX;//default value
+}
+
 void LocPan::_menuMain(char key){
-  String keyStr = "";
   dataMenu menuData;
   int idx;//for index
 
@@ -98,6 +119,7 @@ void LocPan::_menuMain(char key){
           menuData = _accessMenu->read(this->_menuIndex);
           if (menuData.isHasParam){
             _modeMenu = MODE_MENU_PARAMETER;
+            this->_initPrevIndex();
             this->_paramIndex = PARAMETER_VALUE;
             this->menu();
           }
@@ -109,13 +131,12 @@ void LocPan::_menuMain(char key){
 }
 
 void LocPan::_menuParameter(char key){
-  String keyStr = "";
   int idx;//for index
 
   if(this->_paramIndex == PARAMETER_VALUE){
     idx = this->_paramIndex;
-    this->_sendMenu(idx);//kirim parameter ke serial port
-    this->_viewMenu(idx);//tampilkan parameter ke lcd
+    this->_sendParameter(idx);//kirim parameter ke serial port
+    this->_viewParameter(idx);//tampilkan parameter ke lcd
   }
 
   switch (key)
@@ -137,13 +158,13 @@ void LocPan::_menuParameter(char key){
         break;
       case 'L':
         //kembali ke menu utama
-        _modeMenu = MODE_MENU_UTAMA;
+        _modeMenu = MODE_MENU_MAIN;
         this->_menuIndex = 0;
         this->menu();
         break;
       case 'R':
         //ke menu ubah parameter
-        _modeMenu = MODE_UBAH_PARAMETER;
+        _modeMenu = MODE_CHANGE_PARAMETER;
         this->menu();
         //this->_menuUbahParameter(paramData, NO_KEY);
         break;
@@ -154,7 +175,6 @@ void LocPan::_menuParameter(char key){
 }
 
 void LocPan::_menuChangeParameter(char key){
-  String keyStr = "";
   int idx, idxParam;
   param paramData = _accessParameter->getParam();
 
@@ -263,7 +283,7 @@ void LocPan::_viewParameter(int index){
     if(this->_modeMenu == MODE_MENU_PARAMETER){
       _view->viewMessage(0,0,_accessParameter->toString());
     }
-    else if(this->_modeMenu == MODE_UBAH_PARAMETER){
+    else if(this->_modeMenu == MODE_CHANGE_PARAMETER){
       _view->viewMessage(0,0,"Change Parameter");
     }
 
@@ -325,7 +345,7 @@ void LocPan::_sendParameter(int index){
     if(this->_modeMenu == MODE_MENU_PARAMETER){
       Serial.println(_accessParameter->toString());
     }
-    else if(this->_modeMenu == MODE_UBAH_PARAMETER){
+    else if(this->_modeMenu == MODE_CHANGE_PARAMETER){
       Serial.println("Change Parameter");
     }
 
@@ -376,7 +396,7 @@ void LocPan::_sendParameter(int index){
 int LocPan::_increaseIndex(){
   switch (_modeMenu)
     {
-      case MODE_MENU_UTAMA:
+      case MODE_MENU_MAIN:
         if (_menuIndex < (AccessDataMenu::getmenuNbr()-1)) _menuIndex++;
         else _menuIndex = 0;
         return _menuIndex;
@@ -394,7 +414,7 @@ int LocPan::_increaseIndex(){
 int LocPan::_decreaseIndex(){
   switch (_modeMenu)
     {
-      case MODE_MENU_UTAMA:
+      case MODE_MENU_MAIN:
         if (_menuIndex > 0) _menuIndex--;
         else _menuIndex = AccessDataMenu::getmenuNbr()-1;
         return _menuIndex;
@@ -404,7 +424,7 @@ int LocPan::_decreaseIndex(){
         else _paramIndex = PARAMETER_INCREMENT;
         return _paramIndex;
         break;
-      case MODE_UBAH_PARAMETER:
+      case MODE_CHANGE_PARAMETER:
         //Tempatkan menu di sini
         break;
       default:

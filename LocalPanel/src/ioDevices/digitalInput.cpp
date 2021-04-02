@@ -12,27 +12,27 @@ DigitalInput::DigitalInput(int pin):_pin(pin){}
 void DigitalInput::init(boolean typ){
   _id = "DigitalInput";
 
-  if (typ == FORWARD_DI){
+  if (typ == FORWARD_TYPE){
     pinMode(_pin, INPUT);
-    _digTyp = FORWARD_DI;
+    _digTyp = FORWARD_TYPE;
   }
   else {
     pinMode(_pin, INPUT_PULLUP);
-    _digTyp = REVERSE_DI;
+    _digTyp = REVERSE_TYPE;
   }
 }
 
 void DigitalInput::init(String id){
   _id = id;
   
-  if (_digTyp == REVERSE_DI)pinMode(_pin, INPUT_PULLUP);
+  if (_digTyp == REVERSE_TYPE)pinMode(_pin, INPUT_PULLUP);
 
   else pinMode(_pin, INPUT);
 }
 
 boolean DigitalInput::isStatus(){
 
-  if (_digTyp == REVERSE_DI)return (!digitalRead(_pin));
+  if (_digTyp == REVERSE_TYPE)return (!digitalRead(_pin));
 
   else return (digitalRead(_pin));
   
@@ -55,19 +55,17 @@ boolean DigitalInput::isStatus(unsigned long holdTime){
   return validSts;
 }
 
-String DigitalInput::info(){
-  String str;
-  str = String("Device : " + _id);
-  str = String(str + "\n");//new line
+void DigitalInput::info(){
 
-  str = String(str + "Pin : ");
-  str = String(str + _pin);
-  str = String(str + "\n");//new line
+  Serial.print("Device : ");
+  Serial.println(_id);
 
-  str = String(str + "Value : ");
-  if (digitalRead(_pin)) str = String(str + "On \n");//with new line
-  else str = String(str + "Off \n");//with new line
+  Serial.print("Pin : ");
+  Serial.println(_pin);
 
-  return str;
+  Serial.print("Value : ");
+  if (this->isStatus()) Serial.println("On");
+  else Serial.println("Off");
+
 }
 

@@ -69,16 +69,15 @@ String PbAMR::status(){
 void PbAMR::info(){
     Serial.println("PbAMR::info()");
     String str;
-    str = String("_pbAuto \n");//with new line
-    str = String(str + _pbAuto->info());
+
+    Serial.println("_pbAuto");
+    _pbAuto->info();
     Serial.println(str);
 
-    str = String("_pbManual \n");//with new line
-    str = String(str + _pbManual->info());
-    Serial.println(str);
+    Serial.println("_pbManual");
+    _pbManual->info();
     
-    str = String("_pbReset \n");//with new line
-    str = String(str + _pbReset->info());
-    Serial.println(str);
+    Serial.println("_pbReset");
+    _pbReset->info();
     
 }

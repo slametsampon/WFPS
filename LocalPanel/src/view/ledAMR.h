@@ -20,7 +20,7 @@ const int LED_RESET = 4;
 //const unsigned long DEBOUNCE_PB = 150;//milli second
 
 #include "Arduino.h"
-#include "src\digitalOutput\DigitalOutput.h"
+#include "..\ioDevices\DigitalOutput.h"
 
     class LedAMR{
         public:
@@ -65,18 +65,15 @@ const int LED_RESET = 4;
 
             void  info(){
                 Serial.println("LedAMR::info()");
-                String str;
-                str = String("_ledAuto \n");//with new line
-                str = String(str + _ledAuto->info());
-                Serial.println(str);
 
-                str = String("_ledManual \n");//with new line
-                str = String(str + _ledManual->info());
-                Serial.println(str);
+                Serial.println("_ledAuto");
+                _ledAuto->info();
+
+                Serial.println("_ledManual");
+                _ledManual->info();
                 
-                str = String("_ledReset \n");//with new line
-                str = String(str + _ledReset->info());
-                Serial.println(str);
+                Serial.println("_ledReset");
+                _ledReset->info();
                 
             }
         private:

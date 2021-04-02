@@ -7,14 +7,12 @@
 #define locPan_h
 
 #include  "Arduino.h"
-#include  "viewLcd.h"
-#include  "Model.h"
-#include  "src\keyPad\KeyPad.h"
+#include  "src\model\model.h"
+#include  "src\view\viewLcd.h"
+#include  "src\keyPad\keyPad.h"
+#include  "src\dipAddr\dipAddr.h"
 #include  "src\global\param.h"
-
-const int MODE_MENU_UTAMA = 1;
-const int MODE_MENU_PARAMETER = 2;
-const int MODE_UBAH_PARAMETER = 3;
+#include  "src\global\localPanelConst.h"
 
 class LocPan
 {
@@ -24,10 +22,12 @@ class LocPan
       return cmdInNbr;
     }
     LocPan(String);//constructor
+    void attachDipAddr(DipAddr*);//penggunaan pointer ini sangat mutlak (JIKA TIDAK ERROR !!!!)
     void attachCmdIn(command*);//Pasang command, penggunaan pointer ini sangat mutlak (JIKA TIDAK ERROR !!!!)
     void attachView(ViewLcd*);//Pasang View, penggunaan pointer ini sangat mutlak (JIKA TIDAK ERROR !!!!)
     void attachModelMenu(AccessDataMenu*);//Pasang Model menu, penggunaan pointer ini sangat mutlak (JIKA TIDAK ERROR !!!!)
     void attachModelParameter(AccessParam*);//Pasang Model parameter, penggunaan pointer ini sangat mutlak (JIKA TIDAK ERROR !!!!)
+    int getAddress();
     void menu();
     void info();
 
@@ -37,8 +37,9 @@ class LocPan
     AccessParam *_accessParameter;
     command *_cmdInput[MAX_CMD_INPUT];
     ViewLcd    *_view;
+    DipAddr *_dipAddr;
     char _prevCmd;
-    int _modeMenu = MODE_MENU_UTAMA;
+    int _modeMenu = MODE_MENU_MAIN;
     int _menuIndex, _prevMenuIndex, _paramIndex, _prevParamIndex;
     boolean _isParamChanged, _isSaved;
 
@@ -52,5 +53,6 @@ class LocPan
     void _menuMain(char);
     void _menuParameter(char);
     void _menuChangeParameter(char);
+    void _initPrevIndex();
 };//end of class
 #endif

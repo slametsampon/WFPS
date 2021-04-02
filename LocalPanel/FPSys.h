@@ -10,18 +10,14 @@
 //const unsigned long DEBOUNCE_PB = 150;//milli second
 
 #include "Arduino.h"
-#include "ledAMR.h"
-#include "pbAMR.h"
-#include "dipAddr.h"
-#include "src\digitalOutput\DigitalOutput.h"
-#include "src\digitalInput\digitalInput.h"
+#include "src\view\ledAMR.h"
+#include "src\pbAMR\pbAMR.h"
 
     class FPSys{
         
         public:
             FPSys(String);
             void info();
-            void attachDipAddr(DipAddr*);
             void attachLedAMR(LedAMR*);
             void attachPbAMR(PbAMR*);
             void attachFireSensor(DigitalInput*);
@@ -33,7 +29,6 @@
 
             LedAMR *_ledAMR;
             PbAMR *_pbAMR;
-            DipAddr *_dipAddr;
             DigitalInput *_fireSensor;
             DigitalOutput   *_solenoidValve;
 

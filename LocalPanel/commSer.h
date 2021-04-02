@@ -79,7 +79,7 @@ float increment = doc["increment"]; // 1.1
 
 #include    "Arduino.h"
 #include    <ArduinoJson.h>
-#include    "model.h"
+#include    "src\model\model.h"
 
 class CommSer
 {
