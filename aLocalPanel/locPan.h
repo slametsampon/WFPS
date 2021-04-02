@@ -38,6 +38,8 @@ class LocPan
     command *_cmdInput[MAX_CMD_INPUT];
     ViewLcd    *_view;
     DipAddr *_dipAddr;
+    param _dataParam;
+
     char _prevCmd;
     int _modeMenu = MODE_MENU_MAIN;
     int _menuIndex, _prevMenuIndex, _paramIndex, _prevParamIndex;
@@ -49,6 +51,8 @@ class LocPan
     void _sendParameter(int);//Kirim Parameter ke serial port sesuai index-Parameter
     int _increaseIndex();
     int _decreaseIndex();
+    void _increaseParameter(int);
+    void _decreaseParameter(int);
     char _getCommand();
     void _menuMain(char);
     void _menuParameter(char);

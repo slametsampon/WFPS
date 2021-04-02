@@ -75,10 +75,9 @@ class AccessParam{
     void init(String, param);
     JsonObject getJson();
     param getParam();
+    void setParam(param);
     String toString();
     void updateJson(JsonObject);
-    void increaseParameter(int);
-    void decreaseParameter(int);
     void info();
 
   private:
@@ -86,7 +85,8 @@ class AccessParam{
     StaticJsonDocument<192> _paramJson;
     param _param;
 
-    void _checkAlarm();
+    void _initJson(param);
+
 };//end of class
 
 #endif

@@ -8,11 +8,12 @@
 
 //global function
 LocPan::LocPan(String id):_id(id){
+
   _modeMenu = MODE_MENU_MAIN;
   _menuIndex = 0;
-
   this->_initPrevIndex();
 
+  _dataParam = _accessParameter->getParam();
 }
 
 void LocPan::attachDipAddr(DipAddr *dipAddr){
@@ -176,16 +177,13 @@ void LocPan::_menuParameter(char key){
 
 void LocPan::_menuChangeParameter(char key){
   int idx, idxParam;
-  param paramData = _accessParameter->getParam();
-
   switch (key)
     {
       case 'S':
         //save change to parameter
         if (this->_isSaved){
           this->_isSaved = false;//false is saved
-          //idxParam = this->_accessParameter->getIndexParameter();
-          //this->_accessParameter->setParameter(idxParam);
+          this->_accessParameter->setParam(_dataParam);
           _view->viewMessage(0,0,"Parameter saved");//tampilkan pesan pada baris 0, kolom 0              
           Serial.println("Parameter saved");          
         }
@@ -193,7 +191,7 @@ void LocPan::_menuChangeParameter(char key){
       case 'U':
         //Naikkan parameter
         idx = this->_paramIndex;
-        //paramData = this->_accessParameter->increaseParameter(paramData,idx);
+        this->_increaseParameter(idx);
         this->_isParamChanged = true;
         this->_isSaved = true;//true is need to be saved
         this->_sendParameter(idx);//kirim parameter ke serial port
@@ -202,7 +200,7 @@ void LocPan::_menuChangeParameter(char key){
       case 'D':
         //turunkan parameter
         idx = this->_paramIndex;
-        //paramData = this->_accessParameter->decreaseParameter(paramData,idx);
+        this->_decreaseParameter(idx);
         this->_isParamChanged = true;
         this->_isSaved = true;//true is need to be saved
         this->_sendParameter(idx);//kirim parameter ke serial port
@@ -263,7 +261,6 @@ void LocPan::_sendMenu(int index){
 void LocPan::_viewParameter(int index){
   //String paramStr;
   boolean isUpdate = false;
-  param dataParam = _accessParameter->getParam();
 
   //check if display need to be updated
   if(_prevParamIndex != index){
@@ -291,32 +288,32 @@ void LocPan::_viewParameter(int index){
     {
     case PARAMETER_VALUE:
       _view->viewMessage(1,0,"Value : ");//pesan pada baris 2
-      _view->viewMessage(1,8,String(dataParam.value));//pesan pada baris 2
+      _view->viewMessage(1,8,String(_dataParam.value));//pesan pada baris 2
       break;
     
     case PARAMETER_LOW_RANGE:
       _view->viewMessage(1,0,"LoRng : ");//pesan pada baris 2
-      _view->viewMessage(1,8,String(dataParam.lowRange));//pesan pada baris 2
+      _view->viewMessage(1,8,String(_dataParam.lowRange));//pesan pada baris 2
       break;
     
     case PARAMETER_HIGH_RANGE:
       _view->viewMessage(1,0,"HiRng : ");//pesan pada baris 2
-      _view->viewMessage(1,8,String(dataParam.highRange));//pesan pada baris 2
+      _view->viewMessage(1,8,String(_dataParam.highRange));//pesan pada baris 2
       break;
     
     case PARAMETER_LOW_LIMIT:
       _view->viewMessage(1,0,"LoLmt : ");//pesan pada baris 2
-      _view->viewMessage(1,8,String(dataParam.lowLimit));//pesan pada baris 2
+      _view->viewMessage(1,8,String(_dataParam.lowLimit));//pesan pada baris 2
       break;
     
     case PARAMETER_HIGH_LIMIT:
       _view->viewMessage(1,0,"HiLmt : ");//pesan pada baris 2
-      _view->viewMessage(1,8,String(dataParam.highLimit));//pesan pada baris 2
+      _view->viewMessage(1,8,String(_dataParam.highLimit));//pesan pada baris 2
       break;
     
     case PARAMETER_INCREMENT:
       _view->viewMessage(1,0,"Incr : ");//pesan pada baris 2
-      _view->viewMessage(1,8,String(dataParam.increment));//pesan pada baris 2
+      _view->viewMessage(1,8,String(_dataParam.increment));//pesan pada baris 2
       break;
     
     default:
@@ -329,7 +326,6 @@ void LocPan::_sendParameter(int index){
   
   String paramStr;
   boolean isUpdate = false;
-  param dataParam = _accessParameter->getParam();
 
   //check if display need to be updated
   if(_prevParamIndex != index){
@@ -353,37 +349,37 @@ void LocPan::_sendParameter(int index){
     {
       case PARAMETER_VALUE:
         paramStr = "Value : ";
-        paramStr =  String(paramStr + dataParam.value);
+        paramStr =  String(paramStr + _dataParam.value);
         Serial.println(paramStr);
         break;
       
       case PARAMETER_LOW_RANGE:
         paramStr = "LoRng : ";
-        paramStr =  String(paramStr + dataParam.lowRange);
+        paramStr =  String(paramStr + _dataParam.lowRange);
         Serial.println(paramStr);
         break;
       
       case PARAMETER_HIGH_RANGE:
         paramStr = "HiRng : ";
-        paramStr =  String(paramStr + dataParam.highRange);
+        paramStr =  String(paramStr + _dataParam.highRange);
         Serial.println(paramStr);
         break;
       
       case PARAMETER_LOW_LIMIT:
         paramStr = "LoLmt : ";
-        paramStr =  String(paramStr + dataParam.lowLimit);
+        paramStr =  String(paramStr + _dataParam.lowLimit);
         Serial.println(paramStr);
         break;
       
       case PARAMETER_HIGH_LIMIT:
         paramStr = "HiLmt : ";
-        paramStr =  String(paramStr + dataParam.highLimit);
+        paramStr =  String(paramStr + _dataParam.highLimit);
         Serial.println(paramStr);
         break;
       
       case PARAMETER_INCREMENT:
         paramStr = "Incr : ";
-        paramStr =  String(paramStr + dataParam.increment);
+        paramStr =  String(paramStr + _dataParam.increment);
         Serial.println(paramStr);
         break;
       
@@ -430,4 +426,78 @@ int LocPan::_decreaseIndex(){
       default:
           break;
     }
+}
+
+void LocPan::_increaseParameter(int idParam){
+  float percentInc = _dataParam.increment/100.0;
+  float range = _dataParam.highRange - _dataParam.lowRange;
+  float increment = percentInc * range;
+  float tempVal;
+
+  switch (idParam)
+  {
+    case PARAMETER_LOW_RANGE:
+      tempVal = _dataParam.lowRange + increment;
+      if(tempVal < _dataParam.lowLimit) _dataParam.lowRange = tempVal;
+      break;
+    
+    case PARAMETER_HIGH_RANGE:
+      tempVal = _dataParam.highRange + increment;
+      if(tempVal < _dataParam.highRange) _dataParam.highRange = tempVal;
+      break;
+    
+    case PARAMETER_LOW_LIMIT:
+      tempVal = _dataParam.lowLimit + increment;
+      if(tempVal < _dataParam.highLimit) _dataParam.lowLimit = tempVal;
+      break;
+    
+    case PARAMETER_HIGH_LIMIT:
+      tempVal = _dataParam.highLimit + increment;
+      if(tempVal < _dataParam.highRange) _dataParam.highLimit = tempVal;
+      break;
+    
+    case PARAMETER_INCREMENT:
+      _dataParam.increment = _dataParam.increment + _dataParam.increment * DELTA_INCREMENT;
+      break;
+    
+    default:
+      break;
+  }
+}
+
+void LocPan::_decreaseParameter(int idParam){
+  float percentInc = _dataParam.increment/100.0;
+  float range = _dataParam.highRange - _dataParam.lowRange;
+  float increment = percentInc * range;
+  float tempVal;
+
+  switch (idParam)
+  {
+    case PARAMETER_LOW_RANGE:
+      tempVal = _dataParam.lowRange - increment;
+      if(tempVal > _dataParam.lowRange) _dataParam.lowRange = tempVal;
+      break;
+    
+    case PARAMETER_HIGH_RANGE:
+      tempVal = _dataParam.highRange - increment;
+      if(tempVal > _dataParam.highLimit) _dataParam.highRange = tempVal;
+      break;
+    
+    case PARAMETER_LOW_LIMIT:
+      tempVal = _dataParam.lowLimit - increment;
+      if(tempVal > _dataParam.lowLimit) _dataParam.lowLimit = tempVal;
+      break;
+    
+    case PARAMETER_HIGH_LIMIT:
+      tempVal = _dataParam.highLimit - increment;
+      if(tempVal > _dataParam.lowLimit) _dataParam.highLimit = tempVal;
+      break;
+    
+    case PARAMETER_INCREMENT:
+      _dataParam.increment = _dataParam.increment - _dataParam.increment * DELTA_INCREMENT;
+      break;
+    
+    default:
+      break;
+  }
 }
