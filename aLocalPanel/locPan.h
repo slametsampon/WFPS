@@ -8,9 +8,9 @@
 
 #include  "Arduino.h"
 #include  "src\model\model.h"
-#include  "src\view\viewLcd.h"
-#include  "src\keyPad\keyPad.h"
-#include  "src\dipAddr\dipAddr.h"
+#include  "src\compDevices\viewLcd.h"
+#include  "src\compDevices\keyPad.h"
+#include  "src\compDevices\dipAddr.h"
 #include  "src\global\param.h"
 #include  "src\global\localPanelConst.h"
 

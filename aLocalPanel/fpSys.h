@@ -10,8 +10,8 @@
 //const unsigned long DEBOUNCE_PB = 150;//milli second
 
 #include "Arduino.h"
-#include "src\view\ledAMR.h"
-#include "src\pbAMR\pbAMR.h"
+#include "src\compDevices\ledAMR.h"
+#include "src\compDevices\pbAMR.h"
 
     class FPSys{
         
