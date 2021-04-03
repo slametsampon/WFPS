@@ -11,7 +11,6 @@
 #include  "src\compDevices\viewLcd.h"
 #include  "src\compDevices\keyPad.h"
 #include  "src\compDevices\dipAddr.h"
-#include  "src\global\param.h"
 #include  "src\global\localPanelConst.h"
 
 class LocPan

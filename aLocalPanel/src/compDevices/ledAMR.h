@@ -57,7 +57,7 @@
                     case MODE_RESET:
                         _ledAuto->off();
                         _ledManual->off();
-                        _ledReset->on();
+                        _ledReset->blink(250);
                         break;
                     
                     default:

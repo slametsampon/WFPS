@@ -84,6 +84,7 @@ void setup() {
     fpSys.attachPbAMRT(&pbAMRT);
     fpSys.attachLedAMR(&ledAMR);
     fpSys.attachSolenoidValve(&solenoidValve);
+    fpSys.attachModelParameter(&accessParameter);
     fpSys.info();
 
     //After locPan attachDipAddr

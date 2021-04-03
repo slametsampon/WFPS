@@ -14,6 +14,7 @@
 #include "src\compDevices\pbAMRT.h"
 #include "src\ioDevices\analogInput.h"
 #include "src\global\localPanelConst.h"
+#include "src\model\model.h"
 
     class FPSys{
         
@@ -24,18 +25,21 @@
             void attachPbAMRT(PbAMRT*);
             void attachFireSensor(AnalogInput*);
             void attachSolenoidValve(DigitalOutput*);
+            void attachModelParameter(AccessParam*);//Pasang Model parameter, penggunaan pointer ini sangat mutlak (JIKA TIDAK ERROR !!!!)
             void execute();
 
         private:
             String  _id;
+            int _operationMode, _prevMode, _prevSensorVal;
 
             LedAMR *_ledAMR;
             PbAMRT *_pbAMRT;
             AnalogInput *_fireSensor;
             DigitalOutput   *_solenoidValve;
+            AccessParam *_accessParameter;
 
-            int _operationMode, _prevMode, _prevSensorVal;
-            int _getInput();
+            boolean _getSensorStatus();
+            void _logicOperation(int, boolean);
     };
 
 #endif

@@ -40,14 +40,39 @@ void FPSys::attachSolenoidValve(DigitalOutput *solenoidValve){
     _solenoidValve = solenoidValve;
 }
 
+void FPSys::attachModelParameter(AccessParam *accessParameter){
+    Serial.println("FPSys::attachModelParameter(AccessParam *accessParameter)");
+    _accessParameter = accessParameter;
+  }
+ 
 void FPSys::execute(){
 
-    //measure and putting in sensorParam
-    boolean sensorStatus;
+    
+    boolean sensorStatus = this->_getSensorStatus();//get sensor status
+    int operationMode = _pbAMRT->getCmd(500);//debouncing in milli second
+
+    _ledAMR->status(operationMode);//LED action
+    this->_logicOperation(operationMode, sensorStatus);//operation logic
+
+    //report by exception
+    if (_prevMode != operationMode){
+        _prevMode = operationMode;
+        Serial.println(_pbAMRT->status());
+    }
+}
+
+boolean FPSys::_getSensorStatus(){
+    boolean status;
+
+    param paramData = _accessParameter->getParam();
 
     //get sensor value
     int sensorVal = _fireSensor->getValue(80);//AlfaEma in percentage
     int raw = _fireSensor->getRaw();
+
+    //convert to actual unit
+
+    //compare with low/high limit
 
     //report by exception
     if (_prevSensorVal != sensorVal){
@@ -60,18 +85,13 @@ void FPSys::execute(){
         Serial.println(raw);
     }
 
-    //get input command from push button
-    _operationMode = _pbAMRT->getCmd(500);//debouncing in milli second
-    _ledAMR->status(_operationMode);
+    return status;
+}
 
-    //report by exception
-    if (_prevMode != _operationMode){
-        _prevMode = _operationMode;
-        Serial.println(_pbAMRT->status());
-    }
+void FPSys::_logicOperation(int oprMode, boolean sensorStatus){
 
     //logic of operation
-    switch (_operationMode){
+    switch (oprMode){
         case MODE_AUTO:
             if (sensorStatus)_solenoidValve->on();
             else _solenoidValve->off();
