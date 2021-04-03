@@ -13,7 +13,11 @@ LocPan::LocPan(String id):_id(id){
   _menuIndex = 0;
   this->_initPrevIndex();
 
+}
+
+void LocPan::getParamLoc(){
   _dataParam = _accessParameter->getParam();
+
 }
 
 void LocPan::attachDipAddr(DipAddr *dipAddr){
@@ -30,10 +34,9 @@ void LocPan::info(){
   Serial.print("_id : ");
   Serial.println(_id);
 
-  Serial.print("Fire Zone : ");
-  Serial.println(_dipAddr->getAddr());
-
   _dipAddr->info();
+
+  Serial.println("<----->");
 }
 
 void LocPan::attachCmdIn(command *cmdIn){
@@ -166,6 +169,7 @@ void LocPan::_menuParameter(char key){
       case 'R':
         //ke menu ubah parameter
         _modeMenu = MODE_CHANGE_PARAMETER;
+        this->_isParamChanged = true;
         this->menu();
         //this->_menuUbahParameter(paramData, NO_KEY);
         break;
@@ -177,6 +181,13 @@ void LocPan::_menuParameter(char key){
 
 void LocPan::_menuChangeParameter(char key){
   int idx, idxParam;
+
+  if(this->_isParamChanged){
+    idx = this->_paramIndex;
+    this->_sendParameter(idx);//kirim parameter ke serial port 
+    this->_viewParameter(idx);//tampilkan parameter ke lcd
+  }
+
   switch (key)
     {
       case 'S':

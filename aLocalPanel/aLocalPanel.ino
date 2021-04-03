@@ -14,10 +14,6 @@
 SequenceTimer SequenceMain("Sequence");
 
 //Variables declaration for FPSys
-DigitalInput        addr0(PIN_ADDR0);//use pin PIN_ADDR0 for addressing
-DigitalInput        addr1(PIN_ADDR1);//use pin PIN_ADDR1 for addressing
-DigitalInput        addr2(PIN_ADDR2);//use pin PIN_ADDR2 for addressing
-
 DigitalInput        pbAuto(PIN_PB_AUTO);//use pin PIN_PB_AUTO for P/B
 DigitalInput        pbManual(PIN_PB_MANUAL);//use pin PIN_PB_MANUAL for P/B
 DigitalInput        pbReset(PIN_PB_RESET);//use pin PIN_PB_RESET for P/B
@@ -27,14 +23,25 @@ DigitalOutput       solenoidValve(PIN_SOLENOID_VALVE);
 DigitalOutput       ledAuto(PIN_LED_AUTO);
 DigitalOutput       ledManual(PIN_LED_MANUAL);
 DigitalOutput       ledReset(PIN_LED_RESET);
-DigitalOutput       lifeLed(LED_BUILTIN);//Pin 2 for Wemos D1
 
-PbAMR               pbAMR(&pbAuto, &pbManual, &pbReset);
+AnalogInput         fireSensor(PIN_SENSOR);
+
+PbAMRT              pbAMRT(&pbAuto, &pbManual, &pbReset, &pbTest);
 LedAMR              ledAMR(&ledAuto, &ledManual, &ledReset);
 
+FPSys               fpSys("fpSys - Fire Protection System");
+
 //Variables declaration for LocPan
+DigitalInput        addr0(PIN_ADDR0);//use pin PIN_ADDR0 for addressing
+DigitalInput        addr1(PIN_ADDR1);//use pin PIN_ADDR1 for addressing
+DigitalInput        addr2(PIN_ADDR2);//use pin PIN_ADDR2 for addressing
+
+AnalogInput         keyAnalogIn(PIN_KEYPAD);
+
+DigitalOutput       lifeLed(LED_BUILTIN);//Pin 2 for Wemos D1
+
 LiquidCrystal       lcd(LCD_RS,LCD_EN,LCD_D4,LCD_D5,LCD_D6,LCD_D7);
-KeyPad              keyPad(PIN_KEYPAD);//declare keypad
+KeyPad              keyPad(&keyAnalogIn);//declare keypad
 serialCmd           serInput("Serial Command");
 DipAddr             locAddr(&addr0, &addr1, &addr2);
 ViewLcd             view(lcd);//declare view, part of MVC pattern
@@ -56,9 +63,12 @@ void setup() {
     Serial.begin(9600);
     delay(500);
 
+    keyAnalogIn.init(PULLUP);
+
     initPbLed();
 
     lifeLed.info();
+    keyPad.info();
 
     //attachment all peripherals for locPan
     locPan.attachDipAddr(&locAddr);
@@ -69,9 +79,19 @@ void setup() {
     locPan.attachModelParameter(&accessParameter);
     locPan.info();
 
+    //attachment all peripherals for fpSys
+    fpSys.attachFireSensor(&fireSensor);
+    fpSys.attachPbAMRT(&pbAMRT);
+    fpSys.attachLedAMR(&ledAMR);
+    fpSys.attachSolenoidValve(&solenoidValve);
+    fpSys.info();
+
     //After locPan attachDipAddr
     setupMenu();
     setupParameter();
+
+    //After setupParameter, get param and put on localPanel
+    locPan.getParamLoc();
 
 }
 
@@ -85,7 +105,7 @@ void loop() {
     }
 
     locPan.menu();
-    //fpSys.execute();
+    fpSys.execute();
     //commSer.execute();
 }
 

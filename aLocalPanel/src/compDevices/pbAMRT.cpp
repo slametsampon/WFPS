@@ -1,15 +1,23 @@
 /*
-  pbAMR.h - Library for P/B Auto, Manual, Reset
-  By : Sam March 01, 2021
+  pbAMRT.h - Library for P/B Auto, Manual, Reset, Test
+  By : Sam April 03, 2021
 */
 
 /* Dependencies */
-#include "pbAMR.h"
+#include "pbAMRT.h"
 
-PbAMR::PbAMR(DigitalInput *pbAuto, DigitalInput *pbManual, DigitalInput *pbReset): _pbAuto(pbAuto), _pbManual(pbManual), _pbReset(pbReset){}
+PbAMRT::PbAMRT(DigitalInput *pbAuto, DigitalInput *pbManual, DigitalInput *pbReset, DigitalInput *pbTest): _pbAuto(pbAuto), _pbManual(pbManual), _pbReset(pbReset), _pbTest(pbTest){}
 
-int PbAMR::getCmd(unsigned long debounceTime){
+int PbAMRT::getCmd(unsigned long debounceTime){
     int cmd;
+
+    //mode test is top priority
+    if (_pbTest->isStatus(debounceTime)){
+        cmd = MODE_TEST;
+        _prevCmd = cmd;
+        return cmd;
+    }
+
     if (_pbReset->isStatus(debounceTime)){
       if (_prevCmd == MODE_RESET) cmd = MODE_READY;//highest priority
       else if (_prevCmd == MODE_READY) cmd = MODE_READY;//highest priority
@@ -36,7 +44,7 @@ int PbAMR::getCmd(unsigned long debounceTime){
     return cmd;
 }
 
-String PbAMR::status(){
+String PbAMRT::status(){
     String str = "NO_PB";
     switch (_prevCmd)
     {
@@ -60,14 +68,18 @@ String PbAMR::status(){
         str = "PB : Reset";
         break;
     
+    case MODE_TEST:
+        str = "PB : Test";
+        break;
+    
     default:
         break;
     }
     return str;
 }
 
-void PbAMR::info(){
-    Serial.println("PbAMR::info()");
+void PbAMRT::info(){
+    Serial.println("PbAMRT::info()");
     String str;
 
     Serial.println("_pbAuto");
@@ -79,6 +91,9 @@ void PbAMR::info(){
     
     Serial.println("_pbReset");
     _pbReset->info();
+    
+    Serial.println("_pbTest");
+    _pbTest->info();
     
     Serial.println("<----->");
 }

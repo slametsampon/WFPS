@@ -67,5 +67,6 @@ void DigitalInput::info(){
   if (this->isStatus()) Serial.println("On");
   else Serial.println("Off");
 
+  Serial.println("");
 }
 

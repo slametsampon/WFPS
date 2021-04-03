@@ -1,14 +1,15 @@
 /*
-  pbAMR.h - Library for Push Button Auto, Manual, Reset
+  pbAMRT.h - Library for Push Button Auto, Manual, Reset
   Priority :
     1. Reset
     2. Manual
     3. Auto
-  By : Sam March 01, 2021
+    4. Test
+  By : Sam April 03, 2021
 */
 
-#ifndef pbAMR_h
-#define pbAMR_h
+#ifndef pbAMRT_h
+#define pbAMRT_h
 
 //const unsigned long DEBOUNCE_PB = 150;//milli second
 
@@ -16,14 +17,14 @@
 #include "..\ioDevices\digitalInput.h"
 #include "..\global\localPanelConst.h"
 
-    class PbAMR{
+    class PbAMRT{
         public:
-            PbAMR(DigitalInput*, DigitalInput*, DigitalInput*);
+            PbAMRT(DigitalInput*, DigitalInput*, DigitalInput*, DigitalInput*);
             int getCmd(unsigned long);
             String status();
             void info();
         private:
-            DigitalInput *_pbAuto, *_pbManual, *_pbReset;
+            DigitalInput *_pbAuto, *_pbManual, *_pbReset, *_pbTest;
             int    _prevCmd;
             bool  _isInfo;//one shoot info
     };

@@ -11,7 +11,9 @@
 
 #include "Arduino.h"
 #include "src\compDevices\ledAMR.h"
-#include "src\compDevices\pbAMR.h"
+#include "src\compDevices\pbAMRT.h"
+#include "src\ioDevices\analogInput.h"
+#include "src\global\localPanelConst.h"
 
     class FPSys{
         
@@ -19,8 +21,8 @@
             FPSys(String);
             void info();
             void attachLedAMR(LedAMR*);
-            void attachPbAMR(PbAMR*);
-            void attachFireSensor(DigitalInput*);
+            void attachPbAMRT(PbAMRT*);
+            void attachFireSensor(AnalogInput*);
             void attachSolenoidValve(DigitalOutput*);
             void execute();
 
@@ -28,8 +30,8 @@
             String  _id;
 
             LedAMR *_ledAMR;
-            PbAMR *_pbAMR;
-            DigitalInput *_fireSensor;
+            PbAMRT *_pbAMRT;
+            AnalogInput *_fireSensor;
             DigitalOutput   *_solenoidValve;
 
             int _operationMode;

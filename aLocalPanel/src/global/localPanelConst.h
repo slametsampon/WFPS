@@ -5,7 +5,9 @@ All constants for local panel
 #ifndef localPanelConst_h
 #define localPanelConst_h
 
-    #define PIN_KEYPAD A0 // pin Analog Keypad
+    //#define PIN_KEYPAD A0 // pin Analog Keypad
+    const int PIN_KEYPAD        = A0;//pin Analog Keypad
+    const int PIN_SENSOR        = A1;//pin Analog fire sensor
 
     const int LCD_RS            = 8;
     const int LCD_EN            = 9;
@@ -37,4 +39,10 @@ All constants for local panel
 
     const int DEFAULT_INDEX = 999;
 
+    const int MODE_READY = 0;
+    const int MODE_AUTO = 1;
+    const int MODE_MANUAL = 2;
+    const int MODE_MANUAL_ON = 3;
+    const int MODE_RESET = 4;
+    const int MODE_TEST = 9;
 #endif

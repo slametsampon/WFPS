@@ -1,28 +1,26 @@
 /*
-  analogInput.h - Library untuk AnalogInput
-  Dibuat Oleh : Sam March 02, 2021
+  analogInput.h - Library AI
+  with AlfaEma filter
+  By : Sam April 03, 2021
 */
+
 #ifndef analogInput_h
 #define analogInput_h
 
 #include "Arduino.h"
-#include "..\global\param.h"
+#include "signalConst.h"
 
     class AnalogInput{
-        public:
-            AnalogInput(char);
+        public: 
+            AnalogInput(int pin);   
+            void init(boolean);
             void init(String);
-            void setParameter(param*);
-            param *getParameter();
-            int getStatus();
-            String toString();
+            int getValue(int);
+            int getRaw();
             void info();
-            void getValue();
         private:
-            param   *_param;
-            char _pin;
-            unsigned int _PV_Raw;
-            String _id;//
+            int  _pin, _prevVal;
+            String  _id;
+            boolean _pullUp;
     };
-
 #endif

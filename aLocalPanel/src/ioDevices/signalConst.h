@@ -8,5 +8,6 @@ sam, April 02, 2021
 
     const boolean FORWARD_TYPE = true;
     const boolean REVERSE_TYPE = false;
+    const boolean PULLUP = true;
 
 #endif

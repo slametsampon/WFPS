@@ -7,8 +7,7 @@
 /* Dependencies */
 #include "keyPad.h"
 
-KeyPad::KeyPad(int pin):_pinAnalog(pin){
-  //pinMode(_pinAnalog, INPUT_PULLUP);  // set pull-up on analog pin
+KeyPad::KeyPad(AnalogInput *aI):_analogInput(aI){
   this->_prevKey = NO_KEY;
 }
 
@@ -16,27 +15,28 @@ void KeyPad::info(){
     Serial.println("KeyPad::info()");
     String str;
 
-    str = String("_pinAnalog : " + _pinAnalog);
-    Serial.println(str);
+    _analogInput->info();
 
-    str = String("VALUE_UP : " + VALUE_UP);
-    Serial.println(str);
+    Serial.print("VALUE_UP : ");
+    Serial.println(VALUE_UP);
 
-    str = String("VALUE_DOWN : " + VALUE_DOWN);
-    Serial.println(str);
+    Serial.print("VALUE_DOWN : ");
+    Serial.println(VALUE_DOWN);
 
-    str = String("VALUE_LEFT : " + VALUE_LEFT);
-    Serial.println(str);
+    Serial.print("VALUE_LEFT : ");
+    Serial.println(VALUE_LEFT);
 
-    str = String("VALUE_SELECT : " + VALUE_SELECT);
-    Serial.println(str);
+    Serial.print("VALUE_SELECT : ");
+    Serial.println(VALUE_SELECT);
+
+    Serial.println("<----->");
 }
 
 void KeyPad::init(){}
 
 //function for getting keypad value
 int KeyPad::getValue(){
-      int keyVal = analogRead(_pinAnalog);
+      int keyVal = _analogInput->getRaw();
       return keyVal;
   }
 
