@@ -41,8 +41,17 @@ All constants for local panel
 
     const int MODE_READY = 0;
     const int MODE_AUTO = 1;
-    const int MODE_MANUAL = 2;
-    const int MODE_MANUAL_ON = 3;
-    const int MODE_RESET = 4;
-    const int MODE_TEST = 9;
+    const int MODE_AUTO_ON = 2;
+    const int MODE_MANUAL = 3;
+    const int MODE_MANUAL_ON = 4;
+    const int MODE_RESET = 5;
+    const int MODE_TEST = 99;
+
+    const int ADC_MAX = 1023;//10 bits
+    const int ALFA_EMA = 80;//AlfaEma filter
+    const int DEBOUNCING_TIME = 500;//milli second
+
+    const int BLINK_NORMAL = 500;//milli second
+    const int BLINK_WARNING = 250;//milli second
+    const int BLINK_ERROR = 125;//milli second
 #endif

@@ -46,13 +46,14 @@ void FPSys::attachModelParameter(AccessParam *accessParameter){
   }
  
 void FPSys::execute(){
-
-    
+   
     boolean sensorStatus = this->_getSensorStatus();//get sensor status
-    int operationMode = _pbAMRT->getCmd(500);//debouncing in milli second
+    int operationMode = _pbAMRT->getCmd(DEBOUNCING_TIME);//debouncing in milli second
 
-    _ledAMR->status(operationMode);//LED action
     this->_logicOperation(operationMode, sensorStatus);//operation logic
+
+    if((operationMode == MODE_AUTO) && (sensorStatus == true)) operationMode = MODE_AUTO_ON;
+    _ledAMR->status(operationMode);//LED action
 
     //report by exception
     if (_prevMode != operationMode){
@@ -62,30 +63,39 @@ void FPSys::execute(){
 }
 
 boolean FPSys::_getSensorStatus(){
-    boolean status;
+    boolean sensorStatus = false;
 
     param paramData = _accessParameter->getParam();
 
     //get sensor value
-    int sensorVal = _fireSensor->getValue(80);//AlfaEma in percentage
+    int sensorVal = _fireSensor->getValue(ALFA_EMA);//AlfaEma in percentage
     int raw = _fireSensor->getRaw();
 
     //convert to actual unit
+    int valUnit = map(sensorVal, 0, ADC_MAX, (long) paramData.lowRange, (long) paramData.highRange);
 
     //compare with low/high limit
+    if(valUnit <= paramData.lowLimit)sensorStatus = true;
+    else if(valUnit >= paramData.highLimit)sensorStatus = true;
 
     //report by exception
     if (_prevSensorVal != sensorVal){
 
         _prevSensorVal = sensorVal;
+        Serial.print("valUnit : ");
+        Serial.println(valUnit);
+
         Serial.print("sensorVal : ");
         Serial.println(sensorVal);
 
         Serial.print("raw : ");
         Serial.println(raw);
+
+        Serial.print("sensorStatus : ");
+        Serial.println(sensorStatus);
     }
 
-    return status;
+    return sensorStatus;
 }
 
 void FPSys::_logicOperation(int oprMode, boolean sensorStatus){

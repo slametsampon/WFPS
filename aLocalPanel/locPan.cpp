@@ -124,7 +124,7 @@ void LocPan::_menuMain(char key){
           if (menuData.isHasParam){
             _modeMenu = MODE_MENU_PARAMETER;
             this->_initPrevIndex();
-            this->_paramIndex = PARAMETER_VALUE;
+            this->_paramIndex = PARAMETER_LOW_RANGE;
             this->menu();
           }
           break;
@@ -137,7 +137,7 @@ void LocPan::_menuMain(char key){
 void LocPan::_menuParameter(char key){
   int idx;//for index
 
-  if(this->_paramIndex == PARAMETER_VALUE){
+  if(this->_paramIndex == PARAMETER_LOW_RANGE){
     idx = this->_paramIndex;
     this->_sendParameter(idx);//kirim parameter ke serial port
     this->_viewParameter(idx);//tampilkan parameter ke lcd
@@ -220,7 +220,7 @@ void LocPan::_menuChangeParameter(char key){
       case 'L':
         //kembali ke menu utama
         _modeMenu = MODE_MENU_PARAMETER;
-        this->_paramIndex = PARAMETER_VALUE;
+        this->_paramIndex = PARAMETER_LOW_RANGE;
         this->menu();
         //this->_menuParameter(paramData, NO_KEY);
         break;
@@ -297,11 +297,6 @@ void LocPan::_viewParameter(int index){
 
     switch (index)
     {
-    case PARAMETER_VALUE:
-      _view->viewMessage(1,0,"Value : ");//pesan pada baris 2
-      _view->viewMessage(1,8,String(_dataParam.value));//pesan pada baris 2
-      break;
-    
     case PARAMETER_LOW_RANGE:
       _view->viewMessage(1,0,"LoRng : ");//pesan pada baris 2
       _view->viewMessage(1,8,String(_dataParam.lowRange));//pesan pada baris 2
@@ -358,12 +353,6 @@ void LocPan::_sendParameter(int index){
 
     switch (index)
     {
-      case PARAMETER_VALUE:
-        paramStr = "Value : ";
-        paramStr =  String(paramStr + _dataParam.value);
-        Serial.println(paramStr);
-        break;
-      
       case PARAMETER_LOW_RANGE:
         paramStr = "LoRng : ";
         paramStr =  String(paramStr + _dataParam.lowRange);
@@ -410,7 +399,7 @@ int LocPan::_increaseIndex(){
         break;
       case MODE_MENU_PARAMETER:
         if (_paramIndex < PARAMETER_INCREMENT) _paramIndex++;
-        else _paramIndex = PARAMETER_VALUE;
+        else _paramIndex = PARAMETER_LOW_RANGE;
         return _paramIndex;
         break;
       default:
@@ -427,7 +416,7 @@ int LocPan::_decreaseIndex(){
         return _menuIndex;
         break;
       case MODE_MENU_PARAMETER:
-        if (_paramIndex > PARAMETER_VALUE) _paramIndex--;
+        if (_paramIndex > PARAMETER_LOW_RANGE) _paramIndex--;
         else _paramIndex = PARAMETER_INCREMENT;
         return _paramIndex;
         break;

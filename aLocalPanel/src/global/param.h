@@ -5,7 +5,7 @@
     const int HIGH_ALARM = 1;
     const int LOW_ALARM = 2;
 
-    const int PARAMETER_VALUE = 0;
+    //const int PARAMETER_VALUE = 0;
     const int PARAMETER_LOW_RANGE = 1;
     const int PARAMETER_HIGH_RANGE = 2;
     const int PARAMETER_LOW_LIMIT = 3;
@@ -15,7 +15,6 @@
 
     typedef struct param{
         String unit;//unit
-        float value;
         float highRange;
         float lowRange;
         float highLimit;//for alarm high

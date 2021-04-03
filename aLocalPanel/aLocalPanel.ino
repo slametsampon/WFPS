@@ -98,7 +98,7 @@ void setup() {
 
 // the loop function runs over and over again forever
 void loop() {
-    lifeLed.blink(500);//in milli second
+    lifeLed.blink(BLINK_NORMAL);//in milli second
 
     SequenceMain.execute();
     if(SequenceMain.isASecondEvent()){
@@ -160,7 +160,6 @@ void setupParameter(){
 
   //fire Zone1.
   dtParam.unit = "%";
-  dtParam.value = 51;
   dtParam.highRange = 100;
   dtParam.lowRange = 0;
   dtParam.highLimit = 80;

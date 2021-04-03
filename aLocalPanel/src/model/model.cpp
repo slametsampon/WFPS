@@ -71,7 +71,6 @@ void AccessParam::_initJson(param dtParam){
 
   _paramJson["id"] = _id;
   _paramJson["unit"] = dtParam.unit;
-  _paramJson["value"] = dtParam.value;
   _paramJson["highRange"] = dtParam.highRange;
   _paramJson["lowRange"] = dtParam.lowRange;
   _paramJson["highLimit"] = dtParam.highLimit;

@@ -36,6 +36,12 @@
                         _ledReset->off();
                         break;
                     
+                    case MODE_AUTO_ON:
+                        _ledAuto->blink(BLINK_WARNING);
+                        _ledManual->off();
+                        _ledReset->off();
+                        break;
+                    
                     case MODE_MANUAL:
                         _ledAuto->off();
                         _ledManual->on();
@@ -44,20 +50,20 @@
                     
                     case MODE_MANUAL_ON:
                         _ledAuto->off();
-                        _ledManual->blink(250);
+                        _ledManual->blink(BLINK_WARNING);
                         _ledReset->off();
                         break;
                     
                     case MODE_READY:
-                        _ledAuto->off();
-                        _ledManual->off();
+                        _ledAuto->blink(BLINK_NORMAL);
+                        _ledManual->blink(BLINK_NORMAL);
                         _ledReset->off();
                         break;
                     
                     case MODE_RESET:
                         _ledAuto->off();
                         _ledManual->off();
-                        _ledReset->blink(250);
+                        _ledReset->blink(BLINK_WARNING);
                         break;
                     
                     default:
