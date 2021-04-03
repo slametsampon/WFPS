@@ -24,44 +24,44 @@
             
             void status(int state){
                 switch (state){
-                case MODE_TEST:
-                    _ledAuto->on();
-                    _ledManual->on();
-                    _ledReset->on();
-                    break;
-                
-                case MODE_AUTO:
-                    _ledAuto->on();
-                    _ledManual->off();
-                    _ledReset->off();
-                    break;
-                
-                case MODE_MANUAL:
-                    _ledManual->on();
-                    _ledAuto->off();
-                    _ledReset->off();
-                    break;
-                
-                case MODE_MANUAL_ON:
-                    _ledManual->blink(250);
-                    _ledAuto->off();
-                    _ledReset->off();
-                    break;
-                
-                case MODE_READY:
-                    _ledAuto->off();
-                    _ledManual->off();
-                    _ledReset->off();
-                    break;
-                
-                case MODE_RESET:
-                    _ledReset->on();
-                    _ledAuto->off();
-                    _ledReset->off();
-                    break;
-                
-                default:
-                    break;
+                    case MODE_TEST:
+                        _ledAuto->on();
+                        _ledManual->on();
+                        _ledReset->on();
+                        break;
+                    
+                    case MODE_AUTO:
+                        _ledAuto->on();
+                        _ledManual->off();
+                        _ledReset->off();
+                        break;
+                    
+                    case MODE_MANUAL:
+                        _ledAuto->off();
+                        _ledManual->on();
+                        _ledReset->off();
+                        break;
+                    
+                    case MODE_MANUAL_ON:
+                        _ledAuto->off();
+                        _ledManual->blink(250);
+                        _ledReset->off();
+                        break;
+                    
+                    case MODE_READY:
+                        _ledAuto->off();
+                        _ledManual->off();
+                        _ledReset->off();
+                        break;
+                    
+                    case MODE_RESET:
+                        _ledAuto->off();
+                        _ledManual->off();
+                        _ledReset->on();
+                        break;
+                    
+                    default:
+                        break;
                 }
             }
 

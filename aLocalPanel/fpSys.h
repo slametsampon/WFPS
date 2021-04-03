@@ -34,7 +34,7 @@
             AnalogInput *_fireSensor;
             DigitalOutput   *_solenoidValve;
 
-            int _operationMode;
+            int _operationMode, _prevMode, _prevSensorVal;
             int _getInput();
     };
 

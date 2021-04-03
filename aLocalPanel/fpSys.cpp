@@ -5,7 +5,9 @@
 */
 #include "fpSys.h"
 
-FPSys::FPSys(String id):_id(id){}
+FPSys::FPSys(String id):_id(id){
+    _prevMode = DEFAULT_INDEX;
+}
 
 void FPSys::info(){
     Serial.println("FPSys::info()=>Fire Protection System");
@@ -43,12 +45,30 @@ void FPSys::execute(){
     //measure and putting in sensorParam
     boolean sensorStatus;
 
-    //build controller logic
+    //get sensor value
     int sensorVal = _fireSensor->getValue(80);//AlfaEma in percentage
+    int raw = _fireSensor->getRaw();
+
+    //report by exception
+    if (_prevSensorVal != sensorVal){
+
+        _prevSensorVal = sensorVal;
+        Serial.print("sensorVal : ");
+        Serial.println(sensorVal);
+
+        Serial.print("raw : ");
+        Serial.println(raw);
+    }
 
     //get input command from push button
     _operationMode = _pbAMRT->getCmd(500);//debouncing in milli second
     _ledAMR->status(_operationMode);
+
+    //report by exception
+    if (_prevMode != _operationMode){
+        _prevMode = _operationMode;
+        Serial.println(_pbAMRT->status());
+    }
 
     //logic of operation
     switch (_operationMode){

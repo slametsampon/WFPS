@@ -33,11 +33,16 @@ int AnalogInput::getRaw(){
 }
 
 int AnalogInput::getValue(int alfaEma){
-	unsigned long tempVal;
-    //calculate for EMA filter
-    tempVal = (this->getRaw() * alfaEma + (100-alfaEma)*_prevVal)/100;
+  
+  //calculate for EMA filter
+  float facCurrent = alfaEma/100.0;
+  float facPrev = (100.0 - alfaEma)/100.0;
 
-    _prevVal = (int) tempVal;// after filtering
+  float tempVal = this->getRaw() * facCurrent + facPrev * _prevVal;
+
+  _prevVal = (int) tempVal;// after filtering
+
+  return _prevVal;
 }
 void AnalogInput::info(){
 
