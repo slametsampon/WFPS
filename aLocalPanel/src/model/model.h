@@ -44,8 +44,7 @@ float increment = doc["increment"]; // 1.1
 #define model_h
 
 #include "Arduino.h"
-#include  <ArduinoJson.h>
-#include "..\global\param.h"
+#include "..\ioDevices\signalConst.h"
 #include "..\global\localPanelConst.h"
 
 typedef struct dataMenu{
@@ -66,27 +65,6 @@ class AccessDataMenu{
   private:
     dataMenu  _dataMenu[MAX_MENU];
     String    _id;
-};//end of class
-
-class AccessParam{
-  
-  public:
-    AccessParam(String);
-    void init(String, param);
-    JsonObject getJson();
-    param getParam();
-    void setParam(param);
-    String toString();
-    void updateJson(JsonObject);
-    void info();
-
-  private:
-    String    _id;
-    StaticJsonDocument<192> _paramJson;
-    param _param;
-
-    void _initJson(param);
-
 };//end of class
 
 #endif

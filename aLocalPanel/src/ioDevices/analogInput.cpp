@@ -27,23 +27,69 @@ void AnalogInput::init(String id){
   
 }
 
+void AnalogInput::attachModelParameter(AccessParam *accessParameter){
+    Serial.println("AnalogInput::attachModelParameter(AccessParam *accessParameter)");
+    _accessParameter = accessParameter;
+  }
+ 
 int AnalogInput::getRaw(){
     return analogRead(_pin);
 
 }
 
-int AnalogInput::getValue(int alfaEma){
+float AnalogInput::getValue(){
+
+  _dataParam = _accessParameter->getParam();
   
+  float inMin = 0.0;
+  float inMax = 1023.0;
+
   //calculate for EMA filter
-  float facCurrent = alfaEma/100.0;
-  float facPrev = (100.0 - alfaEma)/100.0;
+  float facCurrent = _dataParam.alfaEma/100.0;
+  float facPrev = (100.0 - _dataParam.alfaEma)/100.0;
+  int raw = this->getRaw();
 
-  float tempVal = this->getRaw() * facCurrent + facPrev * _prevVal;
+  float tempVal = raw * facCurrent + facPrev * _prevVal;
 
-  _prevVal = (int) tempVal;// after filtering
+  //convert to unit
+  float valUnit = (tempVal - inMin) * (_dataParam.highRange - _dataParam.lowRange) / (inMax - inMin) + _dataParam.lowRange;
 
-  return _prevVal;
+  //report by exception
+  if (_dataParam.value != valUnit){
+    //save to parameter
+    _accessParameter->setValue(valUnit);
+
+    Serial.print("valUnit : ");
+    Serial.println(valUnit);
+
+    Serial.print("_dataParam.value : ");
+    Serial.println(_dataParam.value);
+
+  }
+  return valUnit;
 }
+
+int AnalogInput::getStatus(){
+  int statusAi = NO_ALARM;
+
+  float valUnit = this->getValue();
+
+  if (valUnit <= _dataParam.lowLimit)statusAi = LOW_ALARM;
+  else if (valUnit >= _dataParam.highLimit)statusAi = HIGH_ALARM;
+
+  if (_dataParam.alarm != statusAi){
+    //save to parameter
+    _accessParameter->setAlarm(statusAi);
+
+    Serial.print("statusAi : ");
+    Serial.println(statusAi);
+
+    _accessParameter->info();
+  }
+
+  return statusAi;
+}
+
 void AnalogInput::info(){
 
   Serial.print("Device : ");
@@ -55,7 +101,7 @@ void AnalogInput::info(){
   Serial.print("PullUp : ");
   Serial.println(_pullUp);
 
-  Serial.print("Value : ");
+  Serial.print("getRaw() : ");
   Serial.println(this->getRaw());
 
   Serial.println("");

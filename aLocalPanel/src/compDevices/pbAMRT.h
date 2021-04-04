@@ -21,12 +21,12 @@
         public:
             PbAMRT(DigitalInput*, DigitalInput*, DigitalInput*, DigitalInput*);
             int getCmd(unsigned long);
-            String status();
             void info();
         private:
             DigitalInput *_pbAuto, *_pbManual, *_pbReset, *_pbTest;
             int    _prevCmd;
             bool  _isInfo;//one shoot info
+            void _status();
     };
 
 #endif

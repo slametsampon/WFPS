@@ -14,7 +14,9 @@ int PbAMRT::getCmd(unsigned long debounceTime){
     //mode test is top priority
     if (_pbTest->isStatus(debounceTime)){
         cmd = MODE_TEST;
+        if(_prevCmd != cmd)_isInfo = false;
         _prevCmd = cmd;
+        this->_status();
         return cmd;
     }
 
@@ -41,10 +43,11 @@ int PbAMRT::getCmd(unsigned long debounceTime){
         }
         else cmd = _prevCmd;
     }
+    this->_status();
     return cmd;
 }
 
-String PbAMRT::status(){
+void PbAMRT::_status(){
     String str = "NO_PB";
     switch (_prevCmd)
     {
@@ -75,7 +78,11 @@ String PbAMRT::status(){
     default:
         break;
     }
-    return str;
+    //report by exception
+    if (!_isInfo){
+        _isInfo = true;
+        Serial.println(str);
+    }
 }
 
 void PbAMRT::info(){

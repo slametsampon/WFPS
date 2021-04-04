@@ -7,7 +7,9 @@
 
 #include    "commSer.h"
 
-CommSer::CommSer(String id):_id(id){}
+CommSer::CommSer(String id):_id(id){
+  _dataParam = _accessParameter->getParam();
+}
 
 void CommSer::info(){
   Serial.println("CommSer::info()=>Communictaion Serial System");
@@ -28,8 +30,8 @@ void CommSer::sendValue(JsonObject valueJson){
 
 }
 
-void CommSer::sendParameter(JsonObject paramJson){
-    //JsonObject.as<JsonObject>()  paramJson = _accessParameter->getJson();
+void CommSer::sendParameter(){
+  JsonObject paramJson = _accessParameter->getJson();
   serializeJson(paramJson, Serial1);
 
 }
@@ -77,8 +79,10 @@ JsonObject CommSer::getParameter(){
 }
 
 void CommSer::execute(){
-
-  this->getParameter();
-  //serializeJson(this->getParameter(), Serial);// it is just for testing
-    
+  _count++;
+  if (_count > 9){
+    _count = 0;
+    CommSer::sendParameter(); 
+    Serial1.println("");
+  }
 }

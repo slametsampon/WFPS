@@ -25,7 +25,6 @@
             void attachPbAMRT(PbAMRT*);
             void attachFireSensor(AnalogInput*);
             void attachSolenoidValve(DigitalOutput*);
-            void attachModelParameter(AccessParam*);//Pasang Model parameter, penggunaan pointer ini sangat mutlak (JIKA TIDAK ERROR !!!!)
             void execute();
 
         private:
@@ -36,10 +35,9 @@
             PbAMRT *_pbAMRT;
             AnalogInput *_fireSensor;
             DigitalOutput   *_solenoidValve;
-            AccessParam *_accessParameter;
 
             boolean _getSensorStatus();
-            void _logicOperation(int, boolean);
+            void _logicOperation(int, int);
     };
 
 #endif

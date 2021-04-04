@@ -9,18 +9,23 @@
 
 #include "Arduino.h"
 #include "signalConst.h"
+#include "param.h"
 
     class AnalogInput{
         public: 
             AnalogInput(int pin);   
             void init(boolean);
             void init(String);
-            int getValue(int);
             int getRaw();
+            float getValue();
+            int getStatus();
+            void attachModelParameter(AccessParam*);//penggunaan pointer ini sangat mutlak (JIKA TIDAK ERROR !!!!)
             void info();
         private:
             int  _pin, _prevVal;
             String  _id;
             boolean _pullUp;
+            param _dataParam;
+            AccessParam *_accessParameter;
     };
 #endif

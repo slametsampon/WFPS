@@ -49,6 +49,9 @@ AccessDataMenu      accessMenu("Data Menu");//part of MVC pattern
 AccessParam         accessParameter("Parameter");//part of MVC pattern
 LocPan              locPan("LocPan-Local Panel");//local panel
 
+//Variables declaration for commSer
+CommSer             commSer("commSer - Serial Comm");
+
 //Static member class should be initialized FIRST (IF NOT, WILL HAVE ERROR)
 unsigned char       LocPan::cmdInNbr=0;
 unsigned char       AccessDataMenu::menuNbr=0;
@@ -61,6 +64,8 @@ void setupMenu();
 void setup() {
 
     Serial.begin(9600);
+    Serial1.begin(9600);
+    
     delay(500);
 
     keyAnalogIn.init(PULLUP);
@@ -78,22 +83,20 @@ void setup() {
     locPan.attachModelMenu(&accessMenu);
     locPan.attachModelParameter(&accessParameter);
     locPan.info();
-
-    //attachment all peripherals for fpSys
-    fpSys.attachFireSensor(&fireSensor);
-    fpSys.attachPbAMRT(&pbAMRT);
-    fpSys.attachLedAMR(&ledAMR);
-    fpSys.attachSolenoidValve(&solenoidValve);
-    fpSys.attachModelParameter(&accessParameter);
-    fpSys.info();
-
     //After locPan attachDipAddr
     setupMenu();
     setupParameter();
 
-    //After setupParameter, get param and put on localPanel
-    locPan.getParamLoc();
+    //attachment all peripherals for fpSys
+    fireSensor.attachModelParameter(&accessParameter);
+    fpSys.attachFireSensor(&fireSensor);
+    fpSys.attachPbAMRT(&pbAMRT);
+    fpSys.attachLedAMR(&ledAMR);
+    fpSys.attachSolenoidValve(&solenoidValve);
+    fpSys.info();
 
+    //attachment all peripherals for commSer
+    commSer.attachModelParameter(&accessParameter);
 }
 
 // the loop function runs over and over again forever
@@ -102,12 +105,11 @@ void loop() {
 
     SequenceMain.execute();
     if(SequenceMain.isASecondEvent()){
-        //put process every second
+      commSer.execute();
     }
 
     locPan.menu();
     fpSys.execute();
-    //commSer.execute();
 }
 
 void initPbLed(){
@@ -160,10 +162,13 @@ void setupParameter(){
 
   //fire Zone1.
   dtParam.unit = "%";
+  dtParam.value = 51;
   dtParam.highRange = 100;
   dtParam.lowRange = 0;
   dtParam.highLimit = 80;
   dtParam.lowLimit = 40;
+  dtParam.alfaEma = ALFA_EMA;
+  dtParam.alarm = NO_ALARM;
   dtParam.increment = 1.1;
 
   String locId = "ZONE - ";

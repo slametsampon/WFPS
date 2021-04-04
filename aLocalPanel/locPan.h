@@ -8,6 +8,7 @@
 
 #include  "Arduino.h"
 #include  "src\model\model.h"
+#include  "src\ioDevices\param.h"
 #include  "src\compDevices\viewLcd.h"
 #include  "src\compDevices\keyPad.h"
 #include  "src\compDevices\dipAddr.h"
@@ -27,7 +28,6 @@ class LocPan
     void attachModelMenu(AccessDataMenu*);//Pasang Model menu, penggunaan pointer ini sangat mutlak (JIKA TIDAK ERROR !!!!)
     void attachModelParameter(AccessParam*);//Pasang Model parameter, penggunaan pointer ini sangat mutlak (JIKA TIDAK ERROR !!!!)
     int getAddress();
-    void getParamLoc();
     void menu();
     void info();
 
@@ -58,5 +58,6 @@ class LocPan
     void _menuParameter(char);
     void _menuChangeParameter(char);
     void _initPrevIndex();
+    void _getParamLoc();
 };//end of class
 #endif

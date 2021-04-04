@@ -40,70 +40,29 @@ void FPSys::attachSolenoidValve(DigitalOutput *solenoidValve){
     _solenoidValve = solenoidValve;
 }
 
-void FPSys::attachModelParameter(AccessParam *accessParameter){
-    Serial.println("FPSys::attachModelParameter(AccessParam *accessParameter)");
-    _accessParameter = accessParameter;
-  }
- 
 void FPSys::execute(){
    
-    boolean sensorStatus = this->_getSensorStatus();//get sensor status
+    int sensorStatus = _fireSensor->getStatus();//get sensor status
     int operationMode = _pbAMRT->getCmd(DEBOUNCING_TIME);//debouncing in milli second
 
     this->_logicOperation(operationMode, sensorStatus);//operation logic
 
-    if((operationMode == MODE_AUTO) && (sensorStatus == true)) operationMode = MODE_AUTO_ON;
+    if((operationMode == MODE_AUTO) && (sensorStatus != NO_ALARM)) operationMode = MODE_AUTO_ON;
     _ledAMR->status(operationMode);//LED action
 
-    //report by exception
-    if (_prevMode != operationMode){
-        _prevMode = operationMode;
-        Serial.println(_pbAMRT->status());
-    }
 }
 
-boolean FPSys::_getSensorStatus(){
-    boolean sensorStatus = false;
-
-    param paramData = _accessParameter->getParam();
-
-    //get sensor value
-    int sensorVal = _fireSensor->getValue(ALFA_EMA);//AlfaEma in percentage
-    int raw = _fireSensor->getRaw();
-
-    //convert to actual unit
-    int valUnit = map(sensorVal, 0, ADC_MAX, (long) paramData.lowRange, (long) paramData.highRange);
-
-    //compare with low/high limit
-    if(valUnit <= paramData.lowLimit)sensorStatus = true;
-    else if(valUnit >= paramData.highLimit)sensorStatus = true;
-
-    //report by exception
-    if (_prevSensorVal != sensorVal){
-
-        _prevSensorVal = sensorVal;
-        Serial.print("valUnit : ");
-        Serial.println(valUnit);
-
-        Serial.print("sensorVal : ");
-        Serial.println(sensorVal);
-
-        Serial.print("raw : ");
-        Serial.println(raw);
-
-        Serial.print("sensorStatus : ");
-        Serial.println(sensorStatus);
-    }
-
-    return sensorStatus;
-}
-
-void FPSys::_logicOperation(int oprMode, boolean sensorStatus){
+void FPSys::_logicOperation(int oprMode, int sensorStatus){
 
     //logic of operation
+    boolean sensorAlarm = false;
+
+    if (sensorStatus == LOW_ALARM)sensorAlarm=true;
+    else if (sensorStatus == HIGH_ALARM)sensorAlarm=true;
+
     switch (oprMode){
         case MODE_AUTO:
-            if (sensorStatus)_solenoidValve->on();
+            if (sensorAlarm)_solenoidValve->on();
             else _solenoidValve->off();
             break;
         
