@@ -56,13 +56,15 @@ void LocPan::attachModelParameter(AccessParam *accessParameter){
     _accessParameter = accessParameter;
   }
  
+void LocPan::updateParameter(){
+  _dataParam = _accessParameter->getParam();
+
+}
+
 int LocPan::getException(){
     int exp = _exception;
-    if (_exception == NO_EXCEPTION)return _exception;
-    else{
-        _exception = NO_EXCEPTION;
-        return exp;
-    }
+    if (exp != NO_EXCEPTION)_exception = NO_EXCEPTION;
+    return exp;
 }
 
 void LocPan::menu(){
@@ -126,7 +128,7 @@ void LocPan::_menuMain(char key){
           menuData = _accessMenu->read(this->_menuIndex);
           if (menuData.isHasParam){
             _modeMenu = MODE_MENU_PARAMETER;
-            this->_getParamLoc();//update dataParameter
+            this->updateParameter();//update dataParameter
             this->_initPrevIndex();
             this->_paramIndex = PARAMETER_VALUE;
             this->menu();
@@ -203,7 +205,7 @@ void LocPan::_menuChangeParameter(char key){
           Serial.println("Parameter saved");
 
           _exception = PARAMETER_EXCEPTION;//exception occur for parameter change          
-          this->_getParamLoc();//update dataParameter
+          this->updateParameter();//update dataParameter
         }
         break;
       case 'U':
@@ -518,10 +520,5 @@ void LocPan::_decreaseParameter(int idParam){
     default:
       break;
   }
-}
-
-void LocPan::_getParamLoc(){
-  _dataParam = _accessParameter->getParam();
-
 }
 

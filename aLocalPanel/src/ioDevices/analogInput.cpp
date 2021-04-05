@@ -27,11 +27,11 @@ void AnalogInput::init(String id){
   
 }
 
-void AnalogInput::attachModelParameter(AccessParam *accessParameter){
-    Serial.println("AnalogInput::attachModelParameter(AccessParam *accessParameter)");
-    _accessParameter = accessParameter;
-  }
- 
+void AnalogInput::setParam(param dataParam){
+
+  _dataParam = dataParam;
+}
+
 int AnalogInput::getRaw(){
     return analogRead(_pin);
 
@@ -39,8 +39,6 @@ int AnalogInput::getRaw(){
 
 float AnalogInput::getValue(){
 
-  _dataParam = _accessParameter->getParam();
-  
   float inMin = 0.0;
   float inMax = 1023.0;
 
@@ -55,16 +53,12 @@ float AnalogInput::getValue(){
   float valUnit = (tempVal - inMin) * (_dataParam.highRange - _dataParam.lowRange) / (inMax - inMin) + _dataParam.lowRange;
 
   //report by exception
-  if (_dataParam.value != valUnit){
+  if (_prevVal != valUnit){
+    _prevVal = valUnit;
     _exception = OPERATION_EXCEPTION;
-    //save to parameter
-    _accessParameter->setValue(valUnit);
 
     Serial.print("valUnit : ");
     Serial.println(valUnit);
-
-    Serial.print("_dataParam.value : ");
-    Serial.println(_dataParam.value);
 
   }
   return valUnit;
@@ -78,14 +72,11 @@ int AnalogInput::getStatus(){
   if (valUnit <= _dataParam.lowLimit)statusAi = LOW_ALARM;
   else if (valUnit >= _dataParam.highLimit)statusAi = HIGH_ALARM;
 
-  if (_dataParam.alarm != statusAi){
-    //save to parameter
-    _accessParameter->setAlarm(statusAi);
+  if (_prevState != statusAi){
+    _prevState = statusAi;
 
     Serial.print("statusAi : ");
     Serial.println(statusAi);
-
-    _accessParameter->info();
   }
 
   return statusAi;
@@ -93,11 +84,8 @@ int AnalogInput::getStatus(){
 
 int AnalogInput::getException(){
     int exp = _exception;
-    if (_exception == NO_EXCEPTION)return _exception;
-    else{
-        _exception = NO_EXCEPTION;
-        return exp;
-    }
+    if (exp != NO_EXCEPTION)_exception = NO_EXCEPTION;
+    return exp;
 }
 
 void AnalogInput::info(){

@@ -24,15 +24,18 @@ void CommSer::attachModelParameter(AccessParam *accessParameter){
   }
  
 
-void CommSer::sendValue(JsonObject valueJson){
+void CommSer::sendValue(){
   // Send the JSON document over the "link" serial port
+  JsonObject valueJson = _accessParameter->getOperation();
   serializeJson(valueJson, Serial1);
+  Serial1.println("");
 
 }
 
 void CommSer::sendParameter(){
   JsonObject paramJson = _accessParameter->getJson();
   serializeJson(paramJson, Serial1);
+  Serial1.println("");
 
 }
 
@@ -80,11 +83,8 @@ JsonObject CommSer::getParameter(){
 
 int CommSer::getException(){
     int exp = _exception;
-    if (_exception == NO_EXCEPTION)return _exception;
-    else{
-        _exception = NO_EXCEPTION;
-        return exp;
-    }
+    if (exp != NO_EXCEPTION)_exception = NO_EXCEPTION;
+    return exp;
 }
 
 void CommSer::execute(){

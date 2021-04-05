@@ -21,11 +21,12 @@
             float getValue();
             int getStatus();
             int getException();
-            void attachModelParameter(AccessParam*);//penggunaan pointer ini sangat mutlak (JIKA TIDAK ERROR !!!!)
+            void setParam(param);
             void info();
         private:
             int _exception = NO_EXCEPTION;
-            int  _pin, _prevVal;
+            int  _pin, _prevState;
+            float _prevVal;
             String  _id;
             boolean _pullUp;
             param _dataParam;

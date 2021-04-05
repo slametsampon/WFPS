@@ -29,6 +29,7 @@ class LocPan
     void attachModelParameter(AccessParam*);//Pasang Model parameter, penggunaan pointer ini sangat mutlak (JIKA TIDAK ERROR !!!!)
     int getAddress();
     void menu();
+    void updateParameter();
     int getException();
     void info();
 
@@ -60,6 +61,5 @@ class LocPan
     void _menuParameter(char);
     void _menuChangeParameter(char);
     void _initPrevIndex();
-    void _getParamLoc();
 };//end of class
 #endif

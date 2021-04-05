@@ -31,6 +31,8 @@ void FPSys::attachPbAMRT(PbAMRT *pbAMRT){
 void FPSys::attachFireSensor(AnalogInput *fireSensor){
     Serial.println("FPSys::attachFireSensor(AnalogInput *fireSensor)");
     _fireSensor = fireSensor;
+
+    this->updateParameter();
 }
 
 void FPSys::attachSolenoidValve(DigitalOutput *solenoidValve){
@@ -38,13 +40,19 @@ void FPSys::attachSolenoidValve(DigitalOutput *solenoidValve){
     _solenoidValve = solenoidValve;
 }
 
+void FPSys::attachModelParameter(AccessParam *accessParameter){
+    Serial.println("FPSys::attachModelParameter(AccessParam *accessParameter)");
+    _accessParameter = accessParameter;
+  }
+
+void FPSys::updateParameter(){
+    _fireSensor->setParam(_accessParameter->getParam());
+}
+ 
 int FPSys::getException(){
     int exp = _exception;
-    if (_exception == NO_EXCEPTION)return _exception;
-    else{
-        _exception = NO_EXCEPTION;
-        return exp;
-    }
+    if (exp != NO_EXCEPTION)_exception = NO_EXCEPTION;
+    return exp;
 }
 
 void FPSys::execute(){
@@ -56,6 +64,19 @@ void FPSys::execute(){
 
     if((operationMode == MODE_AUTO) && (sensorStatus != NO_ALARM)) operationMode = MODE_AUTO_ON;
     _ledAMR->status(operationMode);//LED action
+
+    //! get exceptions and MUST EXECUTE THE END
+    _exception = _fireSensor->getException();
+    if (_exception != NO_EXCEPTION){
+        _accessParameter->setValue(_fireSensor->getValue());
+        return;
+    }
+
+    _exception = _pbAMRT->getException();
+    if (_exception != NO_EXCEPTION){
+        _accessParameter->setOperationMode(operationMode);
+        return;
+    }
 
 }
 

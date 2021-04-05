@@ -48,7 +48,7 @@ class CommSer
 
     CommSer(String);//constructor
     void info();
-    void sendValue(JsonObject);
+    void sendValue();
     void sendParameter();
     JsonObject getParameter();
     void attachModelParameter(AccessParam*);//Pasang Model parameter, penggunaan pointer ini sangat mutlak (JIKA TIDAK ERROR !!!!)

@@ -60,6 +60,7 @@ unsigned char       AccessDataMenu::menuNbr=0;
 void initPbLed();
 void setupParameter();
 void setupMenu();
+void exceptionAct(int);
 
 void setup() {
 
@@ -88,7 +89,7 @@ void setup() {
     setupParameter();
 
     //attachment all peripherals for fpSys
-    fireSensor.attachModelParameter(&accessParameter);
+    fpSys.attachModelParameter(&accessParameter);
     fpSys.attachFireSensor(&fireSensor);
     fpSys.attachPbAMRT(&pbAMRT);
     fpSys.attachLedAMR(&ledAMR);
@@ -116,20 +117,22 @@ void loop() {
   commSer.execute();
 
   //get exception, and action as per exception code
-  exceptionAct(locPan.getException());
-  exceptionAct(fpSys.getException());
-  exceptionAct(commSer.getException());
+  exceptionAct(locPan.getException());//get parameter exception
+  exceptionAct(fpSys.getException());//get operation exception
+  exceptionAct(commSer.getException());//get remote exception
 
 }
 
 void exceptionAct(int exp){
   switch (exp)  {
     case OPERATION_EXCEPTION:
-      /* code */
+      commSer.sendValue();
       break;
     
     case PARAMETER_EXCEPTION:
-      /* code */
+      fpSys.updateParameter();
+      locPan.updateParameter();
+      commSer.sendParameter();
       break;
 
     case REMOTE_OPERATION_EXCEPTION:
@@ -204,7 +207,7 @@ void setupParameter(){
   dtParam.alarm = NO_ALARM;
   dtParam.increment = 1.1;
 
-  String locId = "ZONE - ";
+  String locId = "ZONE-";
   locId = String(locId + locPan.getAddress());
 
   accessParameter.init(locId, dtParam);

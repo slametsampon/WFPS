@@ -53,11 +53,8 @@ int PbAMRT::getCmd(unsigned long debounceTime){
 
 int PbAMRT::getException(){
     int exp = _exception;
-    if (_exception == NO_EXCEPTION)return _exception;
-    else{
-        _exception = NO_EXCEPTION;
-        return exp;
-    }
+    if (exp != NO_EXCEPTION)_exception = NO_EXCEPTION;
+    return exp;
 }
 
 void PbAMRT::info(){
