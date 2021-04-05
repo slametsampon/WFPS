@@ -50,7 +50,6 @@ class CommSer
     void info();
     void sendValue();
     void sendParameter();
-    JsonObject getParameter();
     void attachModelParameter(AccessParam*);//Pasang Model parameter, penggunaan pointer ini sangat mutlak (JIKA TIDAK ERROR !!!!)
     int getException();
     void execute();
@@ -61,6 +60,8 @@ class CommSer
     AccessParam *_accessParameter;
     param _dataParam;
     int _exception = NO_EXCEPTION;
+
+    void _getData();//get data incoming from serial1 and put on parameter
 };//end of class
 
 #endif

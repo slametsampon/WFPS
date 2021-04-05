@@ -43,6 +43,7 @@ JsonObject AccessParam::getJson(){
   // Get a reference to the root object
   StaticJsonDocument<128> doc;
   
+  doc["header"] = DATA_PARAMETER;
   doc["id"] = _id;
   doc["unit"] = _param.unit;
   doc["value"] = _param.value;
@@ -58,6 +59,23 @@ JsonObject AccessParam::getJson(){
   return doc.as<JsonObject>();
 }
 
+void  AccessParam::setParamJson(JsonObject paramJson){
+
+  //_id = paramJson["id"];
+  //_param.unit = paramJson["unit"];
+
+  _param.value = paramJson["value"];
+  _param.highRange = paramJson["highRange"];
+  _param.lowRange = paramJson["lowRange"];
+  _param.highLimit = paramJson["highLimit"];
+  _param.lowLimit = paramJson["lowLimit"];
+  _param.alfaEma = paramJson["alfaEma"];
+  _param.increment = paramJson["increment"];
+  _param.alarm = paramJson["alarm"];
+  _param.operationMode = paramJson["operationMode"];
+
+}
+
 JsonObject AccessParam::getOperation(){
   /*
   {
@@ -65,29 +83,37 @@ JsonObject AccessParam::getOperation(){
     "id":"Smoke-1",
     "unit":"%",
     "value":51.5,
+    "operationMode":2,
     "alarm":2
   }
 
-  StaticJsonDocument<64> doc;
+  StaticJsonDocument<96> doc;
 
   doc["header"] = 2;
   doc["id"] = "Smoke-1";
   doc["unit"] = "%";
   doc["value"] = 51.5;
+  doc["operationMode"] = 2;
   doc["alarm"] = 2;
 
   serializeJson(doc, output);
-
   */
 
-  StaticJsonDocument<64> doc;
-  doc["header"] = 2;
+  StaticJsonDocument<96> doc;
+  doc["header"] = DATA_OPERATION;
   doc["id"] = _id;
   doc["unit"] = _param.unit;
   doc["value"] = _param.value;
+  doc["operationMode"] = _param.operationMode;
   doc["alarm"] = _param.alarm;
 
   return doc.as<JsonObject>();
+}
+
+void AccessParam::setOperationJson(JsonObject paramJson){
+
+  _param.operationMode=paramJson["operationMode"];
+
 }
 
 param AccessParam::getParam(){
@@ -109,6 +135,10 @@ void AccessParam::setOperationMode(int val){
 void AccessParam::setParam(param dataParam){
 
   _param = dataParam;
+}
+
+String AccessParam::getId(){
+  return _id;
 }
 
 String AccessParam::toString(){

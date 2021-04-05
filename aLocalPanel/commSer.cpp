@@ -39,7 +39,32 @@ void CommSer::sendParameter(){
 
 }
 
-JsonObject CommSer::getParameter(){
+void CommSer::_getData(){
+  /*
+    ? Stream& input;
+
+    StaticJsonDocument<192> doc;
+
+    DeserializationError error = deserializeJson(doc, input);
+
+    if (error) {
+      Serial.print(F("deserializeJson() failed: "));
+      Serial.println(error.f_str());
+      return;
+    }
+
+    int header = doc["header"]; // 2
+    const char* id = doc["id"]; // "Smoke-1"
+    const char* unit = doc["unit"]; // "%"
+    float value = doc["value"]; // 51.5
+    int highRange = doc["highRange"]; // 100
+    int lowRange = doc["lowRange"]; // 0
+    int highLimit = doc["highLimit"]; // 80
+    int lowLimit = doc["lowLimit"]; // 40
+    float increment = doc["increment"]; // 1.1
+    int alarm = doc["alarm"]; // 2
+  
+  */
 
   if (Serial1.available()) 
     {
@@ -52,21 +77,12 @@ JsonObject CommSer::getParameter(){
 
       if (err == DeserializationError::Ok) 
         {
-          // Print the values
-          // (we must use as<T>() to resolve the ambiguity)
-          // Get a reference to the root object
           JsonObject obj = paramJson.as<JsonObject>();
 
-          // Loop through all the key-value pairs in obj
-          Serial.println("\nKey - Value Pair");
-          String str;
-          for (JsonPair p : obj) {
-            str = p.key().c_str();
-            str = String (str + " : ");
-            str = String (str + p.value().as<String>());
-            Serial.println(str);
-          }    
-        return obj;
+          //logic receiving data
+          if(obj["id"] != _accessParameter->getId()) return;//0. Validate id
+          if(obj["header"] == DATA_PARAMETER)_accessParameter->setParamJson(obj);//1. Remote Parameter
+          else if (obj["header"] == DATA_PARAMETER)_accessParameter->setOperationJson(obj);//2. Remote operation
         } 
       else 
         {
@@ -88,5 +104,5 @@ int CommSer::getException(){
 }
 
 void CommSer::execute(){
-  //this->getParameter();
+  this->_getData();
 }
