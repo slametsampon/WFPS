@@ -56,25 +56,33 @@ void LocPan::attachModelParameter(AccessParam *accessParameter){
     _accessParameter = accessParameter;
   }
  
+int LocPan::getException(){
+    int exp = _exception;
+    if (_exception == NO_EXCEPTION)return _exception;
+    else{
+        _exception = NO_EXCEPTION;
+        return exp;
+    }
+}
+
 void LocPan::menu(){
 
   char key = this->_getCommand();
 
-  switch (_modeMenu)
-    {
-      case MODE_MENU_MAIN:
-        this->_menuMain(key);
+  switch (_modeMenu){
+    case MODE_MENU_MAIN:
+      this->_menuMain(key);
+      break;
+    case MODE_MENU_PARAMETER:
+      this->_menuParameter(key);
+      break;
+    case MODE_CHANGE_PARAMETER:
+      this->_menuChangeParameter(key);
+      break;
+    case 'N':
+    default:
         break;
-      case MODE_MENU_PARAMETER:
-        this->_menuParameter(key);
-        break;
-      case MODE_CHANGE_PARAMETER:
-        this->_menuChangeParameter(key);
-        break;
-      case 'N':
-      default:
-          break;
-    }
+  }
 }
 
 //private function
@@ -192,7 +200,9 @@ void LocPan::_menuChangeParameter(char key){
           this->_isSaved = false;//false is saved
           this->_accessParameter->setParam(_dataParam);
           _view->viewMessage(0,0,"Parameter saved");//tampilkan pesan pada baris 0, kolom 0              
-          Serial.println("Parameter saved");          
+          Serial.println("Parameter saved");
+
+          _exception = PARAMETER_EXCEPTION;//exception occur for parameter change          
           this->_getParamLoc();//update dataParameter
         }
         break;

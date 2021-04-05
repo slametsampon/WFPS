@@ -25,11 +25,12 @@
             void attachPbAMRT(PbAMRT*);
             void attachFireSensor(AnalogInput*);
             void attachSolenoidValve(DigitalOutput*);
+            int getException();
             void execute();
 
         private:
             String  _id;
-            int _operationMode, _prevMode, _prevSensorVal;
+            int _exception = NO_EXCEPTION;
 
             LedAMR *_ledAMR;
             PbAMRT *_pbAMRT;

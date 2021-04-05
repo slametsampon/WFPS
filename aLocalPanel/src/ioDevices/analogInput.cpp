@@ -56,6 +56,7 @@ float AnalogInput::getValue(){
 
   //report by exception
   if (_dataParam.value != valUnit){
+    _exception = OPERATION_EXCEPTION;
     //save to parameter
     _accessParameter->setValue(valUnit);
 
@@ -88,6 +89,15 @@ int AnalogInput::getStatus(){
   }
 
   return statusAi;
+}
+
+int AnalogInput::getException(){
+    int exp = _exception;
+    if (_exception == NO_EXCEPTION)return _exception;
+    else{
+        _exception = NO_EXCEPTION;
+        return exp;
+    }
 }
 
 void AnalogInput::info(){

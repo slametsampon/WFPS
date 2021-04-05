@@ -5,9 +5,7 @@
 */
 #include "fpSys.h"
 
-FPSys::FPSys(String id):_id(id){
-    _prevMode = DEFAULT_INDEX;
-}
+FPSys::FPSys(String id):_id(id){}
 
 void FPSys::info(){
     Serial.println("FPSys::info()=>Fire Protection System");
@@ -38,6 +36,15 @@ void FPSys::attachFireSensor(AnalogInput *fireSensor){
 void FPSys::attachSolenoidValve(DigitalOutput *solenoidValve){
     Serial.println("FPSys::attachSolenoidValve(DigitalOutput *solenoidValve)");
     _solenoidValve = solenoidValve;
+}
+
+int FPSys::getException(){
+    int exp = _exception;
+    if (_exception == NO_EXCEPTION)return _exception;
+    else{
+        _exception = NO_EXCEPTION;
+        return exp;
+    }
 }
 
 void FPSys::execute(){

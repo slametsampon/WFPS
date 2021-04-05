@@ -78,11 +78,15 @@ JsonObject CommSer::getParameter(){
     }
 }
 
+int CommSer::getException(){
+    int exp = _exception;
+    if (_exception == NO_EXCEPTION)return _exception;
+    else{
+        _exception = NO_EXCEPTION;
+        return exp;
+    }
+}
+
 void CommSer::execute(){
-  _count++;
-  if (_count > 9){
-    _count = 0;
-    CommSer::sendParameter(); 
-    Serial1.println("");
-  }
+  //this->getParameter();
 }

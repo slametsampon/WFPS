@@ -29,6 +29,7 @@ class LocPan
     void attachModelParameter(AccessParam*);//Pasang Model parameter, penggunaan pointer ini sangat mutlak (JIKA TIDAK ERROR !!!!)
     int getAddress();
     void menu();
+    int getException();
     void info();
 
   private:
@@ -43,6 +44,7 @@ class LocPan
     char _prevCmd;
     int _modeMenu = MODE_MENU_MAIN;
     int _menuIndex, _prevMenuIndex, _paramIndex, _prevParamIndex;
+    int _exception = NO_EXCEPTION;
     boolean _isParamChanged, _isSaved;
 
     void _viewMenu(int);//Tampilkan Menu ke LCD sesuai index-menu

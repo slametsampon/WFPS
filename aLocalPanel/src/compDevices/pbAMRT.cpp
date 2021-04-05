@@ -43,8 +43,41 @@ int PbAMRT::getCmd(unsigned long debounceTime){
         }
         else cmd = _prevCmd;
     }
+
+    //report by exception
+    if (!_isInfo)_exception = OPERATION_EXCEPTION;
+
     this->_status();
     return cmd;
+}
+
+int PbAMRT::getException(){
+    int exp = _exception;
+    if (_exception == NO_EXCEPTION)return _exception;
+    else{
+        _exception = NO_EXCEPTION;
+        return exp;
+    }
+}
+
+void PbAMRT::info(){
+    Serial.println("PbAMRT::info()");
+    String str;
+
+    Serial.println("_pbAuto");
+    _pbAuto->info();
+    Serial.println(str);
+
+    Serial.println("_pbManual");
+    _pbManual->info();
+    
+    Serial.println("_pbReset");
+    _pbReset->info();
+    
+    Serial.println("_pbTest");
+    _pbTest->info();
+    
+    Serial.println("<----->");
 }
 
 void PbAMRT::_status(){
@@ -83,24 +116,4 @@ void PbAMRT::_status(){
         _isInfo = true;
         Serial.println(str);
     }
-}
-
-void PbAMRT::info(){
-    Serial.println("PbAMRT::info()");
-    String str;
-
-    Serial.println("_pbAuto");
-    _pbAuto->info();
-    Serial.println(str);
-
-    Serial.println("_pbManual");
-    _pbManual->info();
-    
-    Serial.println("_pbReset");
-    _pbReset->info();
-    
-    Serial.println("_pbTest");
-    _pbTest->info();
-    
-    Serial.println("<----->");
 }

@@ -10,6 +10,7 @@
 #include "Arduino.h"
 #include "signalConst.h"
 #include "param.h"
+#include "..\global\localPanelConst.h"
 
     class AnalogInput{
         public: 
@@ -19,9 +20,11 @@
             int getRaw();
             float getValue();
             int getStatus();
+            int getException();
             void attachModelParameter(AccessParam*);//penggunaan pointer ini sangat mutlak (JIKA TIDAK ERROR !!!!)
             void info();
         private:
+            int _exception = NO_EXCEPTION;
             int  _pin, _prevVal;
             String  _id;
             boolean _pullUp;

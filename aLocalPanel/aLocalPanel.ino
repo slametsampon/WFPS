@@ -101,15 +101,48 @@ void setup() {
 
 // the loop function runs over and over again forever
 void loop() {
-    lifeLed.blink(BLINK_NORMAL);//in milli second
 
-    SequenceMain.execute();
-    if(SequenceMain.isASecondEvent()){
-      commSer.execute();
-    }
+  int exp = NO_EXCEPTION;
 
-    locPan.menu();
-    fpSys.execute();
+  lifeLed.blink(BLINK_NORMAL);//in milli second
+
+  SequenceMain.execute();
+  if(SequenceMain.isASecondEvent()){
+    //commSer.execute();
+  }
+
+  locPan.menu();
+  fpSys.execute();
+  commSer.execute();
+
+  //get exception, and action as per exception code
+  exceptionAct(locPan.getException());
+  exceptionAct(fpSys.getException());
+  exceptionAct(commSer.getException());
+
+}
+
+void exceptionAct(int exp){
+  switch (exp)  {
+    case OPERATION_EXCEPTION:
+      /* code */
+      break;
+    
+    case PARAMETER_EXCEPTION:
+      /* code */
+      break;
+
+    case REMOTE_OPERATION_EXCEPTION:
+      /* code */
+      break;
+    
+    case REMOTE_PARAMETER_EXCEPTION:
+      /* code */
+      break;
+
+    default:
+      break;
+  }
 }
 
 void initPbLed(){

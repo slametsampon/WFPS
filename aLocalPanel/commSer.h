@@ -40,6 +40,7 @@ float value = doc["value"]; // 51.5
 #include    <ArduinoJson.h>
 #include    "src\model\model.h"
 #include    "src\ioDevices\param.h"
+#include    "src\global\localPanelConst.h"
 
 class CommSer
 {
@@ -51,6 +52,7 @@ class CommSer
     void sendParameter();
     JsonObject getParameter();
     void attachModelParameter(AccessParam*);//Pasang Model parameter, penggunaan pointer ini sangat mutlak (JIKA TIDAK ERROR !!!!)
+    int getException();
     void execute();
 
   private:
@@ -58,7 +60,7 @@ class CommSer
     String _id;
     AccessParam *_accessParameter;
     param _dataParam;
-    int _count;
+    int _exception = NO_EXCEPTION;
 };//end of class
 
 #endif

@@ -21,12 +21,14 @@
         public:
             PbAMRT(DigitalInput*, DigitalInput*, DigitalInput*, DigitalInput*);
             int getCmd(unsigned long);
+            int getException();
             void info();
         private:
             DigitalInput *_pbAuto, *_pbManual, *_pbReset, *_pbTest;
             int    _prevCmd;
             bool  _isInfo;//one shoot info
             void _status();
+            int _exception = NO_EXCEPTION;
     };
 
 #endif
