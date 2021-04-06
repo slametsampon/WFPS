@@ -1,5 +1,19 @@
 /*
-All constants for local panel
+? Pin Function ESP-8266 Pin
+? Wemos D1 Mini
+
+TX TXD TXD
+RX RXD RXD
+A0 Analog in(max 3.3V) A0
+D0 IO GPIO16
+D1 IO, SCL GPIO5
+D2 IO, SDA GPIO4
+D3 IO,Pull-up GPIO0
+D4 IO,pull-up,LED GPIO2
+D5 IO, SCK GPIO14
+D6 IO, MISO GPIO12
+D7 IO, MOSI GPIO13
+D8 IO,pull-down, SS GPIO15
 */
 
 #ifndef EoN_h

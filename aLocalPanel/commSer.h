@@ -37,6 +37,7 @@ float value = doc["value"]; // 51.5
 #define commSer_h
 
 #include    "Arduino.h"
+#include    <SoftwareSerial.h>
 #include    <ArduinoJson.h>
 #include    "src\ioDevices\param.h"
 #include    "src\global\localPanelConst.h"
@@ -50,15 +51,18 @@ class CommSer
     void sendValue();
     void sendParameter();
     void attachModelParameter(AccessParam*);//Pasang Model parameter, penggunaan pointer ini sangat mutlak (JIKA TIDAK ERROR !!!!)
+    void attachSoftwareSerial(SoftwareSerial*);//Pasang SoftwareSerial, penggunaan pointer ini sangat mutlak (JIKA TIDAK ERROR !!!!)
     int getException();
     void execute();
 
   private:
 
     String _id;
+    int _exception = NO_EXCEPTION;
+
     AccessParam *_accessParameter;
     param _dataParam;
-    int _exception = NO_EXCEPTION;
+    SoftwareSerial *_linkSerial; // RX, TX
 
     void _getData();//get data incoming from serial1 and put on parameter
 };//end of class

@@ -22,8 +22,12 @@ void CommSer::attachModelParameter(AccessParam *accessParameter){
     Serial.println("CommSer::attachModelParameter(AccessParam *accessParameter)");
     _accessParameter = accessParameter;
   }
- 
-
+  
+void CommSer::attachSoftwareSerial(SoftwareSerial *softSerial){
+    Serial.println("CommSer::attachSoftwareSerial(SoftwareSerial *softSerial)");
+    _linkSerial = softSerial;
+  }
+  
 void CommSer::sendValue(){
   // Send the JSON document over the "link" serial port
   JsonObject valueJson = _accessParameter->getOperation();

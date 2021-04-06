@@ -21,6 +21,7 @@
                 "C:\\Program Files (x86)\\Arduino\\libraries\\LiquidCrystal\\src",
                 "C:\\Users\\sam294\\OneDrive\\Documents\\Arduino\\libraries\\RTClib",
                 "C:\\Users\\sam294\\OneDrive\\Documents\\Arduino\\libraries\\ArduinoJson\\src",
+                "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\libraries\\SoftwareSerial\\src",
                 "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\libraries\\Wire\\src",
                 "c:\\program files (x86)\\arduino\\hardware\\tools\\avr\\lib\\gcc\\avr\\7.3.0\\include",
                 "c:\\program files (x86)\\arduino\\hardware\\tools\\avr\\lib\\gcc\\avr\\7.3.0\\include-fixed",
