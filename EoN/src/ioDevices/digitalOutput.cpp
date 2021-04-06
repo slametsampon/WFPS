@@ -20,7 +20,7 @@ void DigitalOutput::init(String id){
   pinMode(_pin, OUTPUT);
 
   _id = id;
-  _actionType = FORWARD_DO;
+  _actionType = FORWARD_TYPE;
 }
 
 void DigitalOutput::init(boolean actType, String id){
@@ -30,13 +30,21 @@ void DigitalOutput::init(boolean actType, String id){
   _actionType = actType;
 }
 
+boolean DigitalOutput::isStatus(){
+
+  if (_actionType == REVERSE_TYPE)return (!digitalRead(_pin));
+
+  else return (digitalRead(_pin));
+  
+}
+
 void DigitalOutput::on(){
-  if (_actionType == FORWARD_DO) digitalWrite(_pin, HIGH);
+  if (_actionType == FORWARD_TYPE) digitalWrite(_pin, HIGH);
   else digitalWrite(_pin, LOW);
 }
 
 void DigitalOutput::off(){
-  if (_actionType == FORWARD_DO) digitalWrite(_pin, LOW);
+  if (_actionType == FORWARD_TYPE) digitalWrite(_pin, LOW);
   else digitalWrite(_pin, HIGH);
 }
 
@@ -47,23 +55,20 @@ void DigitalOutput::blink(unsigned long blinkTime){
     }
 }
 
-String DigitalOutput::info(){
-  String str;
-  str = String("Device : " + _id);
-  str = String(str + "\n");//new line
+void DigitalOutput::info(){
+  Serial.print("Device : ");
+  Serial.println(_id);
 
-  str = String(str + "Pin : ");
-  str = String(str + _pin);
-  str = String(str + "\n");//new line
+  Serial.print("Pin : ");
+  Serial.println(_pin);
 
-  str = String(str + "Action : ");
-  if (_actionType == FORWARD_DO) str = String(str + "FORWARD");
-  else str = String(str + "REVERSE");
-  str = String(str + "\n");//new line
+  Serial.print("Action : ");
+  if (_actionType == FORWARD_TYPE) Serial.println("FORWARD");
+  else Serial.println("REVERSE");
 
-  str = String(str + "Value : ");
-  if (digitalRead(_pin)) str = String(str + "On\n");
-  else str = String(str + "Off\n");
+  Serial.print("Value : ");
+  if (this->isStatus()) Serial.println("On");
+  else Serial.println("Off");
 
-  return str;
+  Serial.println("");
 }

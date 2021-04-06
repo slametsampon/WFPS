@@ -25,6 +25,7 @@
             void attachPbAMRT(PbAMRT*);
             void attachFireSensor(AnalogInput*);
             void attachSolenoidValve(DigitalOutput*);
+            void attachBuzzer(DigitalOutput*);
             void attachModelParameter(AccessParam*);//Pasang Model parameter, penggunaan pointer ini sangat mutlak (JIKA TIDAK ERROR !!!!)
             int getException();
             void updateParameter();
@@ -37,7 +38,7 @@
             LedAMR *_ledAMR;
             PbAMRT *_pbAMRT;
             AnalogInput *_fireSensor;
-            DigitalOutput   *_solenoidValve;
+            DigitalOutput   *_solenoidValve, *_buzzer;
             AccessParam *_accessParameter;
             param _dataParam;
 

@@ -40,6 +40,11 @@ void FPSys::attachSolenoidValve(DigitalOutput *solenoidValve){
     _solenoidValve = solenoidValve;
 }
 
+void FPSys::attachBuzzer(DigitalOutput *buzzer){
+    Serial.println("FPSys::attachBuzzer(DigitalOutput *buzzer)");
+    _buzzer = buzzer;
+}
+
 void FPSys::attachModelParameter(AccessParam *accessParameter){
     Serial.println("FPSys::attachModelParameter(AccessParam *accessParameter)");
     _accessParameter = accessParameter;
@@ -89,6 +94,10 @@ void FPSys::_logicOperation(int oprMode, int sensorStatus){
     if (sensorStatus == LOW_ALARM)sensorAlarm=true;
     else if (sensorStatus == HIGH_ALARM)sensorAlarm=true;
 
+    //activate buzzer
+    if(sensorAlarm)_buzzer->blink(1000);
+    else _buzzer->off();
+
     switch (oprMode){
         case MODE_AUTO:
             if (sensorAlarm)_solenoidValve->on();
@@ -109,6 +118,10 @@ void FPSys::_logicOperation(int oprMode, int sensorStatus){
         
         case MODE_RESET:
             _solenoidValve->off();
+            break;
+        
+        case MODE_TEST:
+            _buzzer->on();
             break;
         
         default:

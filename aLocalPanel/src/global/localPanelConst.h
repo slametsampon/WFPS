@@ -30,7 +30,8 @@ All constants for local panel
     const int PIN_LED_MANUAL    = 24; 
     const int PIN_LED_RESET     = 26; 
 
-    const int PIN_SOLENOID_VALVE = 28; 
+    const int PIN_SOLENOID_VALVE    = 28; 
+    const int PIN_BUZZER            = 30; 
 
     //menu status
     const int MAX_MENU = 3;

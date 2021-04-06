@@ -8,10 +8,7 @@
 #define DigitalOutput_h
 
 #include "Arduino.h"
-
-const boolean FORWARD_DO= true;
-const boolean REVERSE_DO= false;
-
+#include "signalConst.h"
 
   class DigitalOutput{
     public: 
@@ -21,7 +18,8 @@ const boolean REVERSE_DO= false;
       void init(boolean);
       void init(String);
       void init(boolean, String);
-      String info();
+      boolean isStatus();
+      void info();
 
       //typical for DO
       void on();

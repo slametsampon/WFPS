@@ -15,10 +15,7 @@ D7 IO, MOSI GPIO13
 D8 IO,pull-down, SS GPIO15
 */
 
-#include    "model.h"
 #include    "commSer.h"
-#include    "src\digitalOutput\DigitalOutput.h"
-#include    <SoftwareSerial.h>
 #include    <ESP8266WiFi.h>
 #include    "uMQTTBroker.h"
 #include    "mqttBroker.h"
@@ -27,9 +24,6 @@ D8 IO,pull-down, SS GPIO15
 
 boolean isWfpsValueUpdate = false;
 boolean isWfpsParamUpdate = false;
-
-const int PIN_RX    = 5; //D1
-const int PIN_TX    = 4; //D2
 
 /*
  * Your WiFi config here
@@ -89,11 +83,6 @@ void setup() {
     */
     mqttBroker.subscribe(WFPS_PARAM);
 
-    String str;
-    str = String("lifeLed \n");//with new line
-    str = String(str + lifeLed.info());
-    Serial.println(str);
-    
     commSer.info();
 }
 

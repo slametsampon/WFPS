@@ -20,6 +20,7 @@ DigitalInput        pbReset(PIN_PB_RESET);//use pin PIN_PB_RESET for P/B
 DigitalInput        pbTest(PIN_PB_TEST);
 
 DigitalOutput       solenoidValve(PIN_SOLENOID_VALVE);
+DigitalOutput       buzzer(PIN_BUZZER);
 DigitalOutput       ledAuto(PIN_LED_AUTO);
 DigitalOutput       ledManual(PIN_LED_MANUAL);
 DigitalOutput       ledReset(PIN_LED_RESET);
@@ -94,6 +95,7 @@ void setup() {
     fpSys.attachPbAMRT(&pbAMRT);
     fpSys.attachLedAMR(&ledAMR);
     fpSys.attachSolenoidValve(&solenoidValve);
+    fpSys.attachBuzzer(&buzzer);
     fpSys.info();
 
     //attachment all peripherals for commSer
@@ -164,6 +166,7 @@ void initPbLed(){
     addr2.init(REVERSE_TYPE);
 
     solenoidValve.init(FORWARD_TYPE);
+    buzzer.init(FORWARD_TYPE);
 
     //initialization LEDs
     lifeLed.init(FORWARD_TYPE);

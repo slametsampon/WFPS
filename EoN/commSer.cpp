@@ -2,14 +2,20 @@
   commSer.h - Library untuk commSer
   Ini adalah bagian dari MVC (Model View Control) pattern design
   Dibuat Oleh : Sam March 22, 2021
+  {"Test":"test Value"}
 */
 
 #include    "commSer.h"
 
-CommSer::CommSer(String id):_id(id){}
+CommSer::CommSer(String id):_id(id){
+  _dataParam = _accessParameter->getParam();
+}
 
 void CommSer::info(){
-    Serial.println(_id);
+  Serial.println("CommSer::info()=>Communictaion Serial System");
+  Serial.print("_id : ");
+  Serial.println(_id);
+  Serial.println("");
 }
 
 void CommSer::attachModelParameter(AccessParam *accessParameter){
@@ -22,19 +28,47 @@ void CommSer::attachSoftwareSerial(SoftwareSerial *softSerial){
     _linkSerial = softSerial;
   }
  
-void CommSer::sendValue(JsonObject valueJson){
+void CommSer::sendValue(){
   // Send the JSON document over the "link" serial port
+  JsonObject valueJson = _accessParameter->getOperation();
   serializeJson(valueJson, *_linkSerial);
+  _linkSerial->println("");
 
 }
 
-void CommSer::sendParameter(JsonObject paramJson){
-    //JsonObject.as<JsonObject>()  paramJson = _accessParameter->getJson();
+void CommSer::sendParameter(){
+  JsonObject paramJson = _accessParameter->getJson();
   serializeJson(paramJson, *_linkSerial);
+  _linkSerial->println("");
 
 }
 
-JsonObject CommSer::getParameter(){
+void CommSer::_getData(){
+  /*
+    ? Stream& input;
+
+    StaticJsonDocument<192> doc;
+
+    DeserializationError error = deserializeJson(doc, input);
+
+    if (error) {
+      Serial.print(F("deserializeJson() failed: "));
+      Serial.println(error.f_str());
+      return;
+    }
+
+    int header = doc["header"]; // 2
+    const char* id = doc["id"]; // "Smoke-1"
+    const char* unit = doc["unit"]; // "%"
+    float value = doc["value"]; // 51.5
+    int highRange = doc["highRange"]; // 100
+    int lowRange = doc["lowRange"]; // 0
+    int highLimit = doc["highLimit"]; // 80
+    int lowLimit = doc["lowLimit"]; // 40
+    float increment = doc["increment"]; // 1.1
+    int alarm = doc["alarm"]; // 2
+  
+  */
 
   if (_linkSerial->available()) 
     {
@@ -47,21 +81,18 @@ JsonObject CommSer::getParameter(){
 
       if (err == DeserializationError::Ok) 
         {
-          // Print the values
-          // (we must use as<T>() to resolve the ambiguity)
-          // Get a reference to the root object
           JsonObject obj = paramJson.as<JsonObject>();
 
-          // Loop through all the key-value pairs in obj
-          Serial.println("\nKey - Value Pair");
-          String str;
-          for (JsonPair p : obj) {
-            str = p.key().c_str();
-            str = String (str + " : ");
-            str = String (str + p.value().as<String>());
-            Serial.println(str);
-          }    
-        return obj;
+          //logic receiving data
+          if(obj["id"] != _accessParameter->getId()) return;//0. Validate id
+          if(obj["header"] == DATA_PARAMETER){
+            _accessParameter->setParamJson(obj);//1. Remote Parameter
+            _exception = REMOTE_PARAMETER_EXCEPTION;
+          }
+          else if (obj["header"] == DATA_OPERATION){
+            _accessParameter->setOperationJson(obj);//2. Remote operation
+            _exception = REMOTE_OPERATION_EXCEPTION;
+          }
         } 
       else 
         {
@@ -76,8 +107,12 @@ JsonObject CommSer::getParameter(){
     }
 }
 
-void CommSer::execute(){
+int CommSer::getException(){
+    int exp = _exception;
+    if (exp != NO_EXCEPTION)_exception = NO_EXCEPTION;
+    return exp;
+}
 
-  this->getParameter();
-    
+void CommSer::execute(){
+  this->_getData();
 }
