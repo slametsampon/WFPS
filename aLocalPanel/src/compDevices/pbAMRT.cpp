@@ -45,7 +45,7 @@ int PbAMRT::getCmd(unsigned long debounceTime){
     }
 
     //report by exception
-    if (!_isInfo)_exception = OPERATION_EXCEPTION;
+    if (!_isInfo)_exception = LOCAL_OPERATION_EXCEPTION;
 
     this->_status();
     return cmd;

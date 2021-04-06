@@ -206,7 +206,7 @@ void LocPan::_menuChangeParameter(char key){
           _view->viewMessage(0,0,"Parameter saved");//tampilkan pesan pada baris 0, kolom 0              
           Serial.println("Parameter saved");
 
-          _exception = PARAMETER_EXCEPTION;//exception occur for parameter change          
+          _exception = LOCAL_PARAMETER_EXCEPTION;//exception occur for parameter change          
           this->updateParameter();//update dataParameter
         }
         break;

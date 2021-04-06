@@ -51,8 +51,8 @@ All constants for local panel
 
     //Exception code
     const int NO_EXCEPTION = 0;
-    const int OPERATION_EXCEPTION = 1;//change on value or operation mode
-    const int PARAMETER_EXCEPTION = 2;//change on parameter
+    const int LOCAL_OPERATION_EXCEPTION = 1;//change on value or operation mode
+    const int LOCAL_PARAMETER_EXCEPTION = 2;//change on parameter
     const int REMOTE_OPERATION_EXCEPTION = 3;//change on value or operation mode remotely
     const int REMOTE_PARAMETER_EXCEPTION = 4;//change on parameter remotely
 

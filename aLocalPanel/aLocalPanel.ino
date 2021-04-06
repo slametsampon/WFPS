@@ -127,11 +127,11 @@ void loop() {
 
 void exceptionAct(int exp){
   switch (exp)  {
-    case OPERATION_EXCEPTION:
+    case LOCAL_OPERATION_EXCEPTION:
       commSer.sendValue();
       break;
     
-    case PARAMETER_EXCEPTION:
+    case LOCAL_PARAMETER_EXCEPTION:
       fpSys.updateParameter();
       locPan.updateParameter();
       commSer.sendParameter();

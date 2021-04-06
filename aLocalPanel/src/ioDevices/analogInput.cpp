@@ -55,7 +55,7 @@ float AnalogInput::getValue(){
   //report by exception
   if (_prevVal != valUnit){
     _prevVal = valUnit;
-    _exception = OPERATION_EXCEPTION;
+    _exception = LOCAL_OPERATION_EXCEPTION;
 
     Serial.print("valUnit : ");
     Serial.println(valUnit);

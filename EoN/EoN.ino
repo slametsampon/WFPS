@@ -39,6 +39,7 @@ CommSer         commSer("EoN-Serial");
 //if not ERRORR !!!!! 
 void startWiFiClient();
 void startWiFiAP();
+void exceptionAct(int);
 
 void setup() {
 
@@ -117,3 +118,21 @@ void startWiFiAP()
   Serial.println("IP address: " + WiFi.softAPIP().toString());
 }
 
+void exceptionAct(int exp){
+  switch (exp)  {
+    case LOCAL_OPERATION_EXCEPTION:
+      break;
+    
+    case LOCAL_PARAMETER_EXCEPTION:
+      break;
+
+    case REMOTE_OPERATION_EXCEPTION:
+      break;
+    
+    case REMOTE_PARAMETER_EXCEPTION:
+      break;
+
+    default:
+      break;
+  }
+}

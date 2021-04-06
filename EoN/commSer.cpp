@@ -87,11 +87,11 @@ void CommSer::_getData(){
           if(obj["id"] != _accessParameter->getId()) return;//0. Validate id
           if(obj["header"] == DATA_PARAMETER){
             _accessParameter->setParamJson(obj);//1. Remote Parameter
-            _exception = REMOTE_PARAMETER_EXCEPTION;
+            _exception = LOCAL_PARAMETER_EXCEPTION;
           }
           else if (obj["header"] == DATA_OPERATION){
             _accessParameter->setOperationJson(obj);//2. Remote operation
-            _exception = REMOTE_OPERATION_EXCEPTION;
+            _exception = LOCAL_OPERATION_EXCEPTION;
           }
         } 
       else 
