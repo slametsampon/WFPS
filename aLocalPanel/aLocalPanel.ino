@@ -136,11 +136,13 @@ void exceptionAct(int exp){
       break;
 
     case REMOTE_OPERATION_EXCEPTION:
-      /* code */
+      fpSys.execute();//1. check status fpSys (getValue, getMode)
       break;
     
     case REMOTE_PARAMETER_EXCEPTION:
-      /* code */
+      fpSys.updateParameter();
+      locPan.updateParameter();
+      fpSys.execute();//1. check status fpSys (getValue, getMode)
       break;
 
     default:
@@ -205,7 +207,7 @@ void setupParameter(){
   dtParam.lowLimit = 40;
   dtParam.alfaEma = ALFA_EMA;
   dtParam.alarm = NO_ALARM;
-  dtParam.increment = 1.1;
+  dtParam.increment = 2.0;
 
   String locId = "ZONE-";
   locId = String(locId + locPan.getAddress());

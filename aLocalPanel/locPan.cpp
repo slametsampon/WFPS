@@ -173,6 +173,8 @@ void LocPan::_menuParameter(char key){
         this->menu();
         break;
       case 'R':
+        if(!_accessParameter->isChangeAble(this->_paramIndex))return;//exit
+
         //ke menu ubah parameter
         _modeMenu = MODE_CHANGE_PARAMETER;
         this->_isParamChanged = true;
@@ -186,10 +188,10 @@ void LocPan::_menuParameter(char key){
 }
 
 void LocPan::_menuChangeParameter(char key){
-  int idx, idxParam;
+
+  int idx = this->_paramIndex;
 
   if(this->_isParamChanged){
-    idx = this->_paramIndex;
     this->_sendParameter(idx);//kirim parameter ke serial port 
     this->_viewParameter(idx);//tampilkan parameter ke lcd
   }
@@ -210,7 +212,6 @@ void LocPan::_menuChangeParameter(char key){
         break;
       case 'U':
         //Naikkan parameter
-        idx = this->_paramIndex;
         this->_increaseParameter(idx);
         this->_isParamChanged = true;
         this->_isSaved = true;//true is need to be saved
@@ -219,7 +220,6 @@ void LocPan::_menuChangeParameter(char key){
         break;
       case 'D':
         //turunkan parameter
-        idx = this->_paramIndex;
         this->_decreaseParameter(idx);
         this->_isParamChanged = true;
         this->_isSaved = true;//true is need to be saved
@@ -336,6 +336,21 @@ void LocPan::_viewParameter(int index){
       _view->viewMessage(1,8,String(_dataParam.increment));//pesan pada baris 2
       break;
     
+    case PARAMETER_ALFA_EMA:
+      _view->viewMessage(1,0,"AlfaEma : ");//pesan pada baris 2
+      _view->viewMessage(1,10,String(_dataParam.alfaEma));//pesan pada baris 2
+      break;
+    
+    case PARAMETER_OPERATION_MODE:
+      _view->viewMessage(1,0,"Mode : ");//pesan pada baris 2
+      _view->viewMessage(1,8,String(_dataParam.operationMode));//pesan pada baris 2
+      break;
+    
+    case PARAMETER_ALARM:
+      _view->viewMessage(1,0,"Alarm : ");//pesan pada baris 2
+      _view->viewMessage(1,8,String(_dataParam.alarm));//pesan pada baris 2
+      break;
+    
     default:
       break;
     }
@@ -403,6 +418,24 @@ void LocPan::_sendParameter(int index){
         Serial.println(paramStr);
         break;
       
+      case PARAMETER_ALFA_EMA:
+        paramStr = "AlfaEma : ";
+        paramStr =  String(paramStr + _dataParam.alfaEma);
+        Serial.println(paramStr);
+        break;
+      
+      case PARAMETER_OPERATION_MODE:
+        paramStr = "Mode : ";
+        paramStr =  String(paramStr + _dataParam.operationMode);
+        Serial.println(paramStr);
+        break;
+      
+      case PARAMETER_ALARM:
+        paramStr = "Incr : ";
+        paramStr =  String(paramStr + _dataParam.alarm);
+        Serial.println(paramStr);
+        break;
+      
       default:
         break;
       }
@@ -418,7 +451,7 @@ int LocPan::_increaseIndex(){
         return _menuIndex;
         break;
       case MODE_MENU_PARAMETER:
-        if (_paramIndex < PARAMETER_INCREMENT) _paramIndex++;
+        if (_paramIndex < PARAMETER_OPERATION_MODE) _paramIndex++;
         else _paramIndex = PARAMETER_VALUE;
         return _paramIndex;
         break;
@@ -437,7 +470,7 @@ int LocPan::_decreaseIndex(){
         break;
       case MODE_MENU_PARAMETER:
         if (_paramIndex > PARAMETER_VALUE) _paramIndex--;
-        else _paramIndex = PARAMETER_INCREMENT;
+        else _paramIndex = PARAMETER_OPERATION_MODE;
         return _paramIndex;
         break;
       case MODE_CHANGE_PARAMETER:

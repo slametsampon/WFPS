@@ -10,8 +10,11 @@
     const int PARAMETER_HIGH_RANGE = 2;
     const int PARAMETER_LOW_LIMIT = 3;
     const int PARAMETER_HIGH_LIMIT = 4;
-    const int PARAMETER_INCREMENT = 5;
-    const float DELTA_INCREMENT = 0.1;
+    const int PARAMETER_ALFA_EMA = 5;
+    const int PARAMETER_INCREMENT = 6;
+    const int PARAMETER_ALARM = 7;
+    const int PARAMETER_OPERATION_MODE = 8;
+    const float DELTA_INCREMENT = 0.5;
 
     //commSer header code
     const int DATA_OPERATION = 0;
@@ -43,16 +46,16 @@
         param getParam();
         void setParamJson(JsonObject);
         void setParam(param);
-        void setValue(float);
+        void setParam(int, float);
+        boolean isChangeAble(int);
         void setAlarm(int);
-        void setOperationMode(int);
         String toString();
         String getId();
         void info();
 
     private:
         String    _id;
-        param _param;
+        param _dataParam;
 
     };//end of class
 #endif

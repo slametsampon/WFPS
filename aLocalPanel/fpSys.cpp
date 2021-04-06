@@ -68,13 +68,14 @@ void FPSys::execute(){
     //! get exceptions and MUST EXECUTE THE END
     _exception = _fireSensor->getException();
     if (_exception != NO_EXCEPTION){
-        _accessParameter->setValue(_fireSensor->getValue());
+        _accessParameter->setParam(PARAMETER_VALUE,_fireSensor->getValue());
+        _accessParameter->setParam(PARAMETER_ALARM,sensorStatus);
         return;
     }
 
     _exception = _pbAMRT->getException();
     if (_exception != NO_EXCEPTION){
-        _accessParameter->setOperationMode(operationMode);
+        _accessParameter->setParam(PARAMETER_OPERATION_MODE, operationMode);
         return;
     }
 

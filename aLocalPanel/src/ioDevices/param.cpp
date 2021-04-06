@@ -45,16 +45,16 @@ JsonObject AccessParam::getJson(){
   
   doc["header"] = DATA_PARAMETER;
   doc["id"] = _id;
-  doc["unit"] = _param.unit;
-  doc["value"] = _param.value;
-  doc["highRange"] = _param.highRange;
-  doc["lowRange"] = _param.lowRange;
-  doc["highLimit"] = _param.highLimit;
-  doc["lowLimit"] = _param.lowLimit;
-  doc["alfaEma"] = _param.alfaEma;
-  doc["increment"] = _param.increment;
-  doc["alarm"] = _param.alarm;
-  doc["operationMode"] = _param.operationMode;
+  doc["unit"] = _dataParam.unit;
+  doc["value"] = _dataParam.value;
+  doc["highRange"] = _dataParam.highRange;
+  doc["lowRange"] = _dataParam.lowRange;
+  doc["highLimit"] = _dataParam.highLimit;
+  doc["lowLimit"] = _dataParam.lowLimit;
+  doc["alfaEma"] = _dataParam.alfaEma;
+  doc["increment"] = _dataParam.increment;
+  doc["alarm"] = _dataParam.alarm;
+  doc["operationMode"] = _dataParam.operationMode;
 
   return doc.as<JsonObject>();
 }
@@ -62,17 +62,17 @@ JsonObject AccessParam::getJson(){
 void  AccessParam::setParamJson(JsonObject paramJson){
 
   //_id = paramJson["id"];
-  //_param.unit = paramJson["unit"];
+  //_dataParam.unit = paramJson["unit"];
 
-  _param.value = paramJson["value"];
-  _param.highRange = paramJson["highRange"];
-  _param.lowRange = paramJson["lowRange"];
-  _param.highLimit = paramJson["highLimit"];
-  _param.lowLimit = paramJson["lowLimit"];
-  _param.alfaEma = paramJson["alfaEma"];
-  _param.increment = paramJson["increment"];
-  _param.alarm = paramJson["alarm"];
-  _param.operationMode = paramJson["operationMode"];
+  _dataParam.value = paramJson["value"];
+  _dataParam.highRange = paramJson["highRange"];
+  _dataParam.lowRange = paramJson["lowRange"];
+  _dataParam.highLimit = paramJson["highLimit"];
+  _dataParam.lowLimit = paramJson["lowLimit"];
+  _dataParam.alfaEma = paramJson["alfaEma"];
+  _dataParam.increment = paramJson["increment"];
+  _dataParam.alarm = paramJson["alarm"];
+  _dataParam.operationMode = paramJson["operationMode"];
 
 }
 
@@ -102,39 +102,97 @@ JsonObject AccessParam::getOperation(){
   StaticJsonDocument<96> doc;
   doc["header"] = DATA_OPERATION;
   doc["id"] = _id;
-  doc["unit"] = _param.unit;
-  doc["value"] = _param.value;
-  doc["operationMode"] = _param.operationMode;
-  doc["alarm"] = _param.alarm;
+  doc["unit"] = _dataParam.unit;
+  doc["value"] = _dataParam.value;
+  doc["operationMode"] = _dataParam.operationMode;
+  doc["alarm"] = _dataParam.alarm;
 
   return doc.as<JsonObject>();
 }
 
 void AccessParam::setOperationJson(JsonObject paramJson){
 
-  _param.operationMode=paramJson["operationMode"];
+  _dataParam.operationMode=paramJson["operationMode"];
 
 }
 
 param AccessParam::getParam(){
-  return _param;
-}
-
-void AccessParam::setValue(float val){
-  _param.value =  val;
+  return _dataParam;
 }
 
 void AccessParam::setAlarm(int val){
-  _param.alarm =  val;
-}
-
-void AccessParam::setOperationMode(int val){
-  _param.operationMode =  val;
+  _dataParam.alarm =  val;
 }
 
 void AccessParam::setParam(param dataParam){
 
-  _param = dataParam;
+  _dataParam = dataParam;
+}
+
+boolean AccessParam::isChangeAble(int idParam){
+
+  boolean isChangeAble = false;
+
+  switch (idParam)
+  {
+    case PARAMETER_LOW_RANGE:
+    case PARAMETER_HIGH_RANGE:
+    case PARAMETER_LOW_LIMIT:
+    case PARAMETER_HIGH_LIMIT:
+    case PARAMETER_INCREMENT:
+    case PARAMETER_ALFA_EMA:
+      isChangeAble = true;
+      break;
+    
+    default:
+      break;
+  }
+  
+  return isChangeAble;
+}
+void AccessParam::setParam(int idParam, float val){
+
+  switch (idParam)
+  {
+    case PARAMETER_VALUE:
+      _dataParam.value = val;
+      break;
+
+    case PARAMETER_LOW_RANGE:
+      _dataParam.lowRange = val;
+      break;
+    
+    case PARAMETER_HIGH_RANGE:
+      _dataParam.highRange = val;
+      break;
+    
+    case PARAMETER_LOW_LIMIT:
+      _dataParam.lowLimit = val;
+      break;
+    
+    case PARAMETER_HIGH_LIMIT:
+      _dataParam.highLimit = val;
+      break;
+    
+    case PARAMETER_OPERATION_MODE:
+      _dataParam.operationMode = (int) val;
+      break;
+    
+    case PARAMETER_ALARM:
+      _dataParam.alarm = (int) val;
+      break;
+    
+    case PARAMETER_INCREMENT:
+      _dataParam.increment = val;
+      break;
+
+    case PARAMETER_ALFA_EMA:
+      _dataParam.alfaEma = val;
+      break;
+
+    default:
+      break;
+  }
 }
 
 String AccessParam::getId(){
@@ -146,14 +204,14 @@ String AccessParam::toString(){
   String alm = "-N";
 
   str =  String(str + " ");
-  str =  String(str + _param.value);
+  str =  String(str + _dataParam.value);
 
-  str =  String(str + _param.unit);
+  str =  String(str + _dataParam.unit);
   
-  if (_param.alarm == LOW_ALARM){
+  if (_dataParam.alarm == LOW_ALARM){
     alm = "-L";
   }
-  if (_param.alarm == HIGH_ALARM){
+  if (_dataParam.alarm == HIGH_ALARM){
     alm = "-H";
   }
   str =  String(str + alm);
