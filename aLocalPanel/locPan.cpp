@@ -24,6 +24,18 @@ int LocPan::getAddress(){
   return _dipAddr->getAddr();
 }
 
+void LocPan::init(){
+  _dipAddr->init();
+
+  for (int i=0; i < this->cmdInNbr; i++){
+      _cmdInput[i]->init();
+  }
+
+  this->_setupMenu();
+  this->_setupParameter();
+
+}
+
 void LocPan::info(){
   Serial.println("LocPan::info()=>Local Panel System");
   Serial.print("_id : ");
@@ -31,7 +43,9 @@ void LocPan::info(){
 
   _dipAddr->info();
 
-  Serial.println("<----->");
+  for (int i=0; i < this->cmdInNbr; i++){
+      _cmdInput[i]->info();
+  }
 }
 
 void LocPan::attachCmdIn(command *cmdIn){
@@ -555,3 +569,44 @@ void LocPan::_decreaseParameter(int idParam){
   }
 }
 
+void LocPan::_setupParameter(){
+  param dtParam;
+  Serial.println("LocPan::_setupParameter()");
+
+  //fire Zone1.
+  dtParam.unit = "%";
+  dtParam.value = 51;
+  dtParam.highRange = 100;
+  dtParam.lowRange = 0;
+  dtParam.highLimit = 80;
+  dtParam.lowLimit = 40;
+  dtParam.alfaEma = ALFA_EMA;
+  dtParam.alarm = NO_ALARM;
+  dtParam.increment = 2.0;
+
+  String locId = "ZONE-";
+  locId = String(locId + _dipAddr->getAddr());
+
+  _accessParameter->init(locId, dtParam);
+}
+
+void LocPan::_setupMenu(){
+  String locId = "Fire Zone-";
+  dataMenu  dtMenu;
+
+  Serial.println("LocPan::_setupMenu()");
+
+  dtMenu.isHasParam = false;
+  dtMenu.Messages_0 ="Fire Protection System";
+  dtMenu.Messages_1 ="Salman Alfarisi";
+  _accessMenu->add(dtMenu);
+
+  //specific zone configuration  
+  dtMenu.isHasParam = true;
+  dtMenu.Messages_0 ="Fire Zone-1";
+  dtMenu.Messages_1 ="Parameters";
+
+  locId = String(locId + _dipAddr->getAddr());
+  locId.toCharArray(dtMenu.Messages_0,16);
+  _accessMenu->add(dtMenu);
+}

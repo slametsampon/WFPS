@@ -20,6 +20,7 @@
         
         public:
             FPSys(String);
+            void init();
             void info();
             void attachLedAMR(LedAMR*);
             void attachPbAMRT(PbAMRT*);

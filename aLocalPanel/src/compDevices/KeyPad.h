@@ -21,9 +21,10 @@ class KeyPad : public command{
     KeyPad(AnalogInput*);//constructor
     void init();//Initialization
     bool isValid(char);
-    int getValue();//function for getting keypad value
-    char getCode();//Convert keypad value to char
     void info();
+    char getCode();//Convert keypad value to char
+
+    int getValue();//function for getting keypad value
   private:
     AnalogInput *_analogInput;
     unsigned long _prevMilli;

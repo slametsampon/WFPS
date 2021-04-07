@@ -12,8 +12,10 @@
 class serialCmd : public command{
   public:
     serialCmd(String);
-    char getCode();
+    void init();//Initialization
+    void info();
     bool isValid(char);
+    char getCode();
   private:
     String  _id;    
     char  _cmd;    
@@ -22,6 +24,8 @@ class serialCmd : public command{
 class bluetoothCmd : public command{
   public:
     bluetoothCmd(String);
+    void init();//Initialization
+    void info();
     virtual char getCode();
     bool isValid(char);
   private:

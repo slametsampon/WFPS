@@ -6,7 +6,8 @@
 /* Dependencies */
 #include "pbAMRT.h"
 
-PbAMRT::PbAMRT(DigitalInput *pbAuto, DigitalInput *pbManual, DigitalInput *pbReset, DigitalInput *pbTest): _pbAuto(pbAuto), _pbManual(pbManual), _pbReset(pbReset), _pbTest(pbTest){}
+PbAMRT::PbAMRT(DigitalInput *pbAuto, DigitalInput *pbManual, DigitalInput *pbReset, DigitalInput *pbTest): 
+            _pbAuto(pbAuto), _pbManual(pbManual), _pbReset(pbReset), _pbTest(pbTest){}
 
 int PbAMRT::getCmd(unsigned long debounceTime){
     int cmd;
@@ -57,21 +58,20 @@ int PbAMRT::getException(){
     return exp;
 }
 
+//init for peripherals
+void PbAMRT::init(){
+    //initialization switch
+    _pbAuto->init(REVERSE_TYPE, "_pbAuto");
+    _pbManual->init(REVERSE_TYPE, "_pbAuto");
+    _pbReset->init(REVERSE_TYPE, "_pbAuto");
+    _pbTest->init(REVERSE_TYPE, "_pbAuto");
+}
 void PbAMRT::info(){
     Serial.println("PbAMRT::info()");
-    String str;
 
-    Serial.println("_pbAuto");
     _pbAuto->info();
-    Serial.println(str);
-
-    Serial.println("_pbManual");
-    _pbManual->info();
-    
-    Serial.println("_pbReset");
-    _pbReset->info();
-    
-    Serial.println("_pbTest");
+    _pbManual->info();    
+    _pbReset->info();    
     _pbTest->info();
     
     Serial.println("<----->");

@@ -7,24 +7,22 @@
 /* Dependencies */
 #include "analogInput.h"
 
-AnalogInput::AnalogInput(int pin):_pin(pin){
-    _id = "AnalogInput";
-    pinMode(_pin, INPUT);
+AnalogInput::AnalogInput(int pin):
+_pin(pin), _id("AnalogInput"), _pullUp(PULLUP_NONE){
+  _device = _id;
+  pinMode(_pin, INPUT);
 }
 
 void AnalogInput::init(boolean typ){
-  if (typ == PULLUP){
-    pinMode(_pin, INPUT_PULLUP);
-    _pullUp = PULLUP;
-  }
-  else {
-    pinMode(_pin, INPUT);
-  }
+  _pullUp = typ;
+
+  if (typ == PULLUP)pinMode(_pin, INPUT_PULLUP);
+  else pinMode(_pin, INPUT);
 }
 
-void AnalogInput::init(String id){
+void AnalogInput::init(boolean typ, String id){
   _id = id;
-  
+  this->init(typ);
 }
 
 void AnalogInput::setParam(param dataParam){
@@ -90,8 +88,11 @@ int AnalogInput::getException(){
 
 void AnalogInput::info(){
 
-  Serial.print("Device : ");
+  Serial.print("_id : ");
   Serial.println(_id);
+
+  Serial.print("_device : ");
+  Serial.println(_device);
 
   Serial.print("Pin : ");
   Serial.println(_pin);

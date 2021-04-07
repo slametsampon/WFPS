@@ -10,6 +10,17 @@
 serialCmd::serialCmd(String id): _id(id){
 }
 
+void serialCmd::init(){}
+
+void serialCmd::info(){
+    Serial.println("serialCmd::info()");
+
+    Serial.print("_id");
+    Serial.println(_id);
+
+    Serial.println("<----->");
+}
+
 char serialCmd::getCode(){
   char serialCmd = NO_KEY;
   if (Serial.available() > 0) {
@@ -40,6 +51,17 @@ bool serialCmd::isValid(char cmdVal){
 }
 
 bluetoothCmd::bluetoothCmd(String id): _id(id){
+}
+
+void bluetoothCmd::init(){}
+
+void bluetoothCmd::info(){
+    Serial.println("bluetoothCmd::info()");
+
+    Serial.print("_id");
+    Serial.println(_id);
+
+    Serial.println("<----->");
 }
 
 char bluetoothCmd::getCode(){

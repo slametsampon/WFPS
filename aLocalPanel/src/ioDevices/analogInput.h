@@ -16,7 +16,7 @@
         public: 
             AnalogInput(int pin);   
             void init(boolean);
-            void init(String);
+            void init(boolean, String);
             int getRaw();
             float getValue();
             int getStatus();
@@ -27,7 +27,7 @@
             int _exception = NO_EXCEPTION;
             int  _pin, _prevState;
             float _prevVal;
-            String  _id;
+            String  _id, _device;
             boolean _pullUp;
             param _dataParam;
             AccessParam *_accessParameter;

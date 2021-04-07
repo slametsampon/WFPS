@@ -7,6 +7,14 @@
 
 FPSys::FPSys(String id):_id(id){}
 
+void FPSys::init(){
+    _pbAMRT->init();
+    _ledAMR->init();
+    _fireSensor->init(PULLUP_NONE,"_fireSensor");
+    _solenoidValve->init(FORWARD_TYPE,"_solenoidValve");
+    _buzzer->init(FORWARD_TYPE,"_buzzer");
+}
+
 void FPSys::info(){
     Serial.println("FPSys::info()=>Fire Protection System");
     
@@ -14,6 +22,7 @@ void FPSys::info(){
     _ledAMR->info();
     _fireSensor->info();
     _solenoidValve->info();
+    _buzzer->info();
 
     Serial.println("<----->");
 }

@@ -21,16 +21,17 @@ int DipAddr::getAddr(){
     return (addr);
 }
 
+void DipAddr::init(){
+  _addr0->init(REVERSE_TYPE,"_addr0");
+  _addr1->init(REVERSE_TYPE,"_addr1");
+  _addr2->init(REVERSE_TYPE,"_addr2");
+
+}
 void DipAddr::info(){
     Serial.println("DipAddr::info()");
     
-    Serial.println("_addr0");
     _addr0->info();
-
-    Serial.println("_addr1");
-    _addr1->info();
-    
-    Serial.println("_addr2");
+    _addr1->info();    
     _addr2->info();
     
     Serial.print("Address : ");

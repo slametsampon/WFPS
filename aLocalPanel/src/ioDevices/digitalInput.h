@@ -14,14 +14,14 @@
         public: 
             DigitalInput(int pin);   
             void init(boolean);
-            void init(String);
+            void init(boolean, String);
             boolean isStatus(unsigned long);
             boolean isStatus();
             void info();
         private:
             int  _pin;
             unsigned long  _prevMilli;
-            String  _id;
+            String  _id, _device;
             boolean _digTyp = REVERSE_TYPE;
     };
 #endif

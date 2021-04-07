@@ -71,16 +71,19 @@
                 }
             }
 
+            void init(){
+                //initialization LEDs
+                _ledAuto->init(FORWARD_TYPE,"_ledAuto");
+                _ledManual->init(FORWARD_TYPE,"_ledManual");
+                _ledReset->init(FORWARD_TYPE,"_ledReset");
+                
+            }
+
             void  info(){
                 Serial.println("LedAMR::info()");
 
-                Serial.println("_ledAuto");
                 _ledAuto->info();
-
-                Serial.println("_ledManual");
-                _ledManual->info();
-                
-                Serial.println("_ledReset");
+                _ledManual->info();                
                 _ledReset->info();
                 
                 Serial.println("<----->");

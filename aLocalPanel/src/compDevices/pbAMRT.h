@@ -22,6 +22,7 @@
             PbAMRT(DigitalInput*, DigitalInput*, DigitalInput*, DigitalInput*);
             int getCmd(unsigned long);
             int getException();
+            void init();
             void info();
         private:
             DigitalInput *_pbAuto, *_pbManual, *_pbReset, *_pbTest;

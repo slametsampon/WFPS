@@ -18,6 +18,7 @@
         public:
             DipAddr(DigitalInput*, DigitalInput*, DigitalInput*);
             int getAddr();
+            void init();
             void info();
         private:
             DigitalInput *_addr0, *_addr1, *_addr2;

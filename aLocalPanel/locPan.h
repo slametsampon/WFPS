@@ -31,6 +31,7 @@ class LocPan
     void menu();
     void updateParameter();
     int getException();
+    void init();
     void info();
 
   private:
@@ -61,5 +62,7 @@ class LocPan
     void _menuParameter(char);
     void _menuChangeParameter(char);
     void _initPrevIndex();
+    void _setupParameter();
+    void _setupMenu();
 };//end of class
 #endif

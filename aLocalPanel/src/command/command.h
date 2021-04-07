@@ -21,6 +21,8 @@ const char NO_KEY = 'N';//No Key pressed
 
 class command{
   public:    
+    virtual void init();//Initialization
+    virtual void info();
     virtual char getCode();
     virtual bool isValid(char);
 };

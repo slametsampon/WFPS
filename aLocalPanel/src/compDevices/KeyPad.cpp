@@ -32,7 +32,9 @@ void KeyPad::info(){
     Serial.println("<----->");
 }
 
-void KeyPad::init(){}
+void KeyPad::init(){
+  _analogInput->init(PULLUP,"_analogInput");
+}
 
 //function for getting keypad value
 int KeyPad::getValue(){

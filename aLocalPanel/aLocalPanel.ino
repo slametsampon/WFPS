@@ -58,9 +58,6 @@ unsigned char       LocPan::cmdInNbr=0;
 unsigned char       AccessDataMenu::menuNbr=0;
 
 //function declaration
-void initPbLed();
-void setupParameter();
-void setupMenu();
 void exceptionAct(int);
 
 void setup() {
@@ -70,12 +67,8 @@ void setup() {
     
     delay(500);
 
-    keyAnalogIn.init(PULLUP);
-
-    initPbLed();
-
+    lifeLed.init(FORWARD_TYPE,"lifeLed");
     lifeLed.info();
-    keyPad.info();
 
     //attachment all peripherals for locPan
     locPan.attachDipAddr(&locAddr);
@@ -84,11 +77,10 @@ void setup() {
     locPan.attachView(&view);
     locPan.attachModelMenu(&accessMenu);
     locPan.attachModelParameter(&accessParameter);
-    locPan.info();
-    //After locPan attachDipAddr
-    setupMenu();
-    setupParameter();
+    //init for peripherals
+    locPan.init();
 
+    locPan.info();
     //attachment all peripherals for fpSys
     fpSys.attachModelParameter(&accessParameter);
     fpSys.attachFireSensor(&fireSensor);
@@ -96,6 +88,9 @@ void setup() {
     fpSys.attachLedAMR(&ledAMR);
     fpSys.attachSolenoidValve(&solenoidValve);
     fpSys.attachBuzzer(&buzzer);
+    //init for peripherals
+    fpSys.init();
+
     fpSys.info();
 
     //attachment all peripherals for commSer
@@ -152,69 +147,3 @@ void exceptionAct(int exp){
   }
 }
 
-void initPbLed(){
-    Serial.println("LocalPanel : initPbLed()");
-
-    //initialization switch
-    pbAuto.init(REVERSE_TYPE);
-    pbManual.init(REVERSE_TYPE);
-    pbReset.init(REVERSE_TYPE);
-    pbTest.init(REVERSE_TYPE);
-
-    addr0.init(REVERSE_TYPE);
-    addr1.init(REVERSE_TYPE);
-    addr2.init(REVERSE_TYPE);
-
-    solenoidValve.init(FORWARD_TYPE);
-    buzzer.init(FORWARD_TYPE);
-
-    //initialization LEDs
-    lifeLed.init(FORWARD_TYPE);
-    ledAuto.init(FORWARD_TYPE);
-    ledManual.init(FORWARD_TYPE);
-    ledReset.init(FORWARD_TYPE);
-}
-
-void setupMenu(){
-  String locId = "Fire Zone-";
-  dataMenu  dtMenu;
-
-  Serial.println("LocalPanel-setupMenu()");
-
-  dtMenu.isHasParam = false;
-  dtMenu.Messages_0 ="Fire Protection System";
-  dtMenu.Messages_1 ="Salman Alfarisi";
-  accessMenu.add(dtMenu);
-
-  //specific zone configuration  
-  dtMenu.isHasParam = true;
-  dtMenu.Messages_0 ="Fire Zone-1";
-  dtMenu.Messages_1 ="Parameters";
-
-  locId = String(locId + locPan.getAddress());
-  locId.toCharArray(dtMenu.Messages_0,16);
-  accessMenu.add(dtMenu);
-
-}
-
-void setupParameter(){
-  param dtParam;
-  Serial.println("LocalPanel-setupParameter()");
-
-  //fire Zone1.
-  dtParam.unit = "%";
-  dtParam.value = 51;
-  dtParam.highRange = 100;
-  dtParam.lowRange = 0;
-  dtParam.highLimit = 80;
-  dtParam.lowLimit = 40;
-  dtParam.alfaEma = ALFA_EMA;
-  dtParam.alarm = NO_ALARM;
-  dtParam.increment = 2.0;
-
-  String locId = "ZONE-";
-  locId = String(locId + locPan.getAddress());
-
-  accessParameter.init(locId, dtParam);
-
-}
