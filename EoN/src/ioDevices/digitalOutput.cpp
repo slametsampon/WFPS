@@ -7,27 +7,22 @@
 /* Dependencies */
 #include "DigitalOutput.h"
 
-DigitalOutput::DigitalOutput(int pin):_pin(pin){}
-
-void DigitalOutput::init(boolean actType){
+DigitalOutput::DigitalOutput(int pin):_pin(pin), _id("DigitalOutput"), _actionType(FORWARD_TYPE){
+  _device = _id;
+  this->init(_actionType);
   pinMode(_pin, OUTPUT);
 
-  _id = "Digital Output";
-  _actionType = actType;
 }
 
-void DigitalOutput::init(String id){
-  pinMode(_pin, OUTPUT);
+void DigitalOutput::init(boolean actType){
+  _actionType = actType;
 
-  _id = id;
-  _actionType = FORWARD_TYPE;
 }
 
 void DigitalOutput::init(boolean actType, String id){
-  pinMode(_pin, OUTPUT);
-
   _id = id;
   _actionType = actType;
+
 }
 
 boolean DigitalOutput::isStatus(){
@@ -56,8 +51,11 @@ void DigitalOutput::blink(unsigned long blinkTime){
 }
 
 void DigitalOutput::info(){
-  Serial.print("Device : ");
+  Serial.print("_id : ");
   Serial.println(_id);
+
+  Serial.print("_device : ");
+  Serial.println(_device);
 
   Serial.print("Pin : ");
   Serial.println(_pin);

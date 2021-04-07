@@ -28,7 +28,7 @@
     private:
       int  _pin;
       boolean _actionType;
-      String _id;
+      String _id, _device;
       unsigned long  _prevMilli;//in milli second
   };
 #endif

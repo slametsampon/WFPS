@@ -47,7 +47,7 @@ void setup() {
     delay(500);
 
     //initialization LEDs
-    lifeLed.init("lifeLed");
+    lifeLed.init(FORWARD_TYPE,"lifeLed");
 
     //attachment all peripherals for commSer
     commSer.attachModelParameter(&accessParameter);

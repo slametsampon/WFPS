@@ -7,28 +7,24 @@
 /* Dependencies */
 #include "digitalInput.h"
 
-DigitalInput::DigitalInput(int pin):_pin(pin){}
+DigitalInput::DigitalInput(int pin):_pin(pin), _id("DigitalInput"), _digTyp(REVERSE_TYPE){
+  _device = _id;
+  this->init(_digTyp);
+}
 
 void DigitalInput::init(boolean typ){
-  _id = "DigitalInput";
+  _digTyp = typ;
 
-  if (typ == FORWARD_TYPE){
-    pinMode(_pin, INPUT);
-    _digTyp = FORWARD_TYPE;
-  }
-  else {
-    pinMode(_pin, INPUT_PULLUP);
-    _digTyp = REVERSE_TYPE;
-  }
+  if(_digTyp == FORWARD_TYPE)pinMode(_pin, INPUT);
+  else pinMode(_pin, INPUT_PULLUP);
+
 }
 
-void DigitalInput::init(String id){
+void DigitalInput::init(boolean type, String id){
   _id = id;
-  
-  if (_digTyp == REVERSE_TYPE)pinMode(_pin, INPUT_PULLUP);
 
-  else pinMode(_pin, INPUT);
-}
+  this->init(type);
+  }
 
 boolean DigitalInput::isStatus(){
 
@@ -57,8 +53,11 @@ boolean DigitalInput::isStatus(unsigned long holdTime){
 
 void DigitalInput::info(){
 
-  Serial.print("Device : ");
+  Serial.print("_id : ");
   Serial.println(_id);
+
+  Serial.print("_device : ");
+  Serial.println(_device);
 
   Serial.print("Pin : ");
   Serial.println(_pin);

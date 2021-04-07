@@ -9,6 +9,7 @@ sam, April 02, 2021
     const boolean FORWARD_TYPE = true;
     const boolean REVERSE_TYPE = false;
     const boolean PULLUP = true;
+    const boolean PULLUP_NONE = false;
 
     const int NO_ALARM = 0;
     const int HIGH_ALARM = 1;
