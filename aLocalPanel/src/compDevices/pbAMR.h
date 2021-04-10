@@ -20,12 +20,15 @@
         public:
             PbAMR(DigitalInput*, DigitalInput*, DigitalInput*);
             int getCmd(unsigned long);
-            String status();
+            int getException();
+            void init();
             void info();
         private:
             DigitalInput *_pbAuto, *_pbManual, *_pbReset;
             int    _prevCmd;
             bool  _isInfo;//one shoot info
+            void _status();
+            int _exception = NO_EXCEPTION;
     };
 
 #endif
