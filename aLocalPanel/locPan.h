@@ -8,7 +8,6 @@
 
 #include  "Arduino.h"
 #include  "src\model\model.h"
-#include  "src\ioDevices\param.h"
 #include  "src\compDevices\viewLcd.h"
 #include  "src\compDevices\keyPad.h"
 #include  "src\compDevices\dipAddr.h"
