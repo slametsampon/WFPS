@@ -17,6 +17,9 @@ void KeyPad::info(){
 
     _analogInput->info();
 
+    Serial.print("VALUE_RIGHT : ");
+    Serial.println(VALUE_RIGHT);
+
     Serial.print("VALUE_UP : ");
     Serial.println(VALUE_UP);
 

@@ -62,9 +62,9 @@ int PbAMRT::getException(){
 void PbAMRT::init(){
     //initialization switch
     _pbAuto->init(REVERSE_TYPE, "_pbAuto");
-    _pbManual->init(REVERSE_TYPE, "_pbAuto");
-    _pbReset->init(REVERSE_TYPE, "_pbAuto");
-    _pbTest->init(REVERSE_TYPE, "_pbAuto");
+    _pbManual->init(REVERSE_TYPE, "_pbManual");
+    _pbReset->init(REVERSE_TYPE, "_pbReset");
+    _pbTest->init(REVERSE_TYPE, "_pbTest");
 }
 void PbAMRT::info(){
     Serial.println("PbAMRT::info()");
