@@ -95,7 +95,7 @@ void LocPan::menu(){
     case MODE_CHANGE_PARAMETER:
       this->_menuChangeParameter(key);
       break;
-    case 'N':
+    case NO_KEY:
     default:
         break;
   }
@@ -119,25 +119,25 @@ void LocPan::_menuMain(char key){
 
   switch (key) // See which menu item is selected and execute that correS_Pond function
     {
-        case 'S':
+        case SELECT:
           //Tempatkan menu di sini
           break;
-        case 'U':
+        case UP:
           //naikkan index
           idx = this->_increaseIndex();
           this->_sendMenu(idx);//kirim menu ke serial port
           this->_viewMenu(idx);//tampilkan menu ke lcd
           break;
-        case 'D':
+        case DOWN:
           //Turunkan index
           idx = this->_decreaseIndex();
           this->_sendMenu(idx);//kirim menu ke serial port
           this->_viewMenu(idx);//tampilkan menu ke lcd
           break;
-        case 'L':
+        case LEFT:
           //Tempatkan menu di sini
           break;
-        case 'R':
+        case RIGHT:
           //ke menu parameter
           menuData = _accessMenu->read(this->_menuIndex);
           if (menuData.isHasParam){
@@ -148,7 +148,7 @@ void LocPan::_menuMain(char key){
             this->menu();
           }
           break;
-        case 'N'://No Key
+        case NO_KEY://No Key
         default:
           break;
     }
@@ -165,28 +165,28 @@ void LocPan::_menuParameter(char key){
 
   switch (key)
     {
-      case 'S':
+      case SELECT:
         //Tempatkan menu di sini
         break;
-      case 'U':
+      case UP:
         //Naikkan Index
         idx = this->_increaseIndex();
         this->_sendParameter(idx);//kirim parameter ke serial port
         this->_viewParameter(idx);//tampilkan parameter ke lcd
         break;
-      case 'D':
+      case DOWN:
         //Naikkan Index
         idx = this->_decreaseIndex();
         this->_sendParameter(idx);//kirim parameter ke serial port
         this->_viewParameter(idx);//tampilkan parameter ke lcd
         break;
-      case 'L':
+      case LEFT:
         //kembali ke menu utama
         _modeMenu = MODE_MENU_MAIN;
         this->_menuIndex = 0;
         this->menu();
         break;
-      case 'R':
+      case RIGHT:
         if(!_accessParameter->isChangeAble(this->_paramIndex))return;//exit
 
         //ke menu ubah parameter
@@ -195,7 +195,7 @@ void LocPan::_menuParameter(char key){
         this->menu();
         //this->_menuUbahParameter(paramData, NO_KEY);
         break;
-      case 'N'://No Key
+      case NO_KEY://No Key
       default:
         break;
     }
@@ -212,7 +212,7 @@ void LocPan::_menuChangeParameter(char key){
 
   switch (key)
     {
-      case 'S':
+      case SELECT:
         //save change to parameter
         if (this->_isSaved){
           this->_isSaved = false;//false is saved
@@ -224,7 +224,7 @@ void LocPan::_menuChangeParameter(char key){
           this->updateParameter();//update dataParameter
         }
         break;
-      case 'U':
+      case UP:
         //Naikkan parameter
         this->_increaseParameter(idx);
         this->_isParamChanged = true;
@@ -232,7 +232,7 @@ void LocPan::_menuChangeParameter(char key){
         this->_sendParameter(idx);//kirim parameter ke serial port
         this->_viewParameter(idx);//tampilkan parameter ke lcd
         break;
-      case 'D':
+      case DOWN:
         //turunkan parameter
         this->_decreaseParameter(idx);
         this->_isParamChanged = true;
@@ -240,17 +240,17 @@ void LocPan::_menuChangeParameter(char key){
         this->_sendParameter(idx);//kirim parameter ke serial port
         this->_viewParameter(idx);//tampilkan parameter ke lcd
         break;
-      case 'L':
+      case LEFT:
         //kembali ke menu utama
         _modeMenu = MODE_MENU_PARAMETER;
         this->_paramIndex = PARAMETER_VALUE;
         this->menu();
         //this->_menuParameter(paramData, NO_KEY);
         break;
-      case 'R':
+      case RIGHT:
         //ke menu ubah parameter
         break;
-      case 'N'://No Key
+      case NO_KEY://No Key
       default:
         break;
     }
