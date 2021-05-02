@@ -67,8 +67,8 @@ int AnalogInput::getStatus(){
 
   float valUnit = this->getValue();
 
-  if (valUnit <= _dataParam.lowLimit)statusAi = LOW_ALARM;
-  else if (valUnit >= _dataParam.highLimit)statusAi = HIGH_ALARM;
+  if (valUnit >= _dataParam.highLimit)statusAi = HIGH_ALARM;
+  //else if (valUnit <= _dataParam.lowLimit)statusAi = LOW_ALARM;
 
   if (_prevState != statusAi){
     _prevState = statusAi;
