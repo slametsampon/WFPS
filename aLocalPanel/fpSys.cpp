@@ -10,7 +10,7 @@ FPSys::FPSys(String id):_id(id){}
 void FPSys::init(){
     _pbAMRT->init();
     _ledAMR->init();
-    _fireSensor->init(PULLUP_NONE,"_fireSensor");
+    _fireSensor->init(PULLUP,"_fireSensor");
     _solenoidValve->init(FORWARD_TYPE,"_solenoidValve");
     _buzzer->init(FORWARD_TYPE,"_buzzer");
 }

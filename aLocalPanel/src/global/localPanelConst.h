@@ -58,7 +58,7 @@ All constants for local panel
 
     const int ADC_MAX = 1023;//10 bits
     const int ALFA_EMA = 80;//AlfaEma filter
-    const int DEBOUNCING_TIME = 500;//milli second
+    const int DEBOUNCING_TIME = 150;//milli second
 
     const int BLINK_NORMAL = 500;//milli second
     const int BLINK_WARNING = 250;//milli second

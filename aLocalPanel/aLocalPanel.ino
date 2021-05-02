@@ -30,7 +30,7 @@ AnalogInput         fireSensor(PIN_SENSOR);
 PbAMRT              pbAMRT(&pbAuto, &pbManual, &pbReset, &pbTest);
 LedAMR              ledAMR(&ledAuto, &ledManual, &ledReset);
 
-FPSys               fpSys("fpSys - Fire Protection System");
+FPSys               fpSys("fpSys");
 
 //Variables declaration for LocPan
 DigitalInput        addr0(PIN_ADDR0);//use pin PIN_ADDR0 for addressing
@@ -43,15 +43,15 @@ DigitalOutput       lifeLed(LED_BUILTIN);//Pin 2 for Wemos D1
 
 LiquidCrystal       lcd(LCD_RS,LCD_EN,LCD_D4,LCD_D5,LCD_D6,LCD_D7);
 KeyPad              keyPad(&keyAnalogIn);//declare keypad
-serialCmd           serInput("Serial Command");
+serialCmd           serInput("serInput");
 DipAddr             locAddr(&addr0, &addr1, &addr2);
 ViewLcd             view(lcd);//declare view, part of MVC pattern
-AccessDataMenu      accessMenu("Data Menu");//part of MVC pattern
-AccessParam         accessParameter("Parameter");//part of MVC pattern
-LocPan              locPan("LocPan-Local Panel");//local panel
+AccessDataMenu      accessMenu("accessMenu");//part of MVC pattern
+AccessParam         accessParameter("accessParameter");//part of MVC pattern
+LocPan              locPan("locPan");//local panel
 
 //Variables declaration for commSer
-CommSer             commSer("commSer - Serial Comm");
+CommSer             commSer("commSer");
 
 //Static member class should be initialized FIRST (IF NOT, WILL HAVE ERROR)
 unsigned char       LocPan::cmdInNbr=0;
