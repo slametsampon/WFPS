@@ -100,8 +100,8 @@ void FPSys::_logicOperation(int oprMode, int sensorStatus){
     //logic of operation
     boolean sensorAlarm = false;
 
-    if (sensorStatus == LOW_ALARM)sensorAlarm=true;
-    else if (sensorStatus == HIGH_ALARM)sensorAlarm=true;
+    if (sensorStatus == HIGH_ALARM)sensorAlarm=true;
+    //else if (sensorStatus == LOW_ALARM)sensorAlarm=true;
 
     //activate buzzer
     if(sensorAlarm)_buzzer->blink(1000);
