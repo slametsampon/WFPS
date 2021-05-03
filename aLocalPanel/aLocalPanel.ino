@@ -104,11 +104,6 @@ void loop() {
 
   lifeLed.blink(BLINK_NORMAL);//in milli second
 
-  SequenceMain.execute();
-  if(SequenceMain.isASecondEvent()){
-    //commSer.execute();
-  }
-
   locPan.menu();
   fpSys.execute();
   commSer.execute();
