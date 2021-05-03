@@ -79,7 +79,7 @@ void FPSys::execute(){
     if((operationMode == MODE_AUTO) && (sensorStatus != NO_ALARM)) operationMode = MODE_AUTO_ON;
     _ledAMR->status(operationMode);//LED action
 
-    //! get exceptions and MUST EXECUTE THE END
+    //! get exceptions and MUST BE EXECUTED AT THE END
     _exception = _fireSensor->getException();
     if (_exception != NO_EXCEPTION){
         _accessParameter->setParam(PARAMETER_VALUE,_fireSensor->getValue());
