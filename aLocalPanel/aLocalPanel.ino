@@ -2,16 +2,10 @@
 #include <LiquidCrystal.h>//for LCD
 #include <RTClib.h>
 
-#include    "src\sequenceTimer\sequenceTimer.h"
 #include    "src\serDevCmd\serDevCmd.h"
-
 #include    "locPan.h"
 #include    "fpSys.h"
 #include    "commSer.h"
-
-//Variables declaration
-
-SequenceTimer SequenceMain("Sequence");
 
 //Variables declaration for FPSys
 DigitalInput        pbAuto(PIN_PB_AUTO);//use pin PIN_PB_AUTO for P/B
