@@ -43,7 +43,7 @@ void CommSer::sendParameter(){
 
 }
 
-void CommSer::_getData(){
+void CommSer::execute(){
   /*
     ? Stream& input;
 
@@ -111,8 +111,4 @@ int CommSer::getException(){
     int exp = _exception;
     if (exp != NO_EXCEPTION)_exception = NO_EXCEPTION;
     return exp;
-}
-
-void CommSer::execute(){
-  this->_getData();
 }

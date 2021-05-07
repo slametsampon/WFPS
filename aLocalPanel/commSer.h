@@ -63,8 +63,6 @@ class CommSer
     AccessParam *_accessParameter;
     param _dataParam;
     SoftwareSerial *_linkSerial; // RX, TX
-
-    void _getData();//get data incoming from serial1 and put on parameter
 };//end of class
 
 #endif
