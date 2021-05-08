@@ -140,6 +140,8 @@ boolean EventTimer::execute(){
 				status = false;
 			}
 		}
+		
+		//has duration
 		if (_durationMilli <= 0){
 			if(_prevDurationMilli == 0)_prevDurationMilli = millis();
 			if((millis() - _prevDurationMilli) <= _durationMilli)status = true;
@@ -148,6 +150,8 @@ boolean EventTimer::execute(){
 				_prevDelayMilli = 0;
 			}
 		}
+
+		//cyclic
 		if (_isCyclic){
 			_isEnable = true;
 			_prevDelayMilli = millis();
