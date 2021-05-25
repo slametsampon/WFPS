@@ -1,0 +1,32 @@
+Temperature Control
+
+Pada sebuah reactor kimia terdapat reaksi antara bahan-bahan yang masuk (feed)
+untuk menghasilkan produk jadi. Reaksi ini dibantu dengan catalyst agar reaksi
+menjadi lebih cepat. Seluruh reaksi yang terjadi pada fase cairan (liquid) sehingga diperlukan
+pompa untuk mengalirkan hasil reaksi agar bisa bercampuir dengan baik (homogen).
+Feed dimasukkan dari atas kemudian mengalir ke bawah melalui catalyst, sampai ke bawah
+terbentuklah hasil reaksi berupa product.
+Product ini selanjutnya dipompa ke alat penukar panas (heat exchanger/HE) untuk diambil panasnya.
+
+Setelah keluar dari HE diharapkan temperature menjadi 50 DegC, sebagian diambil sebagai product jadi sebagian lagi
+disirkulasikan lagi kedalam reaktor untuk membuat reaksi lebih merata (homogen).
+
+Selain menghasilkan product, reaksi ini juga menghasilkan panas akibat reaksi (dikenal dengan reaksi exothermis).
+panas yang terjadi sangat membahayakan reaktor serta dapat menimbulkan kebakaran serta peledakan.
+
+Untuk itu perlu digunakan alat pendingin berupa alat penukar panas (heat exchanger/HE) untuk mengambil panas dari
+hasil reaksi. HE ini dalam pengambilan panas menggunakan media air (water), makin banyak air yang dialirkan ke dalam HE,
+semakin banyak panas yang bisa diambil. Namun demikian reaksi dalam reaktor tidak bisa berjalan dengan optimal jika
+temperature di bawah 100 derajat celcius. Dan sangat membahanyakan jika lebih tinggi dari 200 derajat celcius.
+
+Temperature yang optimal terjadi saat temperature 125 derajat celcius.
+
+Untuk itu diperlukan pengendalian temperature (Temperature Control/TC) pada titik reaksi yang optimal (125 DegC).
+TC ini akan menerima sinyal indikasi dari TI (Temperature Indicator) yang memberikan pengukuran dalam reaktor.
+selanjutnya TC akan melakukan pengendalian temperature menggunakan PID (Proposional Integral Deferential) dengan
+acuan (setting) yang diberikan (dalam hal ini 125 DegC). Jika TI memberikan nilai lebih tinggi dari setting, maka 
+TC akan memberikan perintah ke control valve/CV untuk membuka lebih besar lagi sehinnga air (untuk pendingin) mengalir
+lebih besar untuk menurunkan temperature. Demikian juga sebaliknya.
+
+Jika TI sama dengan setting, maka dengan formula yang ada pada PID, TC akan mempertahankan perintah sehingga 
+CV akan mempertahankan bukaan-nya.
