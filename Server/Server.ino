@@ -36,8 +36,7 @@ SequenceTimer   mainSequence("Sequence");
 void startWiFiClient();
 void startWiFiAP();
 
-void setup()
-{
+void setup(){
   pinMode(LED_BUILTIN, OUTPUT);     // Initialize the LED_BUILTIN pin as an output
 
   Serial.begin(115200);
@@ -62,8 +61,7 @@ void setup()
 
 int counter = 0;
 
-void loop()
-{
+void loop(){
   mainSequence.execute();
   if (mainSequence.isASecondEvent()){
     digitalWrite( LED_BUILTIN, digitalRead(LED_BUILTIN) ^ 1 );
@@ -81,8 +79,7 @@ void loop()
 /*
  * WiFi init stuff
  */
-void startWiFiClient()
-{
+void startWiFiClient(){
   Serial.println("Connecting to "+(String)ssid);
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
@@ -97,8 +94,7 @@ void startWiFiClient()
   Serial.println("IP address: " + WiFi.localIP().toString());
 }
 
-void startWiFiAP()
-{
+void startWiFiAP(){
   WiFi.mode(WIFI_AP);
   WiFi.softAP(ssid, password);
   Serial.println("AP started");
